@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<mule xmlns:http="http://www.mulesoft.org/schema/mule/http"
-	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="
-http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd">
+<mule xmlns:moodle="http://www.mulesoft.org/schema/connectivity/moodle"
+	xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/connectivity/moodle http://www.mulesoft.org/schema/connectivity/moodle/current/mule-moodle.xsd">
  <flow name="post:\core_course_create_categories:application\x-www-form-urlencoded:moodle-rest-api-config">
         <http:listener doc:name="Listener" doc:id="e427c011-deff-40f0-8ca3-db7b861193bb" path="/core_course_create_categories" config-ref="HTTP_Listener_config">
             <http:error-response statusCode="#[vars.httpStatus default 500]">
@@ -12,77 +13,8 @@ http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/htt
             </http:error-response>
         </http:listener>
         <flow-ref doc:name="Flow Reference" doc:id="911afab0-c485-4500-b068-6c4110200102" name="accesstoken_Flow" />
-        <moodle:post-core-course-create-categories doc:name="Course Category - Create Categories" doc:id="dae3dad1-4953-4f37-828e-27248633cb9b" config-ref="Moodle_Config" correlationIdHeader="#[correlationId]">
-            <moodle:post-core-course-create-categories-body><![CDATA[#[%dw 2.0
-output application/x-www-form-urlencoded
----
-{
-    wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,                            
-    (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
-    (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
-    "categories[0][name]": payload.'categories[0][name]',
-    "categories[0][parent]": payload.'categories[0][parent]',
-    "categories[0][idnumber]": payload.'categories[0][idnumber]',
-    "categories[0][description]": payload.'categories[0][description]',
-    "categories[0][descriptionformat]": payload.'categories[0][descriptionformat]',
-    "categories[0][theme]": payload.'categories[0][theme]'
-}]]]></moodle:post-core-course-create-categories-body>
-        </moodle:post-core-course-create-categories>
-    </flow>
-    <flow name="post:\core_course_create_courses:application\x-www-form-urlencoded:moodle-rest-api-config">
-        <http:listener doc:name="Listener" doc:id="0b23cccc-6c77-41eb-9fc3-06437d10f957" path="/core_course_create_courses" allowedMethods="GET,POST" config-ref="HTTP_Listener_config">
-            <http:error-response statusCode="#[vars.httpStatus default 500]">
-                <http:body><![CDATA[#[output application/json --- payload default error.description]]]></http:body>
-            </http:error-response>
-        </http:listener>
-        <flow-ref doc:name="Flow Reference" doc:id="ff591f57-63a7-4dcc-961b-57d96776f1ad" name="accesstoken_Flow" />
-        <moodle:post-core-course-create-courses doc:name="Course - Create Courses" doc:id="084a58fc-443a-4533-9816-134767c4c4c7" config-ref="Moodle_Config" correlationIdHeader="#[correlationId]">
-            <moodle:post-core-course-create-courses-body><![CDATA[#[%dw 2.0
-output application/x-www-form-urlencoded
----
-{
-     wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,                            
-    (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
-    (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
-    ('courses[0][fullname]': payload.'courses[0][fullname]') if (!isEmpty(payload.'courses[0][fullname]')),
-    ('courses[0][shortname]': payload.'courses[0][shortname]') if (!isEmpty(payload.'courses[0][shortname]')),
-    ('courses[0][categoryid]': payload.'courses[0][categoryid]')if (!isEmpty(payload.'courses[0][categoryid]')),
-    ('courses[0][idnumber]': payload.'courses[0][idnumber]')if (!isEmpty(payload.'courses[0][idnumber]')),
-    'courses[0][summary]': payload.'courses[0][summary]',
-    'courses[0][summaryformat]': payload.'courses[0][summaryformat]',
-    'courses[0][format]': payload.'courses[0][format]',
-    'courses[0][showgrades]': payload.'courses[0][showgrades]',
-    'courses[0][newsitems]': payload.'courses[0][newsitems]',
-    'courses[0][startdate]': payload.'courses[0][startdate]',
-    'courses[0][enddate]': payload.'courses[0][enddate]',
-    'courses[0][numsections]': payload.'courses[0][numsections]',
-    'courses[0][maxbytes]': payload.'courses[0][maxbytes]',
-    'courses[0][showreports]': payload.'courses[0][showreports]',
-    'courses[0][visible]': payload.'courses[0][visible]',
-    'courses[0][hiddensections]': payload.'courses[0][hiddensections]',
-    'courses[0][groupmode]': payload.'courses[0][groupmode]',
-    'courses[0][groupmodeforce]': payload.'courses[0][groupmodeforce]',
-    'courses[0][defaultgroupingid]': payload.'courses[0][defaultgroupingid]',
-    'courses[0][enablecompletion]': payload.'courses[0][enablecompletion]',
-    'courses[0][completionnotify]': payload.'courses[0][completionnotify]',
-    'courses[0][lang]': payload.'courses[0][lang]',
-    'courses[0][forcetheme]': payload.'courses[0][forcetheme]',
-    'courses[0][courseformatoptions][0][name]': payload.'courses[0][courseformatoptions][0][name]',
-    'courses[0][courseformatoptions][0][value]': payload.'courses[0][courseformatoptions][0][value]',
-    'courses[0][customfields][0][shortname]': payload.'courses[0][customfields][0][shortname]',
-    'courses[0][customfields][0][value]': payload.'courses[0][customfields][0][value]'
-}]]]></moodle:post-core-course-create-courses-body>
-        </moodle:post-core-course-create-courses>
-    </flow>
-    <flow name="post:\core_course_delete_categories:application\x-www-form-urlencoded:moodle-rest-api-config">
-        <http:listener doc:name="Listener" doc:id="5c7e0c65-700d-4c81-894a-87614e2701e5" path="/core_course_delete_categories" config-ref="HTTP_Listener_config">
-            <http:error-response statusCode="#[vars.httpStatus default 500]">
-                <http:body><![CDATA[#[output application/json --- payload default error.description]]]></http:body>
-            </http:error-response>
-        </http:listener>
-        <flow-ref doc:name="Flow Reference" doc:id="7c43c471-5685-4ce5-8ffc-c992a050c5e9" name="accesstoken_Flow" />
-        <moodle:post-core-course-delete-categories doc:name="Course Category - Delete Categories" doc:id="3280437e-113f-4c90-bf14-5b5469eed6bd" config-ref="Moodle_Config" correlationIdHeader="#[correlationId]">
-            <moodle:post-core-course-delete-categories-body><![CDATA[#[%dw 2.0
+		<moodle:course-category-create-categories doc:name="Course Category - Create Categories" doc:id="c55f5c37-14ce-4e3e-acac-52752c0a1437" config-ref="Moodle_config1" correlationId="#[correlationId]">
+			<moodle:course_category_create_categories--body ><![CDATA[#[%dw 2.0
 output application/x-www-form-urlencoded
 ---
 {
@@ -91,10 +23,27 @@ output application/x-www-form-urlencoded
     (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
     "categories[0][id]": payload.'categories[0][id]',                  
     ("categories[0][newparent]": payload.categories[0].newparent)  if (!isEmpty(payload.categories[0].newparent)),  
-    ("categories[0][recursive]": payload.categories[0].recursive)
-                                                  if (!isEmpty(payload.categories[0].recursive))
-}]]]></moodle:post-core-course-delete-categories-body>
-        </moodle:post-core-course-delete-categories>
+    ("categories[0][recursive]": payload.categories[0].recursive)  if (!isEmpty(payload.categories[0].recursive))
+                                                 
+}]]]></moodle:course_category_create_categories--body>
+		</moodle:course-category-create-categories>
+    
+</flow>
+    <flow name="post:\core_course_create_courses:application\x-www-form-urlencoded:moodle-rest-api-config">
+        <http:listener doc:name="Listener" doc:id="0b23cccc-6c77-41eb-9fc3-06437d10f957" path="/core_course_create_courses" allowedMethods="GET,POST" config-ref="HTTP_Listener_config">
+            <http:error-response statusCode="#[vars.httpStatus default 500]">
+                <http:body><![CDATA[#[output application/json --- payload default error.description]]]></http:body>
+            </http:error-response>
+        </http:listener>
+        <flow-ref doc:name="Flow Reference" doc:id="ff591f57-63a7-4dcc-961b-57d96776f1ad" name="accesstoken_Flow" />
+    </flow>
+    <flow name="post:\core_course_delete_categories:application\x-www-form-urlencoded:moodle-rest-api-config">
+        <http:listener doc:name="Listener" doc:id="5c7e0c65-700d-4c81-894a-87614e2701e5" path="/core_course_delete_categories" config-ref="HTTP_Listener_config">
+            <http:error-response statusCode="#[vars.httpStatus default 500]">
+                <http:body><![CDATA[#[output application/json --- payload default error.description]]]></http:body>
+            </http:error-response>
+        </http:listener>
+        <flow-ref doc:name="Flow Reference" doc:id="7c43c471-5685-4ce5-8ffc-c992a050c5e9" name="accesstoken_Flow" />
     </flow>
     <flow name="post:\core_course_delete_courses:application\x-www-form-urlencoded:moodle-rest-api-config">
         <http:listener doc:name="Listener" doc:id="e18d11ff-84ea-446e-8dcf-e89a8241a55c" path="/core_course_delete_courses" config-ref="HTTP_Listener_config">
@@ -103,17 +52,6 @@ output application/x-www-form-urlencoded
             </http:error-response>
         </http:listener>
         <flow-ref doc:name="Flow Reference" doc:id="cf8efbd9-0f98-4d8d-aece-34e558cfb6d0" name="accesstoken_Flow" />
-        <moodle:post-core-course-delete-courses doc:name="Course - Delete Courses" doc:id="b2126f96-885d-4a38-861e-729a135b5f8b" config-ref="Moodle_Config" correlationIdHeader="#[correlationId]">
-            <moodle:post-core-course-delete-courses-body><![CDATA[#[%dw 2.0
-output application/x-www-form-urlencoded
----
-{
-    wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,                
-    (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
-    (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
-    "courseids[0]": payload.'courseids[0]'        
-}]]]></moodle:post-core-course-delete-courses-body>
-        </moodle:post-core-course-delete-courses>
     </flow>
     <flow name="post:\core_course_get_categories:application\x-www-form-urlencoded:moodle-rest-api-config">
         <http:listener doc:name="Listener" doc:id="8b46c6f0-52f1-42b4-8dde-250f89cac788" path="/core_course_get_categories" config-ref="HTTP_Listener_config">
@@ -122,19 +60,6 @@ output application/x-www-form-urlencoded
             </http:error-response>
         </http:listener>
         <flow-ref doc:name="Flow Reference" doc:id="116839a5-b1cf-4ab0-b716-5a1acad540a3" name="accesstoken_Flow" />
-        <moodle:post-core-course-get-categories doc:name="Course Category - Get Categories" doc:id="754de337-c5ea-4b71-bda2-63e85da98e84" config-ref="Moodle_Config" correlationIdHeader="#[correlationId]">
-            <moodle:post-core-course-get-categories-body><![CDATA[#[%dw 2.0
-output application/x-www-form-urlencoded
----
-{
-    wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,                         
-    (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
-    (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
-    ("criteria[0][key]": payload.'criteria[0][key]') if(!isEmpty(payload.'criteria[0][key]')),           
-    ("criteria[0][value]": payload.'criteria[0][value]') if (!isEmpty(payload.'criteria[0][value]')),      
-    (addsubcategories: payload.addsubcategories) if (!isEmpty(payload.addsubcategories))      
-}]]]></moodle:post-core-course-get-categories-body>
-        </moodle:post-core-course-get-categories>
     </flow>
     <flow name="post:\core_course_get_courses:application\x-www-form-urlencoded:moodle-rest-api-config">
         <http:listener doc:name="Listener" doc:id="a1f38c5e-743c-4f7c-80a9-f37d8aa23261" path="/core_course_get_courses" config-ref="HTTP_Listener_config">
@@ -143,16 +68,6 @@ output application/x-www-form-urlencoded
             </http:error-response>
         </http:listener>
         <flow-ref doc:name="Flow Reference" doc:id="f2c696e6-6975-46d7-9858-24519f8f796a" name="accesstoken_Flow" />
-        <moodle:post-core-course-get-courses doc:name="Course - Get Courses" doc:id="c3afc9a5-fdd1-4bb8-8b49-8a4e21656fff" config-ref="Moodle_Config" correlationIdHeader="#[correlationId]">
-            <moodle:post-core-course-get-courses-body><![CDATA[#[%dw 2.0
-output application/x-www-form-urlencoded
----
-{
-    wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,            
-    (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
-    (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat))
-}]]]></moodle:post-core-course-get-courses-body>
-        </moodle:post-core-course-get-courses>
     </flow>
     <flow name="post:\core_course_get_courses_by_field:application\x-www-form-urlencoded:moodle-rest-api-config">
         <http:listener doc:name="Listener" doc:id="60ecbf6c-8ac6-4f43-9200-ca96b1042fd5" path="/core_course_get_courses_by_field" config-ref="HTTP_Listener_config">
@@ -161,18 +76,6 @@ output application/x-www-form-urlencoded
             </http:error-response>
         </http:listener>
         <flow-ref doc:name="Flow Reference" doc:id="6aca527f-cf84-48c1-a223-b66393218fec" name="accesstoken_Flow" />
-        <moodle:post-core-course-get-courses-by-field doc:name="Course - Get Courses by Field" doc:id="3ec67922-9404-45bf-8b6f-37514dc2ae52" config-ref="Moodle_Config" correlationIdHeader="#[correlationId]">
-            <moodle:post-core-course-get-courses-by-field-body><![CDATA[#[%dw 2.0
-output application/x-www-form-urlencoded
----
-{
-    wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,              
-    (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
-    (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
-    (field: payload.field) if (!isEmpty(payload.field)),
-    ("values[0]": payload.'values[0]') if (!isEmpty(payload.'values[0]'))
-}]]]></moodle:post-core-course-get-courses-by-field-body>
-        </moodle:post-core-course-get-courses-by-field>
     </flow>
     <flow name="post:\core_course_update_categories:application\x-www-form-urlencoded:moodle-rest-api-config">
         <http:listener doc:name="Listener" doc:id="822fa413-e8e4-4ab2-af0c-42316e7b6385" path="/core_course_update_categories" config-ref="HTTP_Listener_config">
@@ -181,23 +84,6 @@ output application/x-www-form-urlencoded
             </http:error-response>
         </http:listener>
         <flow-ref doc:name="Flow Reference" doc:id="c720d970-6933-4c4c-8139-ca490e58ac38" name="accesstoken_Flow" />
-        <moodle:post-core-course-update-categories doc:name="Course Category - Update Categories" doc:id="5dc4cc2f-fc25-42e2-936b-a09d3098853d" config-ref="Moodle_Config" correlationIdHeader="#[correlationId]">
-            <moodle:post-core-course-update-categories-body><![CDATA[#[%dw 2.0
-output application/x-www-form-urlencoded
----
-{
-    wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,                    
-    (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
-    (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
-    "categories[0][id]": payload.'categories[0][id]',                  
-    ("categories[0][name]": payload.categories[0].name) if (!isEmpty(payload.categories[0].name)),            
-    "categories[0][idnumber]": payload.'categories[0][idnumber]',      
-    ("categories[0][parent]": payload.categories[0].parent) if (!isEmpty(payload.categories[0].parent)),         
-    "categories[0][description]": payload.'categories[0][description]',
-    "categories[0][descriptionformat]": payload.'categories[0][descriptionformat]',
-    "categories[0][theme]": payload.'categories[0][theme]'
-}]]]></moodle:post-core-course-update-categories-body>
-        </moodle:post-core-course-update-categories>
     </flow>
     <flow name="post:\core_course_update_courses:application\x-www-form-urlencoded:moodle-rest-api-config">
         <http:listener doc:name="Listener" doc:id="43f18231-5899-4bd2-872c-7c7970334e88" path="/core_course_update_courses" config-ref="HTTP_Listener_config">
@@ -206,44 +92,6 @@ output application/x-www-form-urlencoded
             </http:error-response>
         </http:listener>
         <flow-ref doc:name="Flow Reference" doc:id="ccad70cc-5999-416b-918a-9c31f473b77b" name="accesstoken_Flow" />
-        <moodle:post-core-course-update-courses doc:name="Course - Update Courses" doc:id="98337ac3-9d5c-42d5-9f96-d9f82ae163f7" config-ref="Moodle_Config" correlationIdHeader="#[correlationId]">
-            <moodle:post-core-course-update-courses-body><![CDATA[#[%dw 2.0
-output application/x-www-form-urlencoded
----
-{
-    wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,                    
-    (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
-    (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
-    "courses[0][id]": payload.'courses[0][id]',
-    "courses[0][fullname]": payload.'courses[0][fullname]',
-    "courses[0][shortname]": payload.'courses[0][shortname]',
-    "courses[0][categoryid]": payload.'courses[0][categoryid]',
-    "courses[0][idnumber]": payload.'courses[0][idnumber]',
-    "courses[0][summary]": payload.'courses[0][summary]',
-    "courses[0][summaryformat]": payload.'courses[0][summaryformat]',
-    "courses[0][format]": payload.'courses[0][format]',
-    "courses[0][showgrades]": payload.'courses[0][showgrades]',
-    "courses[0][newsitems]": payload.'courses[0][newsitems]',
-    "courses[0][startdate]": payload.'courses[0][startdate]',
-    "courses[0][enddate]": payload.'courses[0][enddate]',
-    "courses[0][numsections]": payload.'courses[0][numsections]',
-    "courses[0][maxbytes]": payload.'courses[0][maxbytes]',
-    "courses[0][showreports]": payload.'courses[0][showreports]',
-    "courses[0][visible]": payload.'courses[0][visible]',
-    "courses[0][hiddensections]": payload.'courses[0][hiddensections]',
-    "courses[0][groupmode]": payload.'courses[0][groupmode]',
-    "courses[0][groupmodeforce]": payload.'courses[0][groupmodeforce]',
-    "courses[0][defaultgroupingid]": payload.'courses[0][defaultgroupingid]',
-    "courses[0][enablecompletion]": payload.'courses[0][enablecompletion]',
-    "courses[0][completionnotify]": payload.'courses[0][completionnotify]',
-    "courses[0][lang]": payload.'courses[0][lang]',
-    "courses[0][forcetheme]": payload.'courses[0][forcetheme]',
-    "courses[0][courseformatoptions][0][name]": payload.'courses[0][courseformatoptions][0][name]',
-    "courses[0][courseformatoptions][0][value]": payload.'courses[0][courseformatoptions][0][value]',
-    "courses[0][customfields][0][shortname]": payload.'courses[0][customfields][0][shortname]',
-    "courses[0][customfields][0][value]": payload.'courses[0][customfields][0][value]'
-}]]]></moodle:post-core-course-update-courses-body>
-        </moodle:post-core-course-update-courses>
     </flow>
     <flow name="post:\core_enrol_get_enrolled_users:application\x-www-form-urlencoded:moodle-rest-api-config">
         <http:listener doc:name="Listener" doc:id="c76c5c55-c872-47c7-b1a0-70ee7c9cbe30" path="/core_enrol_get_enrolled_users" config-ref="HTTP_Listener_config">
@@ -252,17 +100,6 @@ output application/x-www-form-urlencoded
             </http:error-response>
         </http:listener>
         <flow-ref doc:name="Flow Reference" doc:id="5f8a22c1-6f4f-45f1-a795-4d1f00a16a9a" name="accesstoken_Flow" />
-        <moodle:post-core-enrol-get-enrolled-users doc:name="Enrollment - Get Enrolled Users" doc:id="f32f0c67-90e9-42bc-81ec-b2ad85593819" config-ref="Moodle_Config" correlationIdHeader="#[correlationId]">
-            <moodle:post-core-enrol-get-enrolled-users-body><![CDATA[#[%dw 2.0
-output application/x-www-form-urlencoded
----
-{
-    wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,           
-    (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
-    (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
-    courseid: payload.courseid               
-}]]]></moodle:post-core-enrol-get-enrolled-users-body>
-        </moodle:post-core-enrol-get-enrolled-users>
     </flow>
     <flow name="post:\core_enrol_get_users_courses:application\x-www-form-urlencoded:moodle-rest-api-config">
         <http:listener doc:name="Listener" doc:id="dd3382e7-d5db-4503-8291-047c0f8d4215" path="/core_enrol_get_users_courses" config-ref="HTTP_Listener_config">
@@ -271,18 +108,6 @@ output application/x-www-form-urlencoded
             </http:error-response>
         </http:listener>
         <flow-ref doc:name="Flow Reference" doc:id="447383f6-5421-4ffb-99b8-c27426e504f7" name="accesstoken_Flow" />
-        <moodle:post-core-enrol-get-users-courses doc:name="Enrollment - Get User''s Courses" doc:id="65668d2a-af23-4870-be88-ff1df288e91a" config-ref="Moodle_Config" correlationIdHeader="#[correlationId]">
-            <moodle:post-core-enrol-get-users-courses-body><![CDATA[#[%dw 2.0
-output application/x-www-form-urlencoded
----
-{
-    wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,               
-   (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
-    (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
-    (userid: payload.userid) if (!isEmpty(payload.userid)),                  
-    (returnusercount: payload.returnusercount)if(!isEmpty(payload.returnusercount))
-}]]]></moodle:post-core-enrol-get-users-courses-body>
-        </moodle:post-core-enrol-get-users-courses>
     </flow>
     <flow name="post:\core_enrol_unenrol_user_enrolment:application\x-www-form-urlencoded:moodle-rest-api-config">
         <http:listener doc:name="Listener" doc:id="779056f2-abff-4d82-a87c-66788563e6b1" path="/core_enrol_unenrol_user_enrolment" config-ref="HTTP_Listener_config">
@@ -291,17 +116,6 @@ output application/x-www-form-urlencoded
             </http:error-response>
         </http:listener>
         <flow-ref doc:name="Flow Reference" doc:id="62612bbb-7055-4064-9f0c-9bcb6f4ec045" name="accesstoken_Flow" />
-		<moodle:post-core-enrol-unenrol-user-enrolment doc:name="Enrollment - Unenroll Users" doc:id="0a0bc03d-c78c-4013-bae1-b30ed84cb52d" config-ref="Moodle_Config" correlationIdHeader="#[correlationId]">
-			<moodle:post-core-enrol-unenrol-user-enrolment-body ><![CDATA[#[%dw 2.0
-output application/x-www-form-urlencoded
----
-{
-    wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,     
-    (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
-    (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
-    ueid: payload.ueid               
-}]]]></moodle:post-core-enrol-unenrol-user-enrolment-body>
-		</moodle:post-core-enrol-unenrol-user-enrolment>
     </flow>
     <flow name="post:\core_role_assign_roles:application\x-www-form-urlencoded:moodle-rest-api-config">
         <http:listener doc:name="Listener" doc:id="da208c82-a02c-4b30-aed6-69271adab6b7" path="/core_role_assign_roles" config-ref="HTTP_Listener_config">
@@ -310,21 +124,6 @@ output application/x-www-form-urlencoded
             </http:error-response>
         </http:listener>
         <flow-ref doc:name="Flow Reference" doc:id="e987402e-1d02-4cdd-85b3-05daf09bb7c5" name="accesstoken_Flow" />
-        <moodle:post-core-role-assign-roles doc:name="User Roles - Assign Roles" doc:id="387e5ea7-ac1e-4e96-baec-a238d21cf1f9" config-ref="Moodle_Config" correlationIdHeader="#[correlationId]">
-            <moodle:post-core-role-assign-roles-body><![CDATA[#[%dw 2.0
-output application/x-www-form-urlencoded
----
-{
-    wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,
-    (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
-    (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
-    "assignments[0][roleid]": payload.'assignments[0][roleid]',
-    "assignments[0][userid]": payload.'assignments[0][userid]',
-    "assignments[0][contextid]": payload.'assignments[0][contextid]',
-    "assignments[0][contextlevel]": payload.'assignments[0][contextlevel]',
-    "assignments[0][instanceid]": payload.'assignments[0][instanceid]'
-}]]]></moodle:post-core-role-assign-roles-body>
-        </moodle:post-core-role-assign-roles>
     </flow>
     <flow name="post:\core_role_unassign_roles:application\x-www-form-urlencoded:moodle-rest-api-config">
         <http:listener doc:name="Listener" doc:id="8ff1cf50-4f4c-41db-8fea-1666667f6684" path="/core_role_unassign_roles" config-ref="HTTP_Listener_config">
@@ -333,21 +132,6 @@ output application/x-www-form-urlencoded
             </http:error-response>
         </http:listener>
         <flow-ref doc:name="Flow Reference" doc:id="79ba80a0-f03e-44f9-82fe-66155bd57070" name="accesstoken_Flow" />
-        <moodle:post-core-role-unassign-roles doc:name="User Roles - Unassign Roles" doc:id="3a37ed97-51a6-41c9-92ae-fe349464a919" config-ref="Moodle_Config" correlationIdHeader="#[correlationId]">
-            <moodle:post-core-role-unassign-roles-body><![CDATA[#[%dw 2.0
-output application/x-www-form-urlencoded
----
-{
-    wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,
-    (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
-    (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
-    "unassignments[0][roleid]": payload.'unassignments[0][roleid]',
-    "unassignments[0][userid]": payload.'unassignments[0][userid]',
-    "unassignments[0][contextid]": payload.'unassignments[0][contextid]',
-    "unassignments[0][contextlevel]": payload.'unassignments[0][contextlevel]',
-    "unassignments[0][instanceid]": payload.'unassignments[0][instanceid]'
-}]]]></moodle:post-core-role-unassign-roles-body>
-        </moodle:post-core-role-unassign-roles>
     </flow>
     <flow name="post:\core_user_create_users:application\x-www-form-urlencoded:moodle-rest-api-config">
         <http:listener doc:name="Listener" doc:id="9f5e602d-4473-4632-9fd8-cf78b404c448" path="/core_user_create_users" config-ref="HTTP_Listener_config">
@@ -356,47 +140,6 @@ output application/x-www-form-urlencoded
             </http:error-response>
         </http:listener>
         <flow-ref doc:name="Flow Reference" doc:id="0acfddec-fee4-4ff1-8ab2-3e1d0c4f3b0f" name="accesstoken_Flow" />
-        <moodle:post-core-user-create-users doc:name="User - Create users" doc:id="b272792b-e370-43f1-ae6c-bd1ffaefefc3" config-ref="Moodle_Config" correlationIdHeader="#[correlationId]">
-            <moodle:post-core-user-create-users-body><![CDATA[#[%dw 2.0
-output application/x-www-form-urlencoded
----
-{
-    wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,
-    (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
-    (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
-    "users[0][createpassword]": payload."users[0][createpassword]",
-    "users[0][username]": payload."users[0][username]",
-    "users[0][auth]": payload."users[0][auth]",
-    "users[0][password]": payload."users[0][password]",
-    "users[0][firstname]": payload."users[0][firstname]",
-    "users[0][lastname]": payload."users[0][lastname]",
-    "users[0][email]": payload."users[0][email]",
-    "users[0][maildisplay]": payload."users[0][maildisplay]",
-    "users[0][city]": payload."users[0][city]",
-    "users[0][country]": payload."users[0][country]",
-    "users[0][timezone]": payload."users[0][timezone]",
-    "users[0][description]": payload."users[0][description]",
-    "users[0][firstnamephonetic]": payload."users[0][firstnamephonetic]",
-    "users[0][lastnamephonetic]": payload."users[0][lastnamephonetic]",
-    "users[0][middlename]": payload."users[0][middlename]",
-    "users[0][alternatename]": payload."users[0][alternatename]",
-    "users[0][interests]": payload."users[0][interests]",
-    "users[0][idnumber]": payload."users[0][idnumber]",
-    "users[0][institution]": payload."users[0][institution]",
-    "users[0][department]": payload."users[0][department]",
-    "users[0][phone1]": payload."users[0][phone1]",
-    "users[0][phone2]": payload."users[0][phone2]",
-    "users[0][address]": payload."users[0][address]",
-    "users[0][lang]": payload."users[0][lang]",
-    "users[0][calendartype]": payload."users[0][calendartype]",
-    "users[0][theme]": payload."users[0][theme]",
-    "users[0][mailformat]": payload."users[0][mailformat]",
-    "users[0][customfields][0][type]": payload."users[0][customfields][0][type]",
-    "users[0][customfields][0][value]": payload."users[0][customfields][0][value]",
-    "users[0][preferences][0][type]": payload."users[0][preferences][0][type]",
-    "users[0][preferences][0][value]": payload."users[0][preferences][0][value]"
-}]]]></moodle:post-core-user-create-users-body>
-        </moodle:post-core-user-create-users>
     </flow>
     <flow name="post:\core_user_delete_users:application\x-www-form-urlencoded:moodle-rest-api-config">
         <http:listener doc:name="Listener" doc:id="bc1269e7-9009-4242-9ab6-f85ec8f41384" path="/core_user_delete_users" config-ref="HTTP_Listener_config">
@@ -405,17 +148,6 @@ output application/x-www-form-urlencoded
             </http:error-response>
         </http:listener>
         <flow-ref doc:name="Flow Reference" doc:id="ba2a181c-fae2-4856-965a-1831e63880c6" name="accesstoken_Flow" />
-        <moodle:post-core-user-delete-users doc:name="User - Delete Users" doc:id="4ec849ad-e50c-4a85-b206-baa3330761ff" config-ref="Moodle_Config" correlationIdHeader="#[correlationId]">
-            <moodle:post-core-user-delete-users-body><![CDATA[#[%dw 2.0
-output application/x-www-form-urlencoded
----
-{
-    wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,
-   (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
-    (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
-    "userids[0]": payload.'userids[0]'
-}]]]></moodle:post-core-user-delete-users-body>
-        </moodle:post-core-user-delete-users>
     </flow>
     <flow name="post:\core_user_get_users:application\x-www-form-urlencoded:moodle-rest-api-config">
         <http:listener doc:name="Listener" doc:id="2c546c4b-5214-41aa-9a3e-6eefd5f6921f" path="/core_user_get_users" config-ref="HTTP_Listener_config">
@@ -424,18 +156,6 @@ output application/x-www-form-urlencoded
             </http:error-response>
         </http:listener>
         <flow-ref doc:name="Flow Reference" doc:id="6ef0dc4f-ce1d-4419-a218-b8c6485391a0" name="accesstoken_Flow" />
-        <moodle:post-core-user-get-users doc:name="User - Get Users" doc:id="6bfb67c2-709c-48c6-b9d4-f5540a47f522" config-ref="Moodle_Config" correlationIdHeader="#[correlationId]">
-            <moodle:post-core-user-get-users-body><![CDATA[#[%dw 2.0
-output application/x-www-form-urlencoded
----
-{
-    wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,
-    (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
-    (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
-    ("criteria[0][key]": payload.'criteria[0][key]') if (!isEmpty(payload.'criteria[0][key]')),
-    ("criteria[0][value]": payload.'criteria[0][value]') if (!isEmpty(payload.'criteria[0][value]'))
-}]]]></moodle:post-core-user-get-users-body>
-        </moodle:post-core-user-get-users>
     </flow>
     <flow name="post:\core_user_get_users_by_field:application\x-www-form-urlencoded:moodle-rest-api-config">
         <http:listener doc:name="Listener" doc:id="bdafa545-1c1c-4650-b09c-9162cbdd1a00" path="/core_user_get_users_by_field" config-ref="HTTP_Listener_config">
@@ -444,18 +164,6 @@ output application/x-www-form-urlencoded
             </http:error-response>
         </http:listener>
         <flow-ref doc:name="Flow Reference" doc:id="0d3e48ee-0325-4d64-b6cf-07a8925ef263" name="accesstoken_Flow" />
-        <moodle:post-core-user-get-users-by-field doc:name="User - Get Users by Id" doc:id="a4a14fc4-f089-422c-8c60-a915e8ae9142" config-ref="Moodle_Config" correlationIdHeader="#[correlationId]">
-            <moodle:post-core-user-get-users-by-field-body><![CDATA[#[%dw 2.0
-output application/x-www-form-urlencoded
----
-{
-     wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,
-    (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
-    (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
-    (field: payload.field) if (!isEmpty(payload.field)),
-    ("values[0]": payload.'values[0]') if(!isEmpty(payload.'values[0]'))
-}]]]></moodle:post-core-user-get-users-by-field-body>
-        </moodle:post-core-user-get-users-by-field>
     </flow>
     <flow name="post:\core_user_update_users:application\x-www-form-urlencoded:moodle-rest-api-config">
         <http:listener doc:name="Listener" doc:id="61ba9444-7f8c-479e-800e-33e710f4633d" path="/core_user_update_users" config-ref="HTTP_Listener_config">
@@ -464,53 +172,6 @@ output application/x-www-form-urlencoded
             </http:error-response>
         </http:listener>
         <flow-ref doc:name="Flow Reference" doc:id="7add7514-34bd-4a8f-b8f2-f61a74109495" name="accesstoken_Flow" />
-        <moodle:post-core-user-update-users doc:name="User - Update Users" doc:id="4e1b7e8b-3a51-4eba-8628-01bc8123fd9f" config-ref="Moodle_Config" correlationIdHeader="#[correlationId]">
-            <moodle:post-core-user-update-users-body><![CDATA[#[%dw 2.0
-output application/x-www-form-urlencoded
----
-{
-    wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,
-    (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
-    (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
-    "users[0][id]": payload.'users[0][id]',
-    "users[0][username]": payload.'users[0][username]',
-    "users[0][auth]": payload.'users[0][auth]',
-    "users[0][suspended]": payload.'users[0][suspended]',
-    "users[0][password]": payload.'users[0][password]',
-    "users[0][firstname]": payload.'users[0][firstname]',
-    "users[0][lastname]": payload.'users[0][lastname]',
-    "users[0][email]": payload.'users[0][email]',
-    "users[0][maildisplay]": payload.'users[0][maildisplay]',
-    "users[0][city]": payload.'users[0][city]',
-    "users[0][country]": payload.'users[0][country]',
-    "users[0][timezone]": payload.'users[0][timezone]',
-    "users[0][description]": payload.'users[0][description]',
-    "users[0][userpicture]": payload.'users[0][userpicture]',
-    "users[0][firstnamephonetic]": payload.'users[0][firstnamephonetic]',
-    "users[0][lastnamephonetic]": payload.'users[0][lastnamephonetic]',
-    "users[0][middlename]": payload.'users[0][middlename]',
-    "users[0][alternatename]": payload.'users[0][alternatename]',
-    "users[0][interests]": payload.'users[0][interests]',
-    "users[0][idnumber]": payload.'users[0][idnumber]',
-    "users[0][institution]": payload.'users[0][institution]',
-    "users[0][department]": payload.'users[0][department]',
-    "users[0][phone1]": payload.'users[0][phone1]',
-    "users[0][phone2]": payload.'users[0][phone2]',
-    "users[0][address]": payload.'users[0][address]',
-    "users[0][lang]": payload.'users[0][lang]',
-    "users[0][calendartype]": payload.'users[0][calendartype]',
-    "users[0][theme]": payload.'users[0][theme]',
-    "users[0][mailformat]": payload.'users[0][mailformat]',
- 
-    // Custom fields
-    "users[0][customfields][0][type]": payload.'users[0][customfields][0][type]',
-    "users[0][customfields][0][value]": payload.'users[0][customfields][0][value]',
- 
-    // Preferences
-    "users[0][preferences][0][type]": payload.'users[0][preferences][0][type]',
-    "users[0][preferences][0][value]": payload.'users[0][preferences][0][value]'
-}]]]></moodle:post-core-user-update-users-body>
-        </moodle:post-core-user-update-users>
     </flow>
     <flow name="post:\enrol_manual_enrol_users:application\x-www-form-urlencoded:moodle-rest-api-config">
         <http:listener doc:name="Listener" doc:id="80cb160d-cd01-49da-9496-be29115d91c5" path="/enrol_manual_enrol_users" config-ref="HTTP_Listener_config">
@@ -519,19 +180,6 @@ output application/x-www-form-urlencoded
             </http:error-response>
         </http:listener>
         <flow-ref doc:name="Flow Reference" doc:id="070c1547-2d03-4df5-8e0f-ae3be6657226" name="accesstoken_Flow" />
-        <moodle:post-enrol-manual-enrol-users doc:name="Enrollment - Enroll Users" doc:id="f4498f5a-febd-4131-a04c-67b8a0a8585e" config-ref="Moodle_Config" correlationIdHeader="#[correlationId]">
-            <moodle:post-enrol-manual-enrol-users-body><![CDATA[#[%dw 2.0
-output application/x-www-form-urlencoded
----
-{
-    wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,                            
-    (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
-    (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
-    "enrolments[0][roleid]": payload.'enrolments[0][roleid]',
-    "enrolments[0][userid]": payload.'enrolments[0][userid]',
-    "enrolments[0][courseid]": payload.'enrolments[0][courseid]'
-}]]]></moodle:post-enrol-manual-enrol-users-body>
-        </moodle:post-enrol-manual-enrol-users>
     </flow>
     <flow name="post:\enrol_manual_unenrol_users:application\x-www-form-urlencoded:moodle-rest-api-config">
         <http:listener doc:name="Listener" doc:id="388cf13f-69b3-434c-bc2f-51e97c67e863" path="/enrol_manual_unenrol_users" config-ref="HTTP_Listener_config">
@@ -540,19 +188,6 @@ output application/x-www-form-urlencoded
             </http:error-response>
         </http:listener>
         <flow-ref doc:name="Flow Reference" doc:id="71e6e40c-d7a1-43ed-a00b-1fea3d481a46" name="accesstoken_Flow" />
-		<moodle:post-enrol-manual-unenrol-users doc:name="Enrollment - Unenroll Users" doc:id="4d7760cf-3162-4301-9a07-681faac380c3" config-ref="Moodle_Config" correlationIdHeader="#[correlationId]">
-			<moodle:post-enrol-manual-unenrol-users-body ><![CDATA[#[%dw 2.0
-output application/x-www-form-urlencoded
----
-{
-     wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,                            
-    (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
-    (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
-     ("enrolments[0][roleid]": payload.'enrolments[0][roleid]') if(!isEmpty(payload.'enrolments[0][roleid]')),
-    ("enrolments[0][userid]": payload.'enrolments[0][userid]') if(!isEmpty(payload.'enrolments[0][userid]')),
-    ("enrolments[0][courseid]": payload.'enrolments[0][courseid]') if (!isEmpty(payload.'enrolments[0][courseid]'))
-}]]]></moodle:post-enrol-manual-unenrol-users-body>
-		</moodle:post-enrol-manual-unenrol-users>
     </flow>
     <flow name="post:\gradereport_overview_get_course_grades:application\x-www-form-urlencoded:moodle-rest-api-config">
         <http:listener doc:name="Listener" doc:id="8487c658-082c-48a9-8ac7-100d236999a0" path="/gradereport_overview_get_course_grades" config-ref="HTTP_Listener_config">
@@ -561,18 +196,6 @@ output application/x-www-form-urlencoded
             </http:error-response>
         </http:listener>
         <flow-ref doc:name="Flow Reference" doc:id="85a49721-a777-44a9-81ad-3ed5bad48e56" name="accesstoken_Flow" />
-        <moodle:post-gradereport-overview-get-course-grades doc:name="Grade Report - Get Course Grades" doc:id="0d086cb0-757b-4a16-83ae-e10abd75324b" config-ref="Moodle_Config" correlationIdHeader="#[correlationId]">
-            <moodle:post-gradereport-overview-get-course-grades-body><![CDATA[#[%dw 2.0
-output application/x-www-form-urlencoded
----
-{
-     wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,                            
-    (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
-    (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
- 
-    (userid: payload.userid) if (!isEmpty(payload.userid))
-}]]]></moodle:post-gradereport-overview-get-course-grades-body>
-        </moodle:post-gradereport-overview-get-course-grades>
     </flow>
     <flow name="post:\mod_assign_get_assignments:application\x-www-form-urlencoded:moodle-rest-api-config">
         <http:listener doc:name="Listener" doc:id="7c89cf55-9f03-478e-8f32-aa010b319c68" path="/mod_assign_get_assignments" config-ref="HTTP_Listener_config">
@@ -581,18 +204,6 @@ output application/x-www-form-urlencoded
             </http:error-response>
         </http:listener>
         <flow-ref doc:name="Flow Reference" doc:id="70f970e4-02c0-41fc-a0a7-21bb011a653c" name="accesstoken_Flow" />
-        <moodle:post-mod-assign-get-assignments doc:name="Assignments - Get all the course assignments" doc:id="97e679c1-f830-407b-8c84-f3e60461eedc" config-ref="Moodle_Config" correlationIdHeader="#[correlationId]">
-            <moodle:post-mod-assign-get-assignments-body><![CDATA[#[%dw 2.0
-output application/x-www-form-urlencoded
----
-{
-     wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,                            
-    (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
-    (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
-    ("courseids[0]": payload.courseids[0]) if (!isEmpty(payload.courseids[0]))
-    
-}]]]></moodle:post-mod-assign-get-assignments-body>
-        </moodle:post-mod-assign-get-assignments>
     </flow>
     <flow name="post:\mod_assign_get_grades:application\x-www-form-urlencoded:moodle-rest-api-config">
         <http:listener doc:name="Listener" doc:id="0e73fdea-5d37-4e08-886b-3ed6da4ec857" path="/mod_assign_get_grades" config-ref="HTTP_Listener_config">
@@ -601,17 +212,6 @@ output application/x-www-form-urlencoded
             </http:error-response>
         </http:listener>
         <flow-ref doc:name="Flow Reference" doc:id="d9e16b28-1f74-48cf-94bf-09b33f7a5b54" name="accesstoken_Flow" />
-        <moodle:post-mod-assign-get-grades doc:name="Assignments - Get assignment grades" doc:id="ae19cf52-2a33-41f9-a04b-a28fe6708b0b" config-ref="Moodle_Config" correlationIdHeader="#[correlationId]">
-            <moodle:post-mod-assign-get-grades-body><![CDATA[#[%dw 2.0
-output application/x-www-form-urlencoded
----
-{
-     wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,                            
-    (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
-    (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
-    'assignmentids[0]': payload.'assignmentids[0]'
-}]]]></moodle:post-mod-assign-get-grades-body>
-        </moodle:post-mod-assign-get-grades>
     </flow>
     <flow name="post:\mod_assign_get_submission_status:application\x-www-form-urlencoded:moodle-rest-api-config">
         <http:listener doc:name="Listener" doc:id="132f8c0f-8b8d-45b9-b5a4-943f1c4cf38a" path="/mod_assign_get_submission_status" config-ref="HTTP_Listener_config">
@@ -620,18 +220,6 @@ output application/x-www-form-urlencoded
             </http:error-response>
         </http:listener>
         <flow-ref doc:name="Flow Reference" doc:id="cc017757-8d50-4afe-a95d-dbf597df33df" name="accesstoken_Flow" />
-        <moodle:post-mod-assign-get-submission-status doc:name="Assignments - Get assignment submissions" doc:id="72bd3049-46a5-4a20-a813-7a570126b2a3" config-ref="Moodle_Config" correlationIdHeader="#[correlationId]">
-            <moodle:post-mod-assign-get-submission-status-body><![CDATA[#[%dw 2.0
-output application/x-www-form-urlencoded
----
-{
-     wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,                            
-    (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
-    (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
-    assignid: payload.assignid,
-    userid: payload.userid
-}]]]></moodle:post-mod-assign-get-submission-status-body>
-        </moodle:post-mod-assign-get-submission-status>
     </flow>
     <flow name="post:\core_calendar_create_calendar_events:application\x-www-form-urlencoded:moodle-rest-api-config">
         <http:listener doc:name="Listener" doc:id="25264860-e959-4665-b5ff-c3add2616b96" path="/core_calendar_create_calendar_events" config-ref="HTTP_Listener_config">
@@ -640,27 +228,6 @@ output application/x-www-form-urlencoded
 			</http:error-response>
 		</http:listener>
 		<flow-ref doc:name="Flow Reference" doc:id="45427ad6-9103-4f19-8c8a-cc4834d61864" name="accesstoken_Flow"/>
-		<moodle:post-core-calendar-create-calendar-events doc:name="Calendar - Create Calendar Events" doc:id="68426f07-e729-4aab-91f2-7945142c89fe" config-ref="Moodle_Config" correlationIdHeader="#[correlationId]">
-			<moodle:post-core-calendar-create-calendar-events-body ><![CDATA[#[%dw 2.0
-output application/x-www-form-urlencoded
----
-{
-     wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,                            
-    (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
-    (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
-    "events[0][name]": payload."events[0][name]",
-    "events[0][description]": payload."events[0][description]",
-    "events[0][format]": payload."events[0][format]",
-    "events[0][courseid]": payload."events[0][courseid]",
-    "events[0][groupid]": payload."events[0][groupid]",
-    "events[0][repeats]": payload."events[0][repeats]",
-    "events[0][eventtype]": payload."events[0][eventtype]",
-    "events[0][timestart]": payload."events[0][timestart]",
-    "events[0][timeduration]": payload."events[0][timeduration]",
-    "events[0][visible]": payload."events[0][visible]",
-    "events[0][sequence]": payload."events[0][sequence]"
-}]]]></moodle:post-core-calendar-create-calendar-events-body>
-		</moodle:post-core-calendar-create-calendar-events>
     </flow>
     <flow name="post:\core_calendar_delete_calendar_events:application\x-www-form-urlencoded:moodle-rest-api-config">
         <http:listener doc:name="Listener" doc:id="110fc0ff-b846-4010-87ed-4b0ca5876c69" path="/core_calendar_delete_calendar_events" config-ref="HTTP_Listener_config">
@@ -669,18 +236,6 @@ output application/x-www-form-urlencoded
 			</http:error-response>
 		</http:listener>
 		<flow-ref doc:name="Flow Reference" doc:id="0ffc8be2-eff2-4568-a654-9e1a947988c6" name="accesstoken_Flow"/>
-		<moodle:post-core-calendar-delete-calendar-events doc:name="Calendar - Delete Calendar Events" doc:id="608a8594-0fd5-424f-b68a-ac640d935395" config-ref="Moodle_Config" correlationIdHeader="#[correlationId]">
-			<moodle:post-core-calendar-delete-calendar-events-body ><![CDATA[#[%dw 2.0
-output application/x-www-form-urlencoded
----
-{
-     wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,                            
-    (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
-    (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
-    "events[0][eventid]": payload."events[0][eventid]",
-    "events[0][repeat]": payload."events[0][repeat]"
-}]]]></moodle:post-core-calendar-delete-calendar-events-body>
-		</moodle:post-core-calendar-delete-calendar-events>
     </flow>
     <flow name="post:\core_calendar_get_action_events_by_timesort:application\x-www-form-urlencoded:moodle-rest-api-config">
         <http:listener doc:name="Listener" doc:id="c2f90f00-a1da-4a54-b48e-599ead120db8" path="/core_calendar_get_action_events_by_timesort" config-ref="HTTP_Listener_config">
@@ -689,17 +244,6 @@ output application/x-www-form-urlencoded
 			</http:error-response>
 		</http:listener>
 		<flow-ref doc:name="Flow Reference" doc:id="f699576a-8f49-4fde-b431-0131a36820f5" name="accesstoken_Flow"/>
-		<moodle:post-core-calendar-get-action-events-by-timesort doc:name="Calendar - Get Calendar events for students" doc:id="4e229693-8f7d-42a0-9f9a-e58a10175030" config-ref="Moodle_Config" correlationIdHeader="#[correlationId]">
-			<moodle:post-core-calendar-get-action-events-by-timesort-body ><![CDATA[#[%dw 2.0
-output application/x-www-form-urlencoded
----
-{
-     wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,                            
-    (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
-    (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
-    (timesortfrom: payload.timesortfrom) if (!isEmpty(payload.timesortfrom))
-}]]]></moodle:post-core-calendar-get-action-events-by-timesort-body>
-		</moodle:post-core-calendar-get-action-events-by-timesort>
     </flow>
     <flow name="post:\core_calendar_get_calendar_event_by_id:application\x-www-form-urlencoded:moodle-rest-api-config">
         <http:listener doc:name="Listener" doc:id="a909ea99-160a-4de5-9d60-f2dafa2f2689" path="/core_calendar_get_calendar_event_by_id" config-ref="HTTP_Listener_config">
@@ -708,17 +252,6 @@ output application/x-www-form-urlencoded
 			</http:error-response>
 		</http:listener>
 		<flow-ref doc:name="Flow Reference" doc:id="d49d7db6-cabe-4ad5-b9c2-5c28f7319e83" name="accesstoken_Flow"/>
-		<moodle:post-core-calendar-get-calendar-event-by-id doc:name="Calendar - Get Calendar Event by Id" doc:id="672af9b0-5c13-46a2-a6b2-6e75042be6a1" config-ref="Moodle_Config" correlationIdHeader="#[correlationId]">
-			<moodle:post-core-calendar-get-calendar-event-by-id-body ><![CDATA[#[%dw 2.0
-output application/x-www-form-urlencoded
----
-{
-     wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,                            
-    (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
-    (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
-    eventid: payload.eventid
-}]]]></moodle:post-core-calendar-get-calendar-event-by-id-body>
-		</moodle:post-core-calendar-get-calendar-event-by-id>
     </flow>
     <flow name="post:\core_calendar_get_calendar_events:application\x-www-form-urlencoded:moodle-rest-api-config">
         <http:listener doc:name="Listener" doc:id="5e7820a0-b945-4dba-af47-a76c20f70e6c" path="/core_calendar_get_calendar_events" config-ref="HTTP_Listener_config">
@@ -727,20 +260,6 @@ output application/x-www-form-urlencoded
 			</http:error-response>
 		</http:listener>
 		<flow-ref doc:name="Flow Reference" doc:id="55c33c4d-1206-435e-8087-207a521aee9a" name="accesstoken_Flow"/>
-		<moodle:post-core-calendar-get-calendar-events doc:name="Calendar - Get Calendar Events" doc:id="e162078f-a4da-42f8-86c4-0ead549cbabe" config-ref="Moodle_Config" correlationIdHeader="#[correlationId]">
-			<moodle:post-core-calendar-get-calendar-events-body ><![CDATA[#[%dw 2.0
-output application/x-www-form-urlencoded
----
-{
-     wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,                            
-    (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
-    (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
-    ("events[0][eventids]": payload.'events[0][eventids]') if(!isEmpty(payload.'events[0][eventids]')),
-    ("events[0][courseids]": payload.'events[0][courseids]') if(!isEmpty(payload.'events[0][courseids]')),
-    ("events[0][groupids]": payload.'events[0][groupids]') if(!isEmpty(payload.'events[0][groupids]')),
-    ("events[0][categoryids]": payload.'events[0][categoryids]') if(!isEmpty(payload.'events[0][categoryids]'))
-}]]]></moodle:post-core-calendar-get-calendar-events-body>
-		</moodle:post-core-calendar-get-calendar-events>
 		<logger level="INFO" doc:name="Logger" doc:id="252df018-eca5-40db-9b84-1d67499f0461" />
     </flow>
     <flow name="post:\core_cohort_add_cohort_members:application\x-www-form-urlencoded:moodle-rest-api-config">
@@ -750,20 +269,6 @@ output application/x-www-form-urlencoded
 			</http:error-response>
 		</http:listener>
 		<flow-ref doc:name="Flow Reference" doc:id="98baa5db-fbff-4e22-8d06-ebc83e423b71" name="accesstoken_Flow"/>
-		<moodle:post-core-cohort-add-cohort-members doc:name="Cohort - Add Cohort Members" doc:id="9470074f-35b4-449e-a886-a1f08b9d781a" config-ref="Moodle_Config" correlationIdHeader="#[correlationId]">
-			<moodle:post-core-cohort-add-cohort-members-body ><![CDATA[#[%dw 2.0
-output application/x-www-form-urlencoded
----
-{
-     wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,                            
-    (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
-    (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
-    ("members[0][cohorttype][type]": payload.'members[0][cohorttype][type]') if(!isEmpty(payload.'members[0][cohorttype][type]')),
-    ("members[0][cohorttype][value]": payload.'members[0][cohorttype][value]') if(!isEmpty(payload.'members[0][cohorttype][value]')),
-    ("members[0][usertype][type]": payload.'members[0][usertype][type]') if(!isEmpty(payload.'members[0][usertype][type]')),
-    ("members[0][usertype][value]": payload.'members[0][usertype][value]')if(!isEmpty(payload.'members[0][usertype][value]'))
-}]]]></moodle:post-core-cohort-add-cohort-members-body>
-		</moodle:post-core-cohort-add-cohort-members>
     </flow>
     <flow name="post:\core_cohort_create_cohorts:application\x-www-form-urlencoded:moodle-rest-api-config">
         <http:listener doc:name="Listener" doc:id="2045d773-b6ec-4a82-96f6-ffd5fd06cf8e" path="/core_cohort_create_cohorts" config-ref="HTTP_Listener_config">
@@ -772,24 +277,6 @@ output application/x-www-form-urlencoded
 			</http:error-response>
 		</http:listener>
 		<flow-ref doc:name="Flow Reference" doc:id="f3d08859-7d2f-4d6c-a723-a653befefd69" name="accesstoken_Flow"/>
-		<moodle:post-core-cohort-create-cohorts doc:name="Cohort - Create Cohorts" doc:id="ba9fd530-1439-4d03-a53f-fc9eded2ec57" config-ref="Moodle_Config" correlationIdHeader="#[correlationId]">
-			<moodle:post-core-cohort-create-cohorts-body ><![CDATA[#[%dw 2.0
-output application/x-www-form-urlencoded
----
-{
-     wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,                            
-    (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
-    (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
-    "cohorts[0][categorytype][type]": payload.'cohorts[0][categorytype][type]',
-    "cohorts[0][categorytype][value]": payload.'cohorts[0][categorytype][value]',
-    "cohorts[0][name]": payload.'cohorts[0][name]',
-    "cohorts[0][idnumber]": payload.'cohorts[0][idnumber]',
-    "cohorts[0][description]": payload.'cohorts[0][description]',
-    "cohorts[0][descriptionformat]": payload.'cohorts[0][descriptionformat]',
-    "cohorts[0][visible]": payload.'cohorts[0][visible]',
-    "cohorts[0][theme]": payload.'cohorts[0][theme]'
-}]]]></moodle:post-core-cohort-create-cohorts-body>
-		</moodle:post-core-cohort-create-cohorts>
     </flow>
     <flow name="post:\core_cohort_delete_cohort_members:application\x-www-form-urlencoded:moodle-rest-api-config">
         <http:listener doc:name="Listener" doc:id="8f8fcb41-50e8-447c-9587-dc5736a3611f" path="/core_cohort_delete_cohort_members" config-ref="HTTP_Listener_config">
@@ -798,18 +285,6 @@ output application/x-www-form-urlencoded
 			</http:error-response>
 		</http:listener>
 		<flow-ref doc:name="Flow Reference" doc:id="da39b292-95c0-493a-b915-fd7f5f78c6e9" name="accesstoken_Flow"/>
-		<moodle:post-core-cohort-delete-cohort-members doc:name="Cohort - Delete Cohort Member" doc:id="8a17ae22-8559-417c-86fb-7c95a71d51d6" config-ref="Moodle_Config" correlationIdHeader="#[correlationId]">
-			<moodle:post-core-cohort-delete-cohort-members-body ><![CDATA[#[%dw 2.0
-output application/x-www-form-urlencoded
----
-{
-     wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,                            
-    (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
-    (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
-    "members[0][cohortid]": payload.'members[0][cohortid]',
-    "members[0][userid]": payload.'members[0][userid]'
-}]]]></moodle:post-core-cohort-delete-cohort-members-body>
-		</moodle:post-core-cohort-delete-cohort-members>
     </flow>
     <flow name="post:\core_cohort_delete_cohorts:application\x-www-form-urlencoded:moodle-rest-api-config">
         <http:listener doc:name="Listener" doc:id="0bb43ad6-ac86-447c-a41d-47002cd4d171" path="/core_cohort_delete_cohorts" config-ref="HTTP_Listener_config">
@@ -818,17 +293,6 @@ output application/x-www-form-urlencoded
 			</http:error-response>
 		</http:listener>
 		<flow-ref doc:name="Flow Reference" doc:id="ea3d41ed-ef72-4f64-adfc-7662773455f8" name="accesstoken_Flow"/>
-		<moodle:post-core-cohort-delete-cohorts doc:name="Cohort - Delete Cohort" doc:id="9b605848-bd37-496c-bf38-c694e5e091ce" config-ref="Moodle_Config" correlationIdHeader="#[correlationId]">
-			<moodle:post-core-cohort-delete-cohorts-body ><![CDATA[#[%dw 2.0
-output application/x-www-form-urlencoded
----
-{
-     wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,                            
-    (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
-    (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
-    "cohortids[0]": payload.'cohortids[0]'
-}]]]></moodle:post-core-cohort-delete-cohorts-body>
-		</moodle:post-core-cohort-delete-cohorts>
     </flow>
     <flow name="post:\core_cohort_get_cohort_members:application\x-www-form-urlencoded:moodle-rest-api-config">
         <http:listener doc:name="Listener" doc:id="af6f3449-3830-42fc-b048-cca09333d620" path="/core_cohort_get_cohort_members" config-ref="HTTP_Listener_config">
@@ -837,17 +301,6 @@ output application/x-www-form-urlencoded
 			</http:error-response>
 		</http:listener>
 		<flow-ref doc:name="Flow Reference" doc:id="f35119dc-d5de-4cb8-aeb6-8965d9bab599" name="accesstoken_Flow"/>
-		<moodle:post-core-cohort-get-cohort-members doc:name="Cohort - Get Cohort Members" doc:id="17eb22ce-723d-4b6c-b3fc-a83232290e2b" config-ref="Moodle_Config" correlationIdHeader="#[correlationId]">
-			<moodle:post-core-cohort-get-cohort-members-body ><![CDATA[#[%dw 2.0
-output application/x-www-form-urlencoded
----
-{
-     wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,                            
-    (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
-    (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
-    "cohortids[0]": payload.'cohortids[0]'                
-}]]]></moodle:post-core-cohort-get-cohort-members-body>
-		</moodle:post-core-cohort-get-cohort-members>
     </flow>
     <flow name="post:\core_cohort_get_cohorts:application\x-www-form-urlencoded:moodle-rest-api-config">
         <http:listener doc:name="Listener" doc:id="71c04de5-b61e-4fc7-b4ff-3e0efc71b987" path="/core_cohort_get_cohorts" config-ref="HTTP_Listener_config">
@@ -856,16 +309,6 @@ output application/x-www-form-urlencoded
 			</http:error-response>
 		</http:listener>
 		<flow-ref doc:name="Flow Reference" doc:id="fbfe3c4d-ced9-4ed0-b2c0-2046c6adefbd" name="accesstoken_Flow"/>
-		<moodle:post-core-cohort-get-cohorts doc:name="Cohort - Get Cohorts" doc:id="87873fd3-4e4b-426a-828d-ec5504fdb9ff" config-ref="Moodle_Config" correlationIdHeader="#[correlationId]">
-			<moodle:post-core-cohort-get-cohorts-body ><![CDATA[#[%dw 2.0
-output application/x-www-form-urlencoded
----
-{
-     wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,                            
-    (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
-    (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
-}]]]></moodle:post-core-cohort-get-cohorts-body>
-		</moodle:post-core-cohort-get-cohorts>
     </flow>
     <flow name="post:\core_cohort_update_cohorts:application\x-www-form-urlencoded:moodle-rest-api-config">
         <http:listener doc:name="Listener" doc:id="59718af9-9adc-4aa5-a423-c3b49b2ae1fb" path="/core_cohort_update_cohorts" config-ref="HTTP_Listener_config">
@@ -874,27 +317,6 @@ output application/x-www-form-urlencoded
 			</http:error-response>
 		</http:listener>
 		<flow-ref doc:name="Flow Reference" doc:id="ebc348a6-5011-4003-bb37-250f3352d6a5" name="accesstoken_Flow"/>
-		<moodle:post-core-cohort-update-cohorts doc:name="Cohort - Update Cohorts" doc:id="79f0e4ff-bb87-4b83-8595-8290674287a0" config-ref="Moodle_Config" correlationIdHeader="#[correlationId]">
-			<moodle:post-core-cohort-update-cohorts-body ><![CDATA[#[%dw 2.0
-output application/x-www-form-urlencoded
----
-{
-     wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,                            
-    (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
-    (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
-    "cohorts[0][id]": payload.'cohorts[0][id]',
-    "cohorts[0][categorytype][type]": payload.'cohorts[0][categorytype][type]',
-    "cohorts[0][categorytype][value]": payload.'cohorts[0][categorytype][value]',
-    "cohorts[0][name]": payload.'cohorts[0][name]',
-    "cohorts[0][idnumber]": payload.'cohorts[0][idnumber]',
-    "cohorts[0][description]": payload.'cohorts[0][description]',
-    "cohorts[0][descriptionformat]": payload.'cohorts[0][descriptionformat]',
-    "cohorts[0][visible]": payload.'cohorts[0][visible]',
-    "cohorts[0][theme]": payload.'cohorts[0][theme]',
-    "cohorts[0][customfields][0][shortname]": payload.'cohorts[0][customfields][0][shortname]',
-    "cohorts[0][customfields][0][value]": payload.'cohorts[0][customfields][0][value]'
-}]]]></moodle:post-core-cohort-update-cohorts-body>
-		</moodle:post-core-cohort-update-cohorts>
     </flow>
     <flow name="post:\core_group_add_group_members:application\x-www-form-urlencoded:moodle-rest-api-config">
         <http:listener doc:name="Listener" doc:id="254ec6c9-e008-495a-a291-904df51b221c" path="/core_group_add_group_members" config-ref="HTTP_Listener_config">
@@ -903,19 +325,6 @@ output application/x-www-form-urlencoded
 			</http:error-response>
 		</http:listener>
 		<flow-ref doc:name="Flow Reference" doc:id="5b524e72-261c-40a6-88fc-00865bcf70ac" name="accesstoken_Flow"/>
-		<moodle:post-core-group-add-group-members doc:name="Groups - Add Group Members" doc:id="c33701e6-a148-49b6-ab2f-1a843947e82e" config-ref="Moodle_Config" correlationIdHeader="#[correlationId]">
-			<moodle:post-core-group-add-group-members-body ><![CDATA[#[%dw 2.0
-output application/x-www-form-urlencoded
----
-{
-     wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,                            
-    (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
-    (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
-
-    ("members[0][groupid]": payload.'members[0][groupid]') if(!isEmpty(payload.'members[0][groupid]')),
-    ("members[0][userid]": payload.'members[0][userid]') if(!isEmpty(payload.'members[0][userid]'))
-}]]]></moodle:post-core-group-add-group-members-body>
-		</moodle:post-core-group-add-group-members>
     </flow>
     <flow name="post:\core_group_assign_grouping:application\x-www-form-urlencoded:moodle-rest-api-config">
         <http:listener doc:name="Listener" doc:id="ae43d627-a530-46d7-bc17-f4193cab3a38" path="/core_group_assign_grouping" config-ref="HTTP_Listener_config">
@@ -924,19 +333,6 @@ output application/x-www-form-urlencoded
 			</http:error-response>
 		</http:listener>
 		<flow-ref doc:name="Flow Reference" doc:id="51f0ee4b-fd22-4325-984f-1ede7acf28f2" name="accesstoken_Flow"/>
-		<moodle:post-core-group-assign-grouping doc:name="Groups - Assign Groupings" doc:id="8ee8f977-d467-45b9-9fb3-20a1c4b816e0" config-ref="Moodle_Config" correlationIdHeader="#[correlationId]">
-			<moodle:post-core-group-assign-grouping-body ><![CDATA[#[%dw 2.0
-output application/x-www-form-urlencoded
----
-{
-     wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,                            
-    (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
-    (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
-
-    "assignments[0][groupingid]": payload.'assignments[0][groupingid]',
-    "assignments[0][groupid]": payload.'assignments[0][groupid]'
-}]]]></moodle:post-core-group-assign-grouping-body>
-		</moodle:post-core-group-assign-grouping>
     </flow>
     <flow name="post:\core_group_create_groupings:application\x-www-form-urlencoded:moodle-rest-api-config">
         <http:listener doc:name="Listener" doc:id="a5951c26-b1a1-4da8-aa9c-7ecd334df70a" path="/core_group_create_groupings" config-ref="HTTP_Listener_config">
@@ -945,21 +341,6 @@ output application/x-www-form-urlencoded
 			</http:error-response>
 		</http:listener>
 		<flow-ref doc:name="Flow Reference" doc:id="4f1c8aaf-9520-40c0-a72e-30a5c32e8624" name="accesstoken_Flow"/>
-		<moodle:post-core-group-create-groupings doc:name="Groups - Create Groupings" doc:id="7f20fbea-896b-4bfc-8a8e-3402264ace76" config-ref="Moodle_Config" correlationIdHeader="#[correlationId]">
-			<moodle:post-core-group-create-groupings-body ><![CDATA[#[%dw 2.0
-output application/x-www-form-urlencoded
----
-{
-     wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,                            
-    (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
-    (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
-    "groupings[0][courseid]": payload.'groupings[0][courseid]',
-    "groupings[0][name]": payload.'groupings[0][name]',
-   ("groupings[0][description]": payload.'groupings[0][description]')  if (!isEmpty(payload.'groupings[0][description]')),
-    "groupings[0][descriptionformat]": payload.'groupings[0][descriptionformat]',
-    "groupings[0][idnumber]": payload.'groupings[0][idnumber]'
-}]]]></moodle:post-core-group-create-groupings-body>
-		</moodle:post-core-group-create-groupings>
     </flow>
     <flow name="post:\core_group_create_groups:application\x-www-form-urlencoded:moodle-rest-api-config">
         <http:listener doc:name="Listener" doc:id="8fcc2f84-3d8e-4eb9-9916-2855f9dea556" path="/core_group_create_groups" config-ref="HTTP_Listener_config">
@@ -968,25 +349,6 @@ output application/x-www-form-urlencoded
 			</http:error-response>
 		</http:listener>
 		<flow-ref doc:name="Flow Reference" doc:id="8f237d4a-bd9e-45e0-9cbd-609d94de029b" name="accesstoken_Flow"/>
-		<moodle:post-core-group-create-groups doc:name="Groups - Create Group" doc:id="ca472a6b-fb79-4306-afaf-283bc475fbf9" config-ref="Moodle_Config" correlationIdHeader="#[correlationId]">
-			<moodle:post-core-group-create-groups-body ><![CDATA[#[%dw 2.0
-output application/x-www-form-urlencoded
----
-{
-     wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,                            
-    (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
-    (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
-    ('groups[0][courseid]': payload.'groups[0][courseid]')if(!isEmpty(payload.'groups[0][courseid]')),
-    ('groups[0][name]': payload.'groups[0][name]')if(!isEmpty(payload.'groups[0][name]')),
-    ('groups[0][description]': payload.'groups[0][description]')if(!isEmpty(payload.'groups[0][description]')),
-    ('groups[0][descriptionformat]': payload.'groups[0][descriptionformat]')if(!isEmpty(payload.'groups[0][descriptionformat]')),
-    ('groups[0][idnumber]': payload.'groups[0][idnumber]') if(!isEmpty(payload.'groups[0][idnumber]')),
-	('groups[0][visibility]': payload.'groups[0][visibility]') if(!isEmpty(payload.'groups[0][visibility]')),
-	('groups[0][participation]': payload.'groups[0][participation]') if(!isEmpty(payload.'groups[0][participation]')),
-	('groups[0][customfields][0][shortname]': payload.'groups[0][customfields][0][shortname]') if(!isEmpty(payload.'groups[0][customfields][0][shortname]')),
-	('groups[0][customfields][0][value]': payload.'groups[0][customfields][0][value]') if(!isEmpty(payload.'groups[0][customfields][0][value]'))
-}]]]></moodle:post-core-group-create-groups-body>
-		</moodle:post-core-group-create-groups>
     </flow>
     <flow name="post:\core_group_delete_group_members:application\x-www-form-urlencoded:moodle-rest-api-config">
         <http:listener doc:name="Listener" doc:id="e11f2f12-4091-4a6d-abcd-fee76c991ade" path="/core_group_delete_group_members" config-ref="HTTP_Listener_config">
@@ -995,19 +357,6 @@ output application/x-www-form-urlencoded
 			</http:error-response>
 		</http:listener>
 		<flow-ref doc:name="Flow Reference" doc:id="f5e42477-197a-4d34-a748-24eb21e38487" name="accesstoken_Flow"/>
-		<moodle:post-core-group-delete-group-members doc:name="Groups - Delete Group Members" doc:id="d06ced1a-268c-474d-ac99-fe9f52b50303" config-ref="Moodle_Config" correlationIdHeader="#[correlationId]">
-			<moodle:post-core-group-delete-group-members-body ><![CDATA[#[%dw 2.0
-output application/x-www-form-urlencoded
----
-{
-   wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,                            
-    (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
-    (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
-
-    ("members[0][userid]": payload.'members[0][userid]') if (!isEmpty(payload.'members[0][userid]')),
-    ("members[0][groupid]": payload.'members[0][groupid]') if (!isEmpty(payload.'members[0][groupid]'))
-}]]]></moodle:post-core-group-delete-group-members-body>
-		</moodle:post-core-group-delete-group-members>
     </flow>
     <flow name="post:\core_group_delete_groupings:application\x-www-form-urlencoded:moodle-rest-api-config">
         <http:listener doc:name="Listener" doc:id="28f9a02b-cd9a-4cb1-a29d-b048b90e092b" path="/core_group_delete_groupings" config-ref="HTTP_Listener_config">
@@ -1016,17 +365,6 @@ output application/x-www-form-urlencoded
 			</http:error-response>
 		</http:listener>
 		<flow-ref doc:name="Flow Reference" doc:id="dbe63b09-9e5f-4d73-b0bf-bc8977a952b9" name="accesstoken_Flow"/>
-		<moodle:post-core-group-delete-groupings doc:name="Groups - Delete Groupings" doc:id="6191eb16-4923-40e4-af01-02d4ca4483e7" config-ref="Moodle_Config" correlationIdHeader="#[correlationId]">
-			<moodle:post-core-group-delete-groupings-body ><![CDATA[#[%dw 2.0
-output application/x-www-form-urlencoded
----
-{
-    wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,                            
-    (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
-    (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
-    "groupingids[0]": payload.'groupingids[0]'
-}]]]></moodle:post-core-group-delete-groupings-body>
-		</moodle:post-core-group-delete-groupings>
     </flow>
     <flow name="post:\core_group_delete_groups:application\x-www-form-urlencoded:moodle-rest-api-config">
         <http:listener doc:name="Listener" doc:id="8defb0eb-2c97-46ab-afb5-2be632b5fb58" path="/core_group_delete_groups" config-ref="HTTP_Listener_config">
@@ -1035,18 +373,6 @@ output application/x-www-form-urlencoded
 			</http:error-response>
 		</http:listener>
 		<flow-ref doc:name="Flow Reference" doc:id="267bd146-5ab2-478e-ba6e-28df71b08763" name="accesstoken_Flow"/>
-		<moodle:post-core-group-delete-groups doc:name="Groups - Delete Group" doc:id="1b481353-64a2-4335-85bf-a7be0bd9ce90" config-ref="Moodle_Config" correlationIdHeader="#[correlationId]">
-			<moodle:post-core-group-delete-groups-body ><![CDATA[#[%dw 2.0
-output application/x-www-form-urlencoded
----
-{
-   wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,                            
-    (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
-    (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
-    "groupids[0]": payload.'groupids[0]',      
-    "groupids[1]": payload.'groupids[1]'       
-}]]]></moodle:post-core-group-delete-groups-body>
-		</moodle:post-core-group-delete-groups>
     </flow>
     <flow name="post:\core_group_get_course_groupings:application\x-www-form-urlencoded:moodle-rest-api-config">
         <http:listener doc:name="Listener" doc:id="55cc1e1a-c62e-4ad5-b4d0-547313d09b12" path="/core_group_get_course_groupings" config-ref="HTTP_Listener_config">
@@ -1055,17 +381,6 @@ output application/x-www-form-urlencoded
 			</http:error-response>
 		</http:listener>
 		<flow-ref doc:name="Flow Reference" doc:id="1d3cffc7-4bb3-4efc-973f-bdbf18d642e9" name="accesstoken_Flow"/>
-		<moodle:post-core-group-get-course-groupings doc:name="Groups - Get Groupings" doc:id="5e632fbb-7393-45fb-a6e2-f07d9a3b2388" config-ref="Moodle_Config" correlationIdHeader="#[correlationId]">
-			<moodle:post-core-group-get-course-groupings-body ><![CDATA[#[%dw 2.0
-output application/x-www-form-urlencoded
----
-{
-    wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,           
-    (wsfunction: payload.wsfunction)if (!isEmpty(payload.wsfunction)),
-    (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
-    (courseid: payload.courseid) if(!isEmpty(payload.courseid))        
-}]]]></moodle:post-core-group-get-course-groupings-body>
-		</moodle:post-core-group-get-course-groupings>
     </flow>
     <flow name="post:\core_group_get_course_groups:application\x-www-form-urlencoded:moodle-rest-api-config">
         <http:listener doc:name="Listener" doc:id="47e33581-59a0-4937-8c62-ebc4dac7e7ea" path="/core_group_get_course_groups" config-ref="HTTP_Listener_config">
@@ -1074,17 +389,6 @@ output application/x-www-form-urlencoded
 			</http:error-response>
 		</http:listener>
 		<flow-ref doc:name="Flow Reference" doc:id="0a915617-80c5-423c-9c1a-abd1eff50159" name="accesstoken_Flow"/>
-		<moodle:post-core-group-get-course-groups doc:name="Groups - Get Course Groups" doc:id="8d00926e-8c0c-426a-af77-36fd44735ace" config-ref="Moodle_Config" correlationIdHeader="#[correlationId]">
-			<moodle:post-core-group-get-course-groups-body ><![CDATA[#[%dw 2.0
-output application/x-www-form-urlencoded
----
-{
-    wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,           
-    (wsfunction: payload.wsfunction)if (!isEmpty(payload.wsfunction)),
-    (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
-    (courseid: payload.courseid)if(!isEmpty(payload.courseid))         
-}]]]></moodle:post-core-group-get-course-groups-body>
-		</moodle:post-core-group-get-course-groups>
     </flow>
     <flow name="post:\core_group_get_group_members:application\x-www-form-urlencoded:moodle-rest-api-config">
         <http:listener doc:name="Listener" doc:id="9d2dbcd0-e145-4f6b-94b4-1e969f0de3ad" path="/core_group_get_group_members" config-ref="HTTP_Listener_config">
@@ -1093,18 +397,6 @@ output application/x-www-form-urlencoded
 			</http:error-response>
 		</http:listener>
 		<flow-ref doc:name="Flow Reference" doc:id="d217584c-7a6f-45af-a78c-ba32c3dfb987" name="accesstoken_Flow"/>
-		<moodle:post-core-group-get-group-members doc:name="Groups - Get Group Members" doc:id="0e7b3c29-4f3c-42a9-a868-efd42e0d81ee" config-ref="Moodle_Config" correlationIdHeader="#[correlationId]">
-			<moodle:post-core-group-get-group-members-body ><![CDATA[#[%dw 2.0
-output application/x-www-form-urlencoded
----
-{
-     wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,                            
-    (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
-    (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
-
-    ("groupids[0]": payload.'groupids[0]') if(!isEmpty(payload.'groupids[0]'))
-}]]]></moodle:post-core-group-get-group-members-body>
-		</moodle:post-core-group-get-group-members>
     </flow>
     <flow name="post:\core_group_get_groups:application\x-www-form-urlencoded:moodle-rest-api-config">
         <http:listener doc:name="Listener" doc:id="4d4dc67d-9499-4ee2-bbb7-a81b56ff122e" path="/core_group_get_groups" config-ref="HTTP_Listener_config">
@@ -1113,17 +405,6 @@ output application/x-www-form-urlencoded
 			</http:error-response>
 		</http:listener>
 		<flow-ref doc:name="Flow Reference" doc:id="7c2b7b2a-6c72-46f9-9409-ccd27028fe96" name="accesstoken_Flow"/>
-		<moodle:post-core-group-get-groups doc:name="Groups - Get Group" doc:id="9f5341da-d5af-4ded-baa8-eb09a2507604" config-ref="Moodle_Config" correlationIdHeader="#[correlationId]">
-			<moodle:post-core-group-get-groups-body ><![CDATA[#[%dw 2.0
-output application/x-www-form-urlencoded
----
-{
-     wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,                            
-    (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
-    (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
-    ('groupids[0]': payload.'groupids[0]') if (!isEmpty(payload.'groupids[0]'))
-}]]]></moodle:post-core-group-get-groups-body>
-		</moodle:post-core-group-get-groups>
     </flow>
     <flow name="post:\core_group_unassign_grouping:application\x-www-form-urlencoded:moodle-rest-api-config">
         <http:listener doc:name="Listener" doc:id="c5189c9b-c5eb-4d56-88d1-7921c5026b1a" path="/core_group_unassign_grouping" config-ref="HTTP_Listener_config">
@@ -1132,43 +413,14 @@ output application/x-www-form-urlencoded
 			</http:error-response>
 		</http:listener>
 		<flow-ref doc:name="Flow Reference" doc:id="a2a138c4-b59f-4ddd-b297-c28194fc31d9" name="accesstoken_Flow"/>
-		<moodle:post-core-group-unassign-grouping doc:name="Groups - Unassign Groupings" doc:id="7cc61991-c168-475d-a9cc-e446ef0c9eec" config-ref="Moodle_Config" correlationIdHeader="#[correlationId]">
-			<moodle:post-core-group-unassign-grouping-body ><![CDATA[#[%dw 2.0
-output application/x-www-form-urlencoded
----
-{
-     wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,                            
-    (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
-    (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
-    ('unassignments[0][groupid]': payload.'unassignments[0][groupid]') if (!isEmpty(payload.'unassignments[0][groupid]')),     
-    ('unassignments[0][groupingid]': payload.'unassignments[0][groupingid]') if(!isEmpty(payload.'unassignments[0][groupingid]'))
-}]]]></moodle:post-core-group-unassign-grouping-body>
-		</moodle:post-core-group-unassign-grouping>
     </flow>
     <flow name="post:\core_group_update_groupings:application\x-www-form-urlencoded:moodle-rest-api-config">
-        <http:listener doc:name="Listener" doc:id="3ebf67a5-2845-43d1-8137-2ed8fcb446ab" path="/core_group_update_groupings">
+        <http:listener doc:name="Listener" doc:id="3ebf67a5-2845-43d1-8137-2ed8fcb446ab" path="/core_group_update_groupings" config-ref="HTTP_Listener_config">
 			<http:error-response statusCode="#[vars.httpStatus default 500]">
 				<http:body ><![CDATA[#[output application/json --- payload default error.description]]]></http:body>
 			</http:error-response>
 		</http:listener>
 		<flow-ref doc:name="Flow Reference" doc:id="e27f8097-af22-4975-9254-4d32f9c109b7" name="accesstoken_Flow"/>
-		<moodle:post-core-group-update-groupings doc:name="Groups - Update Groupings" doc:id="7a56ae4d-423f-4a0e-bef4-8e0bfad3216c" config-ref="Moodle_Config" correlationIdHeader="#[correlationId]">
-			<moodle:post-core-group-update-groupings-body ><![CDATA[#[%dw 2.0
-output application/x-www-form-urlencoded
----
-{
-     wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,                            
-    (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
-    (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
-    ("groupings[0][id]": payload.'groupings[0][id]') if(!isEmpty(payload.'groupings[0][id]')),
-    ("groupings[0][name]": payload.'groupings[0][name]') if(!isEmpty(payload.'groupings[0][name]')),
-    ("groupings[0][description]": payload.'groupings[0][description]') if(!isEmpty(payload.'groupings[0][description]')),
-    ("groupings[0][descriptionformat]": payload.'groupings[0][descriptionformat]') if(!isEmpty(payload.'groupings[0][descriptionformat]')),
-    ("groupings[0][idnumber]": payload.'groupings[0][idnumber]') if(!isEmpty(payload.'groupings[0][idnumber]')),
-    ("groupings[0][customfields][0][shortname]": payload.'groupings[0][customfields][0][shortname]') if(!isEmpty(payload.'groupings[0][customfields][0][shortname]')),
-    ("groupings[0][customfields][0][value]": payload.'groupings[0][customfields][0][value]') if(!isEmpty(payload.'groupings[0][customfields][0][value]'))
-}]]]></moodle:post-core-group-update-groupings-body>
-		</moodle:post-core-group-update-groupings>
     </flow>
     <flow name="post:\core_group_update_groups:application\x-www-form-urlencoded:moodle-rest-api-config">
         <http:listener doc:name="Listener" doc:id="e8fc07a1-77af-4b0f-ad3f-1e7f8f5d54f0" path="/core_group_update_groups" config-ref="HTTP_Listener_config">
@@ -1177,26 +429,6 @@ output application/x-www-form-urlencoded
 			</http:error-response>
 		</http:listener>
 		<flow-ref doc:name="Flow Reference" doc:id="f45a28a5-fea5-4412-868a-4b7bfaa890c3" name="accesstoken_Flow"/>
-		<moodle:post-core-group-update-groups doc:name="Groups - Update Group" doc:id="49ee50a0-cf7a-429c-94be-295a5f0d6f17" config-ref="Moodle_Config" correlationIdHeader="#[correlationId]">
-			<moodle:post-core-group-update-groups-body ><![CDATA[#[%dw 2.0
-output application/x-www-form-urlencoded
----
-{
-    wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,                            
-    (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
-    (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
-    ("groups[0][id]": payload.'groups[0][id]') if(!isEmpty(payload.'groups[0][id]')),
-	("groups[0][enrolmentkey]": payload.'groups[0][enrolmentkey]')if(!isEmpty(payload.'groups[0][enrolmentkey]')),
-    ('groups[0][name]': payload.'groups[0][name]')if(!isEmpty(payload.'groups[0][name]')),
-    ('groups[0][description]': payload.'groups[0][description]')if(!isEmpty(payload.'groups[0][description]')),
-    ('groups[0][descriptionformat]': payload.'groups[0][descriptionformat]')if(!isEmpty(payload.'groups[0][descriptionformat]')),
-    ('groups[0][idnumber]': payload.'groups[0][idnumber]') if(!isEmpty(payload.'groups[0][idnumber]')),
-	('groups[0][visibility]': payload.'groups[0][visibility]') if(!isEmpty(payload.'groups[0][visibility]')),
-	('groups[0][participation]': payload.'groups[0][participation]') if(!isEmpty(payload.'groups[0][participation]')),
-	('groups[0][customfields][0][shortname]': payload.'groups[0][customfields][0][shortname]') if(!isEmpty(payload.'groups[0][customfields][0][shortname]')),
-	('groups[0][customfields][0][value]': payload.'groups[0][customfields][0][value]') if(!isEmpty(payload.'groups[0][customfields][0][value]'))
-}]]]></moodle:post-core-group-update-groups-body>
-		</moodle:post-core-group-update-groups>
     </flow>
     <flow name="post:\gradereport_user_get_grade_items:application\x-www-form-urlencoded:moodle-rest-api-config">
         <http:listener doc:name="Listener" doc:id="4bf953c0-940c-4ff7-9bdb-abfdf568479c" path="/gradereport_user_get_grade_items" config-ref="HTTP_Listener_config">
@@ -1205,20 +437,6 @@ output application/x-www-form-urlencoded
 			</http:error-response>
 		</http:listener>
 		<flow-ref doc:name="Flow Reference" doc:id="6ba9edfb-de0c-4765-af96-b65313c42e6d" name="accesstoken_Flow"/>
-		<moodle:post-gradereport-user-get-grade-items doc:name="Grade Report - Get Grade Items" doc:id="32ec6b6e-44f2-4a42-a74d-6c9233f3ee90" config-ref="Moodle_Config" correlationIdHeader="#[correlationId]">
-			<moodle:post-gradereport-user-get-grade-items-body ><![CDATA[#[%dw 2.0
-output application/x-www-form-urlencoded
----
-{
-    wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,                            
-    (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
-    (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
-	
- 
-    (courseid: payload.courseid) if (!isEmpty(payload.courseid)),
-    (userid: payload.userid) if (!isEmpty(payload.userid))
-}]]]></moodle:post-gradereport-user-get-grade-items-body>
-		</moodle:post-gradereport-user-get-grade-items>
     </flow>	
 	
 	</mule>

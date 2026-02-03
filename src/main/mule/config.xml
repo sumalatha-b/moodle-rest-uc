@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:tls="http://www.mulesoft.org/schema/mule/tls"
+	xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns:moodle="http://www.mulesoft.org/schema/connectivity/moodle" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="
+http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/current/mule-tls.xsd 
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/connectivity/moodle http://www.mulesoft.org/schema/connectivity/moodle/current/mule-moodle.xsd">
+	<configuration-properties doc:name="Configuration properties" doc:id="8b839f00-e945-44f9-ac22-c87a49a05b72" file="config.yaml" />
+	<configuration doc:name="Configuration" doc:id="51971349-ff8b-4143-aee5-3e16310663ac" defaultErrorHandler-ref="Global-Error-Handler" />
+	<moodle:config name="Moodle_config2" doc:name="Moodle config" doc:id="91552805-c7fd-43ec-aa87-a72961e3fead" >
+		<moodle:no-auth-connection baseUri="https://nexturnlms1.moodlecloud.com/login/token.php/login/token" token='""' />
+	</moodle:config>
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="fb106bc8-f257-44e4-89b5-7e62664feff8" >
+		<http:listener-connection host="${https.host}" port="${https.port}" protocol="HTTPS">
+			<tls:context >
+				<tls:key-store type="jks" path="Client-Keystore.jks" keyPassword="Mule12345" password="Mule12345" />
+			</tls:context>
+		</http:listener-connection>
+	</http:listener-config>
+		<moodle:config name="Moodle_config1" doc:name="Moodle config" doc:id="64ee77d7-c5b7-4a6f-8dff-08b1aba8ef3a" >
+		<moodle:no-auth-connection baseUri="https://nexturnlms1.moodlecloud.com/webservice/rest/server.php" token='""' />
+	</moodle:config>
+</mule>

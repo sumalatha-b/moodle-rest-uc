@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<mule xmlns:moodle="http://www.mulesoft.org/schema/mule/moodle" xmlns:moodle-access-token="http://www.mulesoft.org/schema/mule/moodle-access-token"
-	xmlns="http://www.mulesoft.org/schema/mule/core"
-	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
-http://www.mulesoft.org/schema/mule/moodle-access-token http://www.mulesoft.org/schema/mule/moodle-access-token/current/mule-moodle-access-token.xsd
-http://www.mulesoft.org/schema/mule/moodle http://www.mulesoft.org/schema/mule/moodle/current/mule-moodle.xsd">
-
-	<sub-flow name="accesstoken_Flow" doc:id="f888b4a9-8d30-4706-8660-1a9087bc57f2" >
-		<logger level="INFO" doc:name="Token Flow Started  Logger" doc:id="70304aa7-1f2b-4d42-8540-f73a94b2f9e5" message="Token Flow Started "/>
-		<logger level="INFO" doc:name="Token Flow Ended Logger" doc:id="bdc9b97f-2ddb-42b0-9587-cb6f5a3154ba" message="Token Flow Ended  "/>
+<mule xmlns:moodle="http://www.mulesoft.org/schema/connectivity/moodle" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/connectivity/moodle http://www.mulesoft.org/schema/connectivity/moodle/current/mule-moodle.xsd">
+	<sub-flow name="accesstoken_Flow" doc:id="a39ebf3a-3157-4578-a0dd-8d675093853e" >
+		<logger level="INFO" doc:name="Logger" doc:id="5b8b51fa-e730-42ef-9d77-7a512898990d" message="Token Flow Started"/>
+		<moodle:token-access-token doc:name="Token - Access Token" doc:id="9e89071c-6970-40db-aa0b-b716a8b6a868" config-ref="Moodle_config1" username='#["admin"]' password='#["Nexturn@12345"]' service='#["tok"]' correlationId="#[correlationId]"/>
+		<logger level="INFO" doc:name="Logger1" doc:id="d67d3e2c-8d6a-403c-8fec-defb6e0dee5f" message="Token Flow Ended" />
 	</sub-flow>
 </mule>
