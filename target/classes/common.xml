@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:moodle="http://www.mulesoft.org/schema/mule/moodle" xmlns:moodle-access-token="http://www.mulesoft.org/schema/mule/moodle-access-token"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/moodle-access-token http://www.mulesoft.org/schema/mule/moodle-access-token/current/mule-moodle-access-token.xsd
+http://www.mulesoft.org/schema/mule/moodle http://www.mulesoft.org/schema/mule/moodle/current/mule-moodle.xsd">
+
+	<sub-flow name="accesstoken_Flow" doc:id="f888b4a9-8d30-4706-8660-1a9087bc57f2" >
+		<logger level="INFO" doc:name="Token Flow Started  Logger" doc:id="70304aa7-1f2b-4d42-8540-f73a94b2f9e5" message="Token Flow Started "/>
+		<logger level="INFO" doc:name="Token Flow Ended Logger" doc:id="bdc9b97f-2ddb-42b0-9587-cb6f5a3154ba" message="Token Flow Ended  "/>
+	</sub-flow>
+</mule>

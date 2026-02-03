@@ -1,0 +1,35 @@
+{
+  "configs": [
+    "global.xml",
+    "moodle-lms-uc.xml",
+    "Global-error-handling.xml",
+    "common.xml"
+  ],
+  "secureProperties": [],
+  "supportedJavaVersions": [],
+  "redeploymentEnabled": true,
+  "name": "com.mycompany:moodle-lms-uc:1.0.0-SNAPSHOT",
+  "minMuleVersion": "4.10.0",
+  "requiredProduct": "MULE_EE",
+  "classLoaderModelLoaderDescriptor": {
+    "id": "mule",
+    "attributes": {
+      "exportedPackages": [],
+      "exportedResources": [
+        "Client-Keystore.jks",
+        "common.xml",
+        "Global-error-handling.xml",
+        "global.xml",
+        "log4j2.xml",
+        "moodle-lms-uc.xml"
+      ]
+    }
+  },
+  "bundleDescriptorLoader": {
+    "id": "mule",
+    "attributes": {}
+  },
+  "javaSpecificationVersions": [
+    "17"
+  ]
+}
