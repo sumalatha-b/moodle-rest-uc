@@ -6,7 +6,7 @@
 	xsi:schemaLocation="
 http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd">
  <flow name="post:\core_course_create_categories:application\x-www-form-urlencoded:moodle-rest-api-config">
-        <http:listener doc:name="Listener" doc:id="e427c011-deff-40f0-8ca3-db7b861193bb" path="/core_course_create_categories">
+        <http:listener doc:name="Listener" doc:id="e427c011-deff-40f0-8ca3-db7b861193bb" path="/core_course_create_categories" config-ref="HTTP_Listener_config">
             <http:error-response statusCode="#[vars.httpStatus default 500]">
                 <http:body><![CDATA[#[output application/json --- payload default error.description]]]></http:body>
             </http:error-response>
@@ -30,7 +30,7 @@ output application/x-www-form-urlencoded
         </moodle:post-core-course-create-categories>
     </flow>
     <flow name="post:\core_course_create_courses:application\x-www-form-urlencoded:moodle-rest-api-config">
-        <http:listener doc:name="Listener" doc:id="0b23cccc-6c77-41eb-9fc3-06437d10f957" path="/core_course_create_courses" allowedMethods="GET,POST">
+        <http:listener doc:name="Listener" doc:id="0b23cccc-6c77-41eb-9fc3-06437d10f957" path="/core_course_create_courses" allowedMethods="GET,POST" config-ref="HTTP_Listener_config">
             <http:error-response statusCode="#[vars.httpStatus default 500]">
                 <http:body><![CDATA[#[output application/json --- payload default error.description]]]></http:body>
             </http:error-response>
@@ -75,7 +75,7 @@ output application/x-www-form-urlencoded
         </moodle:post-core-course-create-courses>
     </flow>
     <flow name="post:\core_course_delete_categories:application\x-www-form-urlencoded:moodle-rest-api-config">
-        <http:listener doc:name="Listener" doc:id="5c7e0c65-700d-4c81-894a-87614e2701e5" path="/core_course_delete_categories">
+        <http:listener doc:name="Listener" doc:id="5c7e0c65-700d-4c81-894a-87614e2701e5" path="/core_course_delete_categories" config-ref="HTTP_Listener_config">
             <http:error-response statusCode="#[vars.httpStatus default 500]">
                 <http:body><![CDATA[#[output application/json --- payload default error.description]]]></http:body>
             </http:error-response>
@@ -97,7 +97,7 @@ output application/x-www-form-urlencoded
         </moodle:post-core-course-delete-categories>
     </flow>
     <flow name="post:\core_course_delete_courses:application\x-www-form-urlencoded:moodle-rest-api-config">
-        <http:listener doc:name="Listener" doc:id="e18d11ff-84ea-446e-8dcf-e89a8241a55c" path="/core_course_delete_courses">
+        <http:listener doc:name="Listener" doc:id="e18d11ff-84ea-446e-8dcf-e89a8241a55c" path="/core_course_delete_courses" config-ref="HTTP_Listener_config">
             <http:error-response statusCode="#[vars.httpStatus default 500]">
                 <http:body><![CDATA[#[output application/json --- payload default error.description]]]></http:body>
             </http:error-response>
@@ -116,7 +116,7 @@ output application/x-www-form-urlencoded
         </moodle:post-core-course-delete-courses>
     </flow>
     <flow name="post:\core_course_get_categories:application\x-www-form-urlencoded:moodle-rest-api-config">
-        <http:listener doc:name="Listener" doc:id="8b46c6f0-52f1-42b4-8dde-250f89cac788" path="/core_course_get_categories">
+        <http:listener doc:name="Listener" doc:id="8b46c6f0-52f1-42b4-8dde-250f89cac788" path="/core_course_get_categories" config-ref="HTTP_Listener_config">
             <http:error-response statusCode="#[vars.httpStatus default 500]">
                 <http:body><![CDATA[#[output application/json --- payload default error.description]]]></http:body>
             </http:error-response>
@@ -137,7 +137,7 @@ output application/x-www-form-urlencoded
         </moodle:post-core-course-get-categories>
     </flow>
     <flow name="post:\core_course_get_courses:application\x-www-form-urlencoded:moodle-rest-api-config">
-        <http:listener doc:name="Listener" doc:id="a1f38c5e-743c-4f7c-80a9-f37d8aa23261" path="/core_course_get_courses">
+        <http:listener doc:name="Listener" doc:id="a1f38c5e-743c-4f7c-80a9-f37d8aa23261" path="/core_course_get_courses" config-ref="HTTP_Listener_config">
             <http:error-response statusCode="#[vars.httpStatus default 500]">
                 <http:body><![CDATA[#[output application/json --- payload default error.description]]]></http:body>
             </http:error-response>
@@ -155,7 +155,7 @@ output application/x-www-form-urlencoded
         </moodle:post-core-course-get-courses>
     </flow>
     <flow name="post:\core_course_get_courses_by_field:application\x-www-form-urlencoded:moodle-rest-api-config">
-        <http:listener doc:name="Listener" doc:id="60ecbf6c-8ac6-4f43-9200-ca96b1042fd5" path="/core_course_get_courses_by_field">
+        <http:listener doc:name="Listener" doc:id="60ecbf6c-8ac6-4f43-9200-ca96b1042fd5" path="/core_course_get_courses_by_field" config-ref="HTTP_Listener_config">
             <http:error-response statusCode="#[vars.httpStatus default 500]">
                 <http:body><![CDATA[#[output application/json --- payload default error.description]]]></http:body>
             </http:error-response>
@@ -175,7 +175,7 @@ output application/x-www-form-urlencoded
         </moodle:post-core-course-get-courses-by-field>
     </flow>
     <flow name="post:\core_course_update_categories:application\x-www-form-urlencoded:moodle-rest-api-config">
-        <http:listener doc:name="Listener" doc:id="822fa413-e8e4-4ab2-af0c-42316e7b6385" path="/core_course_update_categories">
+        <http:listener doc:name="Listener" doc:id="822fa413-e8e4-4ab2-af0c-42316e7b6385" path="/core_course_update_categories" config-ref="HTTP_Listener_config">
             <http:error-response statusCode="#[vars.httpStatus default 500]">
                 <http:body><![CDATA[#[output application/json --- payload default error.description]]]></http:body>
             </http:error-response>
@@ -200,7 +200,7 @@ output application/x-www-form-urlencoded
         </moodle:post-core-course-update-categories>
     </flow>
     <flow name="post:\core_course_update_courses:application\x-www-form-urlencoded:moodle-rest-api-config">
-        <http:listener doc:name="Listener" doc:id="43f18231-5899-4bd2-872c-7c7970334e88" path="/core_course_update_courses">
+        <http:listener doc:name="Listener" doc:id="43f18231-5899-4bd2-872c-7c7970334e88" path="/core_course_update_courses" config-ref="HTTP_Listener_config">
             <http:error-response statusCode="#[vars.httpStatus default 500]">
                 <http:body><![CDATA[#[output application/json --- payload default error.description]]]></http:body>
             </http:error-response>
@@ -246,7 +246,7 @@ output application/x-www-form-urlencoded
         </moodle:post-core-course-update-courses>
     </flow>
     <flow name="post:\core_enrol_get_enrolled_users:application\x-www-form-urlencoded:moodle-rest-api-config">
-        <http:listener doc:name="Listener" doc:id="c76c5c55-c872-47c7-b1a0-70ee7c9cbe30" path="/core_enrol_get_enrolled_users">
+        <http:listener doc:name="Listener" doc:id="c76c5c55-c872-47c7-b1a0-70ee7c9cbe30" path="/core_enrol_get_enrolled_users" config-ref="HTTP_Listener_config">
             <http:error-response statusCode="#[vars.httpStatus default 500]">
                 <http:body><![CDATA[#[output application/json --- payload default error.description]]]></http:body>
             </http:error-response>
@@ -265,7 +265,7 @@ output application/x-www-form-urlencoded
         </moodle:post-core-enrol-get-enrolled-users>
     </flow>
     <flow name="post:\core_enrol_get_users_courses:application\x-www-form-urlencoded:moodle-rest-api-config">
-        <http:listener doc:name="Listener" doc:id="dd3382e7-d5db-4503-8291-047c0f8d4215" path="/core_enrol_get_users_courses">
+        <http:listener doc:name="Listener" doc:id="dd3382e7-d5db-4503-8291-047c0f8d4215" path="/core_enrol_get_users_courses" config-ref="HTTP_Listener_config">
             <http:error-response statusCode="#[vars.httpStatus default 500]">
                 <http:body><![CDATA[#[output application/json --- payload default error.description]]]></http:body>
             </http:error-response>
@@ -285,7 +285,7 @@ output application/x-www-form-urlencoded
         </moodle:post-core-enrol-get-users-courses>
     </flow>
     <flow name="post:\core_enrol_unenrol_user_enrolment:application\x-www-form-urlencoded:moodle-rest-api-config">
-        <http:listener doc:name="Listener" doc:id="779056f2-abff-4d82-a87c-66788563e6b1" path="/core_enrol_unenrol_user_enrolment">
+        <http:listener doc:name="Listener" doc:id="779056f2-abff-4d82-a87c-66788563e6b1" path="/core_enrol_unenrol_user_enrolment" config-ref="HTTP_Listener_config">
             <http:error-response statusCode="#[vars.httpStatus default 500]">
                 <http:body><![CDATA[#[output application/json --- payload default error.description]]]></http:body>
             </http:error-response>
@@ -304,7 +304,7 @@ output application/x-www-form-urlencoded
 		</moodle:post-core-enrol-unenrol-user-enrolment>
     </flow>
     <flow name="post:\core_role_assign_roles:application\x-www-form-urlencoded:moodle-rest-api-config">
-        <http:listener doc:name="Listener" doc:id="da208c82-a02c-4b30-aed6-69271adab6b7" path="/core_role_assign_roles">
+        <http:listener doc:name="Listener" doc:id="da208c82-a02c-4b30-aed6-69271adab6b7" path="/core_role_assign_roles" config-ref="HTTP_Listener_config">
             <http:error-response statusCode="#[vars.httpStatus default 500]">
                 <http:body><![CDATA[#[output application/json --- payload default error.description]]]></http:body>
             </http:error-response>
@@ -327,7 +327,7 @@ output application/x-www-form-urlencoded
         </moodle:post-core-role-assign-roles>
     </flow>
     <flow name="post:\core_role_unassign_roles:application\x-www-form-urlencoded:moodle-rest-api-config">
-        <http:listener doc:name="Listener" doc:id="8ff1cf50-4f4c-41db-8fea-1666667f6684" path="/core_role_unassign_roles">
+        <http:listener doc:name="Listener" doc:id="8ff1cf50-4f4c-41db-8fea-1666667f6684" path="/core_role_unassign_roles" config-ref="HTTP_Listener_config">
             <http:error-response statusCode="#[vars.httpStatus default 500]">
                 <http:body><![CDATA[#[output application/json --- payload default error.description]]]></http:body>
             </http:error-response>
@@ -350,7 +350,7 @@ output application/x-www-form-urlencoded
         </moodle:post-core-role-unassign-roles>
     </flow>
     <flow name="post:\core_user_create_users:application\x-www-form-urlencoded:moodle-rest-api-config">
-        <http:listener doc:name="Listener" doc:id="9f5e602d-4473-4632-9fd8-cf78b404c448" path="/core_user_create_users">
+        <http:listener doc:name="Listener" doc:id="9f5e602d-4473-4632-9fd8-cf78b404c448" path="/core_user_create_users" config-ref="HTTP_Listener_config">
             <http:error-response statusCode="#[vars.httpStatus default 500]">
                 <http:body><![CDATA[#[output application/json --- payload default error.description]]]></http:body>
             </http:error-response>
@@ -399,7 +399,7 @@ output application/x-www-form-urlencoded
         </moodle:post-core-user-create-users>
     </flow>
     <flow name="post:\core_user_delete_users:application\x-www-form-urlencoded:moodle-rest-api-config">
-        <http:listener doc:name="Listener" doc:id="bc1269e7-9009-4242-9ab6-f85ec8f41384" path="/core_user_delete_users">
+        <http:listener doc:name="Listener" doc:id="bc1269e7-9009-4242-9ab6-f85ec8f41384" path="/core_user_delete_users" config-ref="HTTP_Listener_config">
             <http:error-response statusCode="#[vars.httpStatus default 500]">
                 <http:body><![CDATA[#[output application/json --- payload default error.description]]]></http:body>
             </http:error-response>
@@ -418,7 +418,7 @@ output application/x-www-form-urlencoded
         </moodle:post-core-user-delete-users>
     </flow>
     <flow name="post:\core_user_get_users:application\x-www-form-urlencoded:moodle-rest-api-config">
-        <http:listener doc:name="Listener" doc:id="2c546c4b-5214-41aa-9a3e-6eefd5f6921f" path="/core_user_get_users">
+        <http:listener doc:name="Listener" doc:id="2c546c4b-5214-41aa-9a3e-6eefd5f6921f" path="/core_user_get_users" config-ref="HTTP_Listener_config">
             <http:error-response statusCode="#[vars.httpStatus default 500]">
                 <http:body><![CDATA[#[output application/json --- payload default error.description]]]></http:body>
             </http:error-response>
@@ -438,7 +438,7 @@ output application/x-www-form-urlencoded
         </moodle:post-core-user-get-users>
     </flow>
     <flow name="post:\core_user_get_users_by_field:application\x-www-form-urlencoded:moodle-rest-api-config">
-        <http:listener doc:name="Listener" doc:id="bdafa545-1c1c-4650-b09c-9162cbdd1a00" path="/core_user_get_users_by_field">
+        <http:listener doc:name="Listener" doc:id="bdafa545-1c1c-4650-b09c-9162cbdd1a00" path="/core_user_get_users_by_field" config-ref="HTTP_Listener_config">
             <http:error-response statusCode="#[vars.httpStatus default 500]">
                 <http:body><![CDATA[#[output application/json --- payload default error.description]]]></http:body>
             </http:error-response>
@@ -458,7 +458,7 @@ output application/x-www-form-urlencoded
         </moodle:post-core-user-get-users-by-field>
     </flow>
     <flow name="post:\core_user_update_users:application\x-www-form-urlencoded:moodle-rest-api-config">
-        <http:listener doc:name="Listener" doc:id="61ba9444-7f8c-479e-800e-33e710f4633d" path="/core_user_update_users">
+        <http:listener doc:name="Listener" doc:id="61ba9444-7f8c-479e-800e-33e710f4633d" path="/core_user_update_users" config-ref="HTTP_Listener_config">
             <http:error-response statusCode="#[vars.httpStatus default 500]">
                 <http:body><![CDATA[#[output application/json --- payload default error.description]]]></http:body>
             </http:error-response>
@@ -513,7 +513,7 @@ output application/x-www-form-urlencoded
         </moodle:post-core-user-update-users>
     </flow>
     <flow name="post:\enrol_manual_enrol_users:application\x-www-form-urlencoded:moodle-rest-api-config">
-        <http:listener doc:name="Listener" doc:id="80cb160d-cd01-49da-9496-be29115d91c5" path="/enrol_manual_enrol_users">
+        <http:listener doc:name="Listener" doc:id="80cb160d-cd01-49da-9496-be29115d91c5" path="/enrol_manual_enrol_users" config-ref="HTTP_Listener_config">
             <http:error-response statusCode="#[vars.httpStatus default 500]">
                 <http:body><![CDATA[#[output application/json --- payload default error.description]]]></http:body>
             </http:error-response>
@@ -534,7 +534,7 @@ output application/x-www-form-urlencoded
         </moodle:post-enrol-manual-enrol-users>
     </flow>
     <flow name="post:\enrol_manual_unenrol_users:application\x-www-form-urlencoded:moodle-rest-api-config">
-        <http:listener doc:name="Listener" doc:id="388cf13f-69b3-434c-bc2f-51e97c67e863" path="/enrol_manual_unenrol_users">
+        <http:listener doc:name="Listener" doc:id="388cf13f-69b3-434c-bc2f-51e97c67e863" path="/enrol_manual_unenrol_users" config-ref="HTTP_Listener_config">
             <http:error-response statusCode="#[vars.httpStatus default 500]">
                 <http:body><![CDATA[#[output application/json --- payload default error.description]]]></http:body>
             </http:error-response>
@@ -555,7 +555,7 @@ output application/x-www-form-urlencoded
 		</moodle:post-enrol-manual-unenrol-users>
     </flow>
     <flow name="post:\gradereport_overview_get_course_grades:application\x-www-form-urlencoded:moodle-rest-api-config">
-        <http:listener doc:name="Listener" doc:id="8487c658-082c-48a9-8ac7-100d236999a0" path="/gradereport_overview_get_course_grades">
+        <http:listener doc:name="Listener" doc:id="8487c658-082c-48a9-8ac7-100d236999a0" path="/gradereport_overview_get_course_grades" config-ref="HTTP_Listener_config">
             <http:error-response statusCode="#[vars.httpStatus default 500]">
                 <http:body><![CDATA[#[output application/json --- payload default error.description]]]></http:body>
             </http:error-response>
@@ -575,7 +575,7 @@ output application/x-www-form-urlencoded
         </moodle:post-gradereport-overview-get-course-grades>
     </flow>
     <flow name="post:\mod_assign_get_assignments:application\x-www-form-urlencoded:moodle-rest-api-config">
-        <http:listener doc:name="Listener" doc:id="7c89cf55-9f03-478e-8f32-aa010b319c68" path="/mod_assign_get_assignments">
+        <http:listener doc:name="Listener" doc:id="7c89cf55-9f03-478e-8f32-aa010b319c68" path="/mod_assign_get_assignments" config-ref="HTTP_Listener_config">
             <http:error-response statusCode="#[vars.httpStatus default 500]">
                 <http:body><![CDATA[#[output application/json --- payload default error.description]]]></http:body>
             </http:error-response>
@@ -595,7 +595,7 @@ output application/x-www-form-urlencoded
         </moodle:post-mod-assign-get-assignments>
     </flow>
     <flow name="post:\mod_assign_get_grades:application\x-www-form-urlencoded:moodle-rest-api-config">
-        <http:listener doc:name="Listener" doc:id="0e73fdea-5d37-4e08-886b-3ed6da4ec857" path="/mod_assign_get_grades">
+        <http:listener doc:name="Listener" doc:id="0e73fdea-5d37-4e08-886b-3ed6da4ec857" path="/mod_assign_get_grades" config-ref="HTTP_Listener_config">
             <http:error-response statusCode="#[vars.httpStatus default 500]">
                 <http:body><![CDATA[#[output application/json --- payload default error.description]]]></http:body>
             </http:error-response>
@@ -614,7 +614,7 @@ output application/x-www-form-urlencoded
         </moodle:post-mod-assign-get-grades>
     </flow>
     <flow name="post:\mod_assign_get_submission_status:application\x-www-form-urlencoded:moodle-rest-api-config">
-        <http:listener doc:name="Listener" doc:id="132f8c0f-8b8d-45b9-b5a4-943f1c4cf38a" path="/mod_assign_get_submission_status">
+        <http:listener doc:name="Listener" doc:id="132f8c0f-8b8d-45b9-b5a4-943f1c4cf38a" path="/mod_assign_get_submission_status" config-ref="HTTP_Listener_config">
             <http:error-response statusCode="#[vars.httpStatus default 500]">
                 <http:body><![CDATA[#[output application/json --- payload default error.description]]]></http:body>
             </http:error-response>
@@ -634,7 +634,7 @@ output application/x-www-form-urlencoded
         </moodle:post-mod-assign-get-submission-status>
     </flow>
     <flow name="post:\core_calendar_create_calendar_events:application\x-www-form-urlencoded:moodle-rest-api-config">
-        <http:listener doc:name="Listener" doc:id="25264860-e959-4665-b5ff-c3add2616b96" path="/core_calendar_create_calendar_events">
+        <http:listener doc:name="Listener" doc:id="25264860-e959-4665-b5ff-c3add2616b96" path="/core_calendar_create_calendar_events" config-ref="HTTP_Listener_config">
 			<http:error-response statusCode="#[vars.httpStatus default 500]">
 				<http:body ><![CDATA[#[output application/json --- payload default error.description]]]></http:body>
 			</http:error-response>
@@ -663,7 +663,7 @@ output application/x-www-form-urlencoded
 		</moodle:post-core-calendar-create-calendar-events>
     </flow>
     <flow name="post:\core_calendar_delete_calendar_events:application\x-www-form-urlencoded:moodle-rest-api-config">
-        <http:listener doc:name="Listener" doc:id="110fc0ff-b846-4010-87ed-4b0ca5876c69" path="/core_calendar_delete_calendar_events">
+        <http:listener doc:name="Listener" doc:id="110fc0ff-b846-4010-87ed-4b0ca5876c69" path="/core_calendar_delete_calendar_events" config-ref="HTTP_Listener_config">
 			<http:error-response statusCode="#[vars.httpStatus default 500]">
 				<http:body ><![CDATA[#[output application/json --- payload default error.description]]]></http:body>
 			</http:error-response>
@@ -683,7 +683,7 @@ output application/x-www-form-urlencoded
 		</moodle:post-core-calendar-delete-calendar-events>
     </flow>
     <flow name="post:\core_calendar_get_action_events_by_timesort:application\x-www-form-urlencoded:moodle-rest-api-config">
-        <http:listener doc:name="Listener" doc:id="c2f90f00-a1da-4a54-b48e-599ead120db8" path="/core_calendar_get_action_events_by_timesort">
+        <http:listener doc:name="Listener" doc:id="c2f90f00-a1da-4a54-b48e-599ead120db8" path="/core_calendar_get_action_events_by_timesort" config-ref="HTTP_Listener_config">
 			<http:error-response statusCode="#[vars.httpStatus default 500]">
 				<http:body ><![CDATA[#[output application/json --- payload default error.description]]]></http:body>
 			</http:error-response>
@@ -702,7 +702,7 @@ output application/x-www-form-urlencoded
 		</moodle:post-core-calendar-get-action-events-by-timesort>
     </flow>
     <flow name="post:\core_calendar_get_calendar_event_by_id:application\x-www-form-urlencoded:moodle-rest-api-config">
-        <http:listener doc:name="Listener" doc:id="a909ea99-160a-4de5-9d60-f2dafa2f2689" path="/core_calendar_get_calendar_event_by_id">
+        <http:listener doc:name="Listener" doc:id="a909ea99-160a-4de5-9d60-f2dafa2f2689" path="/core_calendar_get_calendar_event_by_id" config-ref="HTTP_Listener_config">
 			<http:error-response statusCode="#[vars.httpStatus default 500]">
 				<http:body ><![CDATA[#[output application/json --- payload default error.description]]]></http:body>
 			</http:error-response>
@@ -721,7 +721,7 @@ output application/x-www-form-urlencoded
 		</moodle:post-core-calendar-get-calendar-event-by-id>
     </flow>
     <flow name="post:\core_calendar_get_calendar_events:application\x-www-form-urlencoded:moodle-rest-api-config">
-        <http:listener doc:name="Listener" doc:id="5e7820a0-b945-4dba-af47-a76c20f70e6c" path="/core_calendar_get_calendar_events">
+        <http:listener doc:name="Listener" doc:id="5e7820a0-b945-4dba-af47-a76c20f70e6c" path="/core_calendar_get_calendar_events" config-ref="HTTP_Listener_config">
 			<http:error-response statusCode="#[vars.httpStatus default 500]">
 				<http:body ><![CDATA[#[output application/json --- payload default error.description]]]></http:body>
 			</http:error-response>
@@ -744,7 +744,7 @@ output application/x-www-form-urlencoded
 		<logger level="INFO" doc:name="Logger" doc:id="252df018-eca5-40db-9b84-1d67499f0461" />
     </flow>
     <flow name="post:\core_cohort_add_cohort_members:application\x-www-form-urlencoded:moodle-rest-api-config">
-        <http:listener doc:name="Listener" doc:id="844e34df-3211-44a5-a5a1-fd83641fbef1" path="/core_cohort_add_cohort_members">
+        <http:listener doc:name="Listener" doc:id="844e34df-3211-44a5-a5a1-fd83641fbef1" path="/core_cohort_add_cohort_members" config-ref="HTTP_Listener_config">
 			<http:error-response statusCode="#[vars.httpStatus default 500]">
 				<http:body ><![CDATA[#[output application/json --- payload default error.description]]]></http:body>
 			</http:error-response>
@@ -766,7 +766,7 @@ output application/x-www-form-urlencoded
 		</moodle:post-core-cohort-add-cohort-members>
     </flow>
     <flow name="post:\core_cohort_create_cohorts:application\x-www-form-urlencoded:moodle-rest-api-config">
-        <http:listener doc:name="Listener" doc:id="2045d773-b6ec-4a82-96f6-ffd5fd06cf8e" path="/core_cohort_create_cohorts">
+        <http:listener doc:name="Listener" doc:id="2045d773-b6ec-4a82-96f6-ffd5fd06cf8e" path="/core_cohort_create_cohorts" config-ref="HTTP_Listener_config">
 			<http:error-response statusCode="#[vars.httpStatus default 500]">
 				<http:body ><![CDATA[#[output application/json --- payload default error.description]]]></http:body>
 			</http:error-response>
@@ -792,7 +792,7 @@ output application/x-www-form-urlencoded
 		</moodle:post-core-cohort-create-cohorts>
     </flow>
     <flow name="post:\core_cohort_delete_cohort_members:application\x-www-form-urlencoded:moodle-rest-api-config">
-        <http:listener doc:name="Listener" doc:id="8f8fcb41-50e8-447c-9587-dc5736a3611f" path="/core_cohort_delete_cohort_members">
+        <http:listener doc:name="Listener" doc:id="8f8fcb41-50e8-447c-9587-dc5736a3611f" path="/core_cohort_delete_cohort_members" config-ref="HTTP_Listener_config">
 			<http:error-response statusCode="#[vars.httpStatus default 500]">
 				<http:body ><![CDATA[#[output application/json --- payload default error.description]]]></http:body>
 			</http:error-response>
@@ -812,7 +812,7 @@ output application/x-www-form-urlencoded
 		</moodle:post-core-cohort-delete-cohort-members>
     </flow>
     <flow name="post:\core_cohort_delete_cohorts:application\x-www-form-urlencoded:moodle-rest-api-config">
-        <http:listener doc:name="Listener" doc:id="0bb43ad6-ac86-447c-a41d-47002cd4d171" path="/core_cohort_delete_cohorts">
+        <http:listener doc:name="Listener" doc:id="0bb43ad6-ac86-447c-a41d-47002cd4d171" path="/core_cohort_delete_cohorts" config-ref="HTTP_Listener_config">
 			<http:error-response statusCode="#[vars.httpStatus default 500]">
 				<http:body ><![CDATA[#[output application/json --- payload default error.description]]]></http:body>
 			</http:error-response>
@@ -831,7 +831,7 @@ output application/x-www-form-urlencoded
 		</moodle:post-core-cohort-delete-cohorts>
     </flow>
     <flow name="post:\core_cohort_get_cohort_members:application\x-www-form-urlencoded:moodle-rest-api-config">
-        <http:listener doc:name="Listener" doc:id="af6f3449-3830-42fc-b048-cca09333d620" path="/core_cohort_get_cohort_members">
+        <http:listener doc:name="Listener" doc:id="af6f3449-3830-42fc-b048-cca09333d620" path="/core_cohort_get_cohort_members" config-ref="HTTP_Listener_config">
 			<http:error-response statusCode="#[vars.httpStatus default 500]">
 				<http:body ><![CDATA[#[output application/json --- payload default error.description]]]></http:body>
 			</http:error-response>
@@ -850,7 +850,7 @@ output application/x-www-form-urlencoded
 		</moodle:post-core-cohort-get-cohort-members>
     </flow>
     <flow name="post:\core_cohort_get_cohorts:application\x-www-form-urlencoded:moodle-rest-api-config">
-        <http:listener doc:name="Listener" doc:id="71c04de5-b61e-4fc7-b4ff-3e0efc71b987" path="/core_cohort_get_cohorts">
+        <http:listener doc:name="Listener" doc:id="71c04de5-b61e-4fc7-b4ff-3e0efc71b987" path="/core_cohort_get_cohorts" config-ref="HTTP_Listener_config">
 			<http:error-response statusCode="#[vars.httpStatus default 500]">
 				<http:body ><![CDATA[#[output application/json --- payload default error.description]]]></http:body>
 			</http:error-response>
@@ -868,7 +868,7 @@ output application/x-www-form-urlencoded
 		</moodle:post-core-cohort-get-cohorts>
     </flow>
     <flow name="post:\core_cohort_update_cohorts:application\x-www-form-urlencoded:moodle-rest-api-config">
-        <http:listener doc:name="Listener" doc:id="59718af9-9adc-4aa5-a423-c3b49b2ae1fb" path="/core_cohort_update_cohorts">
+        <http:listener doc:name="Listener" doc:id="59718af9-9adc-4aa5-a423-c3b49b2ae1fb" path="/core_cohort_update_cohorts" config-ref="HTTP_Listener_config">
 			<http:error-response statusCode="#[vars.httpStatus default 500]">
 				<http:body ><![CDATA[#[output application/json --- payload default error.description]]]></http:body>
 			</http:error-response>
@@ -897,7 +897,7 @@ output application/x-www-form-urlencoded
 		</moodle:post-core-cohort-update-cohorts>
     </flow>
     <flow name="post:\core_group_add_group_members:application\x-www-form-urlencoded:moodle-rest-api-config">
-        <http:listener doc:name="Listener" doc:id="254ec6c9-e008-495a-a291-904df51b221c" path="/core_group_add_group_members">
+        <http:listener doc:name="Listener" doc:id="254ec6c9-e008-495a-a291-904df51b221c" path="/core_group_add_group_members" config-ref="HTTP_Listener_config">
 			<http:error-response statusCode="#[vars.httpStatus default 500]">
 				<http:body ><![CDATA[#[output application/json --- payload default error.description]]]></http:body>
 			</http:error-response>
@@ -918,7 +918,7 @@ output application/x-www-form-urlencoded
 		</moodle:post-core-group-add-group-members>
     </flow>
     <flow name="post:\core_group_assign_grouping:application\x-www-form-urlencoded:moodle-rest-api-config">
-        <http:listener doc:name="Listener" doc:id="ae43d627-a530-46d7-bc17-f4193cab3a38" path="/core_group_assign_grouping">
+        <http:listener doc:name="Listener" doc:id="ae43d627-a530-46d7-bc17-f4193cab3a38" path="/core_group_assign_grouping" config-ref="HTTP_Listener_config">
 			<http:error-response statusCode="#[vars.httpStatus default 500]">
 				<http:body ><![CDATA[#[output application/json --- payload default error.description]]]></http:body>
 			</http:error-response>
@@ -939,7 +939,7 @@ output application/x-www-form-urlencoded
 		</moodle:post-core-group-assign-grouping>
     </flow>
     <flow name="post:\core_group_create_groupings:application\x-www-form-urlencoded:moodle-rest-api-config">
-        <http:listener doc:name="Listener" doc:id="a5951c26-b1a1-4da8-aa9c-7ecd334df70a" path="/core_group_create_groupings">
+        <http:listener doc:name="Listener" doc:id="a5951c26-b1a1-4da8-aa9c-7ecd334df70a" path="/core_group_create_groupings" config-ref="HTTP_Listener_config">
 			<http:error-response statusCode="#[vars.httpStatus default 500]">
 				<http:body ><![CDATA[#[output application/json --- payload default error.description]]]></http:body>
 			</http:error-response>
@@ -962,7 +962,7 @@ output application/x-www-form-urlencoded
 		</moodle:post-core-group-create-groupings>
     </flow>
     <flow name="post:\core_group_create_groups:application\x-www-form-urlencoded:moodle-rest-api-config">
-        <http:listener doc:name="Listener" doc:id="8fcc2f84-3d8e-4eb9-9916-2855f9dea556" path="/core_group_create_groups">
+        <http:listener doc:name="Listener" doc:id="8fcc2f84-3d8e-4eb9-9916-2855f9dea556" path="/core_group_create_groups" config-ref="HTTP_Listener_config">
 			<http:error-response statusCode="#[vars.httpStatus default 500]">
 				<http:body ><![CDATA[#[output application/json --- payload default error.description]]]></http:body>
 			</http:error-response>
@@ -989,7 +989,7 @@ output application/x-www-form-urlencoded
 		</moodle:post-core-group-create-groups>
     </flow>
     <flow name="post:\core_group_delete_group_members:application\x-www-form-urlencoded:moodle-rest-api-config">
-        <http:listener doc:name="Listener" doc:id="e11f2f12-4091-4a6d-abcd-fee76c991ade" path="/core_group_delete_group_members">
+        <http:listener doc:name="Listener" doc:id="e11f2f12-4091-4a6d-abcd-fee76c991ade" path="/core_group_delete_group_members" config-ref="HTTP_Listener_config">
 			<http:error-response statusCode="#[vars.httpStatus default 500]">
 				<http:body ><![CDATA[#[output application/json --- payload default error.description]]]></http:body>
 			</http:error-response>
@@ -1010,7 +1010,7 @@ output application/x-www-form-urlencoded
 		</moodle:post-core-group-delete-group-members>
     </flow>
     <flow name="post:\core_group_delete_groupings:application\x-www-form-urlencoded:moodle-rest-api-config">
-        <http:listener doc:name="Listener" doc:id="28f9a02b-cd9a-4cb1-a29d-b048b90e092b" path="/core_group_delete_groupings">
+        <http:listener doc:name="Listener" doc:id="28f9a02b-cd9a-4cb1-a29d-b048b90e092b" path="/core_group_delete_groupings" config-ref="HTTP_Listener_config">
 			<http:error-response statusCode="#[vars.httpStatus default 500]">
 				<http:body ><![CDATA[#[output application/json --- payload default error.description]]]></http:body>
 			</http:error-response>
@@ -1029,7 +1029,7 @@ output application/x-www-form-urlencoded
 		</moodle:post-core-group-delete-groupings>
     </flow>
     <flow name="post:\core_group_delete_groups:application\x-www-form-urlencoded:moodle-rest-api-config">
-        <http:listener doc:name="Listener" doc:id="8defb0eb-2c97-46ab-afb5-2be632b5fb58" path="/core_group_delete_groups">
+        <http:listener doc:name="Listener" doc:id="8defb0eb-2c97-46ab-afb5-2be632b5fb58" path="/core_group_delete_groups" config-ref="HTTP_Listener_config">
 			<http:error-response statusCode="#[vars.httpStatus default 500]">
 				<http:body ><![CDATA[#[output application/json --- payload default error.description]]]></http:body>
 			</http:error-response>
@@ -1049,7 +1049,7 @@ output application/x-www-form-urlencoded
 		</moodle:post-core-group-delete-groups>
     </flow>
     <flow name="post:\core_group_get_course_groupings:application\x-www-form-urlencoded:moodle-rest-api-config">
-        <http:listener doc:name="Listener" doc:id="55cc1e1a-c62e-4ad5-b4d0-547313d09b12" path="/core_group_get_course_groupings">
+        <http:listener doc:name="Listener" doc:id="55cc1e1a-c62e-4ad5-b4d0-547313d09b12" path="/core_group_get_course_groupings" config-ref="HTTP_Listener_config">
 			<http:error-response statusCode="#[vars.httpStatus default 500]">
 				<http:body ><![CDATA[#[output application/json --- payload default error.description]]]></http:body>
 			</http:error-response>
@@ -1068,7 +1068,7 @@ output application/x-www-form-urlencoded
 		</moodle:post-core-group-get-course-groupings>
     </flow>
     <flow name="post:\core_group_get_course_groups:application\x-www-form-urlencoded:moodle-rest-api-config">
-        <http:listener doc:name="Listener" doc:id="47e33581-59a0-4937-8c62-ebc4dac7e7ea" path="/core_group_get_course_groups">
+        <http:listener doc:name="Listener" doc:id="47e33581-59a0-4937-8c62-ebc4dac7e7ea" path="/core_group_get_course_groups" config-ref="HTTP_Listener_config">
 			<http:error-response statusCode="#[vars.httpStatus default 500]">
 				<http:body ><![CDATA[#[output application/json --- payload default error.description]]]></http:body>
 			</http:error-response>
@@ -1087,7 +1087,7 @@ output application/x-www-form-urlencoded
 		</moodle:post-core-group-get-course-groups>
     </flow>
     <flow name="post:\core_group_get_group_members:application\x-www-form-urlencoded:moodle-rest-api-config">
-        <http:listener doc:name="Listener" doc:id="9d2dbcd0-e145-4f6b-94b4-1e969f0de3ad" path="/core_group_get_group_members">
+        <http:listener doc:name="Listener" doc:id="9d2dbcd0-e145-4f6b-94b4-1e969f0de3ad" path="/core_group_get_group_members" config-ref="HTTP_Listener_config">
 			<http:error-response statusCode="#[vars.httpStatus default 500]">
 				<http:body ><![CDATA[#[output application/json --- payload default error.description]]]></http:body>
 			</http:error-response>
@@ -1107,7 +1107,7 @@ output application/x-www-form-urlencoded
 		</moodle:post-core-group-get-group-members>
     </flow>
     <flow name="post:\core_group_get_groups:application\x-www-form-urlencoded:moodle-rest-api-config">
-        <http:listener doc:name="Listener" doc:id="4d4dc67d-9499-4ee2-bbb7-a81b56ff122e" path="/core_group_get_groups">
+        <http:listener doc:name="Listener" doc:id="4d4dc67d-9499-4ee2-bbb7-a81b56ff122e" path="/core_group_get_groups" config-ref="HTTP_Listener_config">
 			<http:error-response statusCode="#[vars.httpStatus default 500]">
 				<http:body ><![CDATA[#[output application/json --- payload default error.description]]]></http:body>
 			</http:error-response>
@@ -1126,7 +1126,7 @@ output application/x-www-form-urlencoded
 		</moodle:post-core-group-get-groups>
     </flow>
     <flow name="post:\core_group_unassign_grouping:application\x-www-form-urlencoded:moodle-rest-api-config">
-        <http:listener doc:name="Listener" doc:id="c5189c9b-c5eb-4d56-88d1-7921c5026b1a" path="/core_group_unassign_grouping">
+        <http:listener doc:name="Listener" doc:id="c5189c9b-c5eb-4d56-88d1-7921c5026b1a" path="/core_group_unassign_grouping" config-ref="HTTP_Listener_config">
 			<http:error-response statusCode="#[vars.httpStatus default 500]">
 				<http:body ><![CDATA[#[output application/json --- payload default error.description]]]></http:body>
 			</http:error-response>
@@ -1171,7 +1171,7 @@ output application/x-www-form-urlencoded
 		</moodle:post-core-group-update-groupings>
     </flow>
     <flow name="post:\core_group_update_groups:application\x-www-form-urlencoded:moodle-rest-api-config">
-        <http:listener doc:name="Listener" doc:id="e8fc07a1-77af-4b0f-ad3f-1e7f8f5d54f0" path="/core_group_update_groups">
+        <http:listener doc:name="Listener" doc:id="e8fc07a1-77af-4b0f-ad3f-1e7f8f5d54f0" path="/core_group_update_groups" config-ref="HTTP_Listener_config">
 			<http:error-response statusCode="#[vars.httpStatus default 500]">
 				<http:body ><![CDATA[#[output application/json --- payload default error.description]]]></http:body>
 			</http:error-response>
@@ -1199,7 +1199,7 @@ output application/x-www-form-urlencoded
 		</moodle:post-core-group-update-groups>
     </flow>
     <flow name="post:\gradereport_user_get_grade_items:application\x-www-form-urlencoded:moodle-rest-api-config">
-        <http:listener doc:name="Listener" doc:id="4bf953c0-940c-4ff7-9bdb-abfdf568479c" path="/gradereport_user_get_grade_items">
+        <http:listener doc:name="Listener" doc:id="4bf953c0-940c-4ff7-9bdb-abfdf568479c" path="/gradereport_user_get_grade_items" config-ref="HTTP_Listener_config">
 			<http:error-response statusCode="#[vars.httpStatus default 500]">
 				<http:body ><![CDATA[#[output application/json --- payload default error.description]]]></http:body>
 			</http:error-response>
