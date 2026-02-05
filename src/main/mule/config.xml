@@ -10,9 +10,6 @@ http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/htt
 http://www.mulesoft.org/schema/connectivity/moodle http://www.mulesoft.org/schema/connectivity/moodle/current/mule-moodle.xsd">
 	<configuration-properties doc:name="Configuration properties" doc:id="8b839f00-e945-44f9-ac22-c87a49a05b72" file="config.yaml" />
 	<configuration doc:name="Configuration" doc:id="51971349-ff8b-4143-aee5-3e16310663ac" defaultErrorHandler-ref="Global-Error-Handler" />
-	<moodle:config name="Moodle_config2" doc:name="Moodle config" doc:id="91552805-c7fd-43ec-aa87-a72961e3fead" >
-		<moodle:no-auth-connection baseUri="https://nexturnlms1.moodlecloud.com/login/token.php/login/token" token='""' />
-	</moodle:config>
 	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="fb106bc8-f257-44e4-89b5-7e62664feff8" >
 		<http:listener-connection host="${https.host}" port="${https.port}" protocol="HTTPS">
 			<tls:context >
@@ -20,7 +17,7 @@ http://www.mulesoft.org/schema/connectivity/moodle http://www.mulesoft.org/schem
 			</tls:context>
 		</http:listener-connection>
 	</http:listener-config>
-		<moodle:config name="Moodle_config1" doc:name="Moodle config" doc:id="64ee77d7-c5b7-4a6f-8dff-08b1aba8ef3a" >
-		<moodle:no-auth-connection baseUri="https://nexturnlms1.moodlecloud.com/webservice/rest/server.php" token='""' />
+	<moodle:config name="Moodle_config" doc:name="Moodle config" doc:id="eff5cf4d-2946-48fb-8e07-2997b586409d" >
+		<moodle:moodle-connection apiKey="moodle" baseUri="https://nexturnlms1.moodlecloud.com" />
 	</moodle:config>
 </mule>

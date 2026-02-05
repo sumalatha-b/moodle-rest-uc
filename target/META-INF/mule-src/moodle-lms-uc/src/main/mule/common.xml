@@ -6,7 +6,7 @@
 http://www.mulesoft.org/schema/connectivity/moodle http://www.mulesoft.org/schema/connectivity/moodle/current/mule-moodle.xsd">
 	<sub-flow name="accesstoken_Flow" doc:id="a39ebf3a-3157-4578-a0dd-8d675093853e" >
 		<logger level="INFO" doc:name="Logger" doc:id="5b8b51fa-e730-42ef-9d77-7a512898990d" message="Token Flow Started"/>
-		<moodle:token-access-token doc:name="Token - Access Token" doc:id="9e89071c-6970-40db-aa0b-b716a8b6a868" config-ref="Moodle_config1" username='#["admin"]' password='#["Nexturn@12345"]' service='#["tok"]' correlationId="#[correlationId]"/>
+		<moodle:token-access-token doc:name="Token - Access Token" doc:id="9e89071c-6970-40db-aa0b-b716a8b6a868" username="#[p('moodle.username')]" password="#[p('moodle.password')]" service="#[p('moodle.service')]" correlationId="#[correlationId]" config-ref="Moodle_config" target="moodleToken"/>
 		<logger level="INFO" doc:name="Logger1" doc:id="d67d3e2c-8d6a-403c-8fec-defb6e0dee5f" message="Token Flow Ended" />
 	</sub-flow>
 </mule>
