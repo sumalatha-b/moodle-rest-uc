@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<mule xmlns:moodle="http://www.mulesoft.org/schema/connectivity/moodle"
-	xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
-	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns:moodle="http://www.mulesoft.org/schema/connectivity/moodle" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="
 http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
-http://www.mulesoft.org/schema/connectivity/moodle http://www.mulesoft.org/schema/connectivity/moodle/current/mule-moodle.xsd">
- 	<flow name="post:\core_course_create_categories:application\x-www-form-urlencoded:moodle-rest-api-config">
+http://www.mulesoft.org/schema/connectivity/moodle http://www.mulesoft.org/schema/connectivity/moodle/current/mule-moodle.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+ 	<moodle:config name="Moodle_config1" doc:name="Moodle config" doc:id="8e2bab06-0c30-4600-857d-faa47e0034f0" >
+		<moodle:moodle-connection apiKey="moodle" baseUri="https://nexturnlms1.moodlecloud.com/webservice/rest/server.php" />
+	</moodle:config>
+	<flow name="post:\core_course_create_categories:application\x-www-form-urlencoded:moodle-rest-api-config">
         <http:listener doc:name="Listener" doc:id="8471f469-a21c-4e5d-b570-5dd3b8ee3bf9" path="/core_course_create_categories" config-ref="HTTP_Listener_config">
             <http:error-response statusCode="#[vars.httpStatus default 500]">
                 <http:body><![CDATA[#[output application/json --- payload default error.description]]]></http:body>
@@ -145,17 +149,22 @@ output application/x-www-form-urlencoded
             </http:error-response>
         </http:listener>
         <flow-ref doc:name="Flow Reference" doc:id="c74546e9-3305-463c-95ad-74f88f4ce259" name="accesstoken_Flow" />
-		<moodle:course-get-courses doc:name="Course - Get Courses" doc:id="c584a005-c515-4f20-a380-152fadfc9205" correlationId="#[correlationId]" config-ref="Moodle_config">
-			<moodle:course_get_courses--body ><![CDATA[#[%dw 2.0
-output application/x-www-form-urlencoded
+		<ee:transform doc:name="Transform Message" doc:id="7cbec37f-ed52-454a-b258-681ac675879d" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/java
 ---
 {
-    wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,            
-    (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
-    (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat))
-}]]]></moodle:course_get_courses--body>
+  wstoken: "08bafb7434297fd390357a6839d4c2a5",
+  wsfunction: "core_course_get_courses",
+  moodlewsrestformat: "json"
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<moodle:course-get-courses doc:name="Course - Get Courses" doc:id="c584a005-c515-4f20-a380-152fadfc9205" correlationId="#[correlationId]" config-ref="Moodle_config1" Course_Get_Courses--body="#[payload]">
 		</moodle:course-get-courses>
-    </flow>
+    
+</flow>
     <flow name="post:\core_course_get_courses_by_field:application\x-www-form-urlencoded:moodle-rest-api-config">
         <http:listener doc:name="Listener" doc:id="75d9bafd-2561-4ed7-bc41-ca3609a9f8b3" path="/core_course_get_courses_by_field" config-ref="HTTP_Listener_config">
             <http:error-response statusCode="#[vars.httpStatus default 500]">
