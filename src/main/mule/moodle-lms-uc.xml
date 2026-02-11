@@ -35,7 +35,7 @@ output application/java
 }]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
-		<moodle:course-category-create-categories doc:name="Course Category - Create Categories" doc:id="55331b5b-1fb0-4be7-a70c-7b31e4afbd8f" correlationId="#[correlationId]" config-ref="Moodle_config">
+		<moodle:course-category-create-categories doc:name="Course Category - Create Categories" doc:id="55331b5b-1fb0-4be7-a70c-7b31e4afbd8f" correlationId="#[correlationId]" config-ref="Moodle_config1">
 		</moodle:course-category-create-categories>
     
 </flow>
@@ -85,7 +85,7 @@ output application/java
 }]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
-		<moodle:course-create-courses doc:name="Course - Create Courses" doc:id="2d0a506a-a38c-48ab-aa8d-b1b51c24c676" correlationId="#[correlationId]" config-ref="Moodle_config">
+		<moodle:course-create-courses doc:name="Course - Create Courses" doc:id="2d0a506a-a38c-48ab-aa8d-b1b51c24c676" correlationId="#[correlationId]" config-ref="Moodle_config1">
 		</moodle:course-create-courses>
     </flow>
     <flow name="post:\core_course_delete_categories:application\x-www-form-urlencoded:moodle-rest-api-config">
@@ -111,7 +111,7 @@ output application/java
 }]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
-		<moodle:course-category-delete-categories doc:name="Course Category - Delete Categories" doc:id="15cbb9dd-c9de-4a44-817f-bf41ccdcf2e6" correlationId="#[correlationId]" config-ref="Moodle_config">
+		<moodle:course-category-delete-categories doc:name="Course Category - Delete Categories" doc:id="15cbb9dd-c9de-4a44-817f-bf41ccdcf2e6" correlationId="#[correlationId]" config-ref="Moodle_config1">
 		</moodle:course-category-delete-categories>
     </flow>
     <flow name="post:\core_course_delete_courses:application\x-www-form-urlencoded:moodle-rest-api-config">
@@ -134,7 +134,7 @@ output application/java
 }]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
-		<moodle:course-delete-courses doc:name="Course - Delete Courses" doc:id="55e46e7d-70e4-4713-83bb-b7c0ba442ad0" correlationId="#[correlationId]" config-ref="Moodle_config">
+		<moodle:course-delete-courses doc:name="Course - Delete Courses" doc:id="55e46e7d-70e4-4713-83bb-b7c0ba442ad0" correlationId="#[correlationId]" config-ref="Moodle_config1">
 		</moodle:course-delete-courses>
     </flow>
     <flow name="post:\core_course_get_categories:application\x-www-form-urlencoded:moodle-rest-api-config">
@@ -159,7 +159,7 @@ output application/java
 }]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
-		<moodle:course-category-get-categories doc:name="Course Category - Get Categories" doc:id="03d97592-984c-4906-ae6a-699baa91d429" correlationId="#[correlationId]" config-ref="Moodle_config">
+		<moodle:course-category-get-categories doc:name="Course Category - Get Categories" doc:id="03d97592-984c-4906-ae6a-699baa91d429" correlationId="#[correlationId]" config-ref="Moodle_config1">
 		</moodle:course-category-get-categories>
     </flow>
     <flow name="post:\core_course_get_courses:application\x-www-form-urlencoded:moodle-rest-api-config">
@@ -175,9 +175,9 @@ output application/java
 output application/java
 ---
 {
-  wstoken: "08bafb7434297fd390357a6839d4c2a5",
-  wsfunction: "core_course_get_courses",
-  moodlewsrestformat: "json"
+    wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,              
+    (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
+    (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat))
 }]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
@@ -206,7 +206,7 @@ output application/java
 }]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
-		<moodle:course-get-coursesby-field doc:name="Course - Get Courses by Field" doc:id="f07f1ca1-674f-4bb0-96a2-8d391b3e5e6a" correlationId="#[correlationId]" config-ref="Moodle_config">
+		<moodle:course-get-coursesby-field doc:name="Course - Get Courses by Field" doc:id="f07f1ca1-674f-4bb0-96a2-8d391b3e5e6a" correlationId="#[correlationId]" config-ref="Moodle_config1">
 		</moodle:course-get-coursesby-field>
     </flow>
     <flow name="post:\core_course_update_categories:application\x-www-form-urlencoded:moodle-rest-api-config">
@@ -235,7 +235,7 @@ output application/java
 }]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
-		<moodle:course-category-update-categories doc:name="Course Category - Update Categories" doc:id="bc0e6517-d9bf-4644-ac90-c1e42a1df92a" correlationId="#[correlationId]" config-ref="Moodle_config">
+		<moodle:course-category-update-categories doc:name="Course Category - Update Categories" doc:id="bc0e6517-d9bf-4644-ac90-c1e42a1df92a" correlationId="#[correlationId]" config-ref="Moodle_config1">
 		</moodle:course-category-update-categories>
     </flow>
     <flow name="post:\core_course_update_courses:application\x-www-form-urlencoded:moodle-rest-api-config">
@@ -285,7 +285,7 @@ output application/java
 }]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
-		<moodle:course-update-courses doc:name="Course - Update Courses" doc:id="754f6040-c16a-46a9-bd60-7f5dc132224c" correlationId="#[correlationId]" config-ref="Moodle_config">
+		<moodle:course-update-courses doc:name="Course - Update Courses" doc:id="754f6040-c16a-46a9-bd60-7f5dc132224c" correlationId="#[correlationId]" config-ref="Moodle_config1">
 		</moodle:course-update-courses>
     </flow>
     <flow name="post:\core_enrol_get_enrolled_users:application\x-www-form-urlencoded:moodle-rest-api-config">
@@ -308,7 +308,7 @@ output application/java
 }]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
-		<moodle:enrollment-get-enrolled-users doc:name="Enrollment - Get Enrolled Users" doc:id="afb3b754-65aa-4aa4-a9ff-bb60e669001a" correlationId="#[correlationId]" config-ref="Moodle_config">
+		<moodle:enrollment-get-enrolled-users doc:name="Enrollment - Get Enrolled Users" doc:id="afb3b754-65aa-4aa4-a9ff-bb60e669001a" correlationId="#[correlationId]" config-ref="Moodle_config1">
 		</moodle:enrollment-get-enrolled-users>
     </flow>
     <flow name="post:\core_enrol_get_users_courses:application\x-www-form-urlencoded:moodle-rest-api-config">
@@ -332,7 +332,7 @@ output application/java
 }]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
-		<moodle:enrollment-get-users-courses doc:name="Enrollment - Get Users Courses" doc:id="5eaeb9e6-64ab-4a96-a75e-0b88e8cf7154" correlationId="#[correlationId]" config-ref="Moodle_config">
+		<moodle:enrollment-get-users-courses doc:name="Enrollment - Get Users Courses" doc:id="5eaeb9e6-64ab-4a96-a75e-0b88e8cf7154" correlationId="#[correlationId]" config-ref="Moodle_config1">
 		</moodle:enrollment-get-users-courses>
     </flow>
     <flow name="post:\core_enrol_unenrol_user_enrolment:application\x-www-form-urlencoded:moodle-rest-api-config">
@@ -367,7 +367,7 @@ output application/java
 }]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
-		<moodle:user-roles-assign-roles doc:name="User Roles - Assign Roles" doc:id="86252f0e-0ecb-48ca-8f89-dd5b39bfb4e6" correlationId="#[correlationId]" config-ref="Moodle_config">
+		<moodle:user-roles-assign-roles doc:name="User Roles - Assign Roles" doc:id="86252f0e-0ecb-48ca-8f89-dd5b39bfb4e6" correlationId="#[correlationId]" config-ref="Moodle_config1">
 		</moodle:user-roles-assign-roles>
     </flow>
     <flow name="post:\core_role_unassign_roles:application\x-www-form-urlencoded:moodle-rest-api-config">
@@ -394,7 +394,7 @@ output application/java
 }]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
-		<moodle:user-roles-unassign-roles doc:name="User Roles - Unassign Roles" doc:id="0705e506-be0a-40d4-a3fb-37a5b877bf9d" correlationId="#[correlationId]" config-ref="Moodle_config">
+		<moodle:user-roles-unassign-roles doc:name="User Roles - Unassign Roles" doc:id="0705e506-be0a-40d4-a3fb-37a5b877bf9d" correlationId="#[correlationId]" config-ref="Moodle_config1">
 		</moodle:user-roles-unassign-roles>
     </flow>
     <flow name="post:\core_user_create_users:application\x-www-form-urlencoded:moodle-rest-api-config">
@@ -447,7 +447,7 @@ output application/java
 }]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
-		<moodle:user-createusers doc:name="User - Create users" doc:id="b0e70186-c62f-4b3a-889e-a537c6a8b5e6" correlationId="#[correlationId]" config-ref="Moodle_config">
+		<moodle:user-createusers doc:name="User - Create users" doc:id="b0e70186-c62f-4b3a-889e-a537c6a8b5e6" correlationId="#[correlationId]" config-ref="Moodle_config1">
 		</moodle:user-createusers>
     </flow>
     <flow name="post:\core_user_delete_users:application\x-www-form-urlencoded:moodle-rest-api-config">
@@ -470,7 +470,7 @@ output application/java
 }]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
-		<moodle:user-delete-users doc:name="User - Delete Users" doc:id="ef77f13a-53c0-420d-a065-57461ec052be" correlationId="#[correlationId]" config-ref="Moodle_config">
+		<moodle:user-delete-users doc:name="User - Delete Users" doc:id="ef77f13a-53c0-420d-a065-57461ec052be" correlationId="#[correlationId]" config-ref="Moodle_config1">
 		</moodle:user-delete-users>
     </flow>
     <flow name="post:\core_user_get_users:application\x-www-form-urlencoded:moodle-rest-api-config">
@@ -491,10 +491,11 @@ output application/java
     (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
     ("criteria[0][key]": payload.'criteria[0][key]') if (!isEmpty(payload.'criteria[0][key]')),
     ("criteria[0][value]": payload.'criteria[0][value]') if (!isEmpty(payload.'criteria[0][value]'))
-}]]></ee:set-payload>
+}
+]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
-		<moodle:user-get-users doc:name="User - Get Users" doc:id="0de1ef01-f54e-4ff0-a954-ef06529a2b8d" correlationId="#[correlationId]" config-ref="Moodle_config">
+		<moodle:user-get-users doc:name="User - Get Users" doc:id="0de1ef01-f54e-4ff0-a954-ef06529a2b8d" correlationId="#[correlationId]" config-ref="Moodle_config1">
 		</moodle:user-get-users>
     </flow>
     <flow name="post:\core_user_get_users_by_field:application\x-www-form-urlencoded:moodle-rest-api-config">
@@ -518,7 +519,7 @@ output application/java
 }]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
-		<moodle:user-get-usersby-id doc:name="User - Get Users by Id" doc:id="99ed74ff-b131-4b47-bb5c-3a770fe3c8e3" correlationId="#[correlationId]" config-ref="Moodle_config">
+		<moodle:user-get-usersby-id doc:name="User - Get Users by Id" doc:id="99ed74ff-b131-4b47-bb5c-3a770fe3c8e3" correlationId="#[correlationId]" config-ref="Moodle_config1">
 		</moodle:user-get-usersby-id>
     </flow>
     <flow name="post:\core_user_update_users:application\x-www-form-urlencoded:moodle-rest-api-config">
@@ -577,7 +578,7 @@ output application/java
 }]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
-		<moodle:user-update-users doc:name="User - Update Users" doc:id="5182ef77-3168-4857-9f89-e1e605dcaff9" correlationId="#[correlationId]" config-ref="Moodle_config">
+		<moodle:user-update-users doc:name="User - Update Users" doc:id="5182ef77-3168-4857-9f89-e1e605dcaff9" correlationId="#[correlationId]" config-ref="Moodle_config1">
 		</moodle:user-update-users>
     </flow>
     <flow name="post:\enrol_manual_enrol_users:application\x-www-form-urlencoded:moodle-rest-api-config">
@@ -602,7 +603,7 @@ output application/java
 }]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
-		<moodle:enrollment-enroll-users doc:name="Enrollment - Enroll Users" doc:id="e2aee599-8eeb-455f-9185-1e648af64c7b" correlationId="#[correlationId]" config-ref="Moodle_config">
+		<moodle:enrollment-enroll-users doc:name="Enrollment - Enroll Users" doc:id="e2aee599-8eeb-455f-9185-1e648af64c7b" correlationId="#[correlationId]" config-ref="Moodle_config1">
 		</moodle:enrollment-enroll-users>
     </flow>
     <flow name="post:\enrol_manual_unenrol_users:application\x-www-form-urlencoded:moodle-rest-api-config">
@@ -634,7 +635,7 @@ output application/java
 }]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
-		<moodle:grade-report-get-course-grades doc:name="Grade Report - Get Course Grades" doc:id="1995490d-9a89-4412-ada9-d8debeaa7b7e" correlationId="#[correlationId]" config-ref="Moodle_config">
+		<moodle:grade-report-get-course-grades doc:name="Grade Report - Get Course Grades" doc:id="1995490d-9a89-4412-ada9-d8debeaa7b7e" correlationId="#[correlationId]" config-ref="Moodle_config1">
 		</moodle:grade-report-get-course-grades>
     </flow>
     <flow name="post:\mod_assign_get_assignments:application\x-www-form-urlencoded:moodle-rest-api-config">
@@ -658,7 +659,7 @@ output application/java
 }]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
-		<moodle:assignments-getallthecourseassignments doc:name="Assignments - Get all the course assignments" doc:id="577d81fa-38a2-4e41-a62f-4ba795a35db9" correlationId="#[correlationId]" config-ref="Moodle_config">
+		<moodle:assignments-getallthecourseassignments doc:name="Assignments - Get all the course assignments" doc:id="577d81fa-38a2-4e41-a62f-4ba795a35db9" correlationId="#[correlationId]" config-ref="Moodle_config1">
 		</moodle:assignments-getallthecourseassignments>
     </flow>
     <flow name="post:\mod_assign_get_grades:application\x-www-form-urlencoded:moodle-rest-api-config">
@@ -681,7 +682,7 @@ output application/java
 }]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
-		<moodle:assignments-getassignmentgrades doc:name="Assignments - Get assignment grades" doc:id="4e893310-0b41-4c2e-9ecf-0db80ac32d00" correlationId="#[correlationId]" config-ref="Moodle_config">
+		<moodle:assignments-getassignmentgrades doc:name="Assignments - Get assignment grades" doc:id="4e893310-0b41-4c2e-9ecf-0db80ac32d00" correlationId="#[correlationId]" config-ref="Moodle_config1">
 		</moodle:assignments-getassignmentgrades>
     </flow>
     <flow name="post:\mod_assign_get_submission_status:application\x-www-form-urlencoded:moodle-rest-api-config">
@@ -705,7 +706,7 @@ output application/java
 }]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
-		<moodle:assignments-getassignmentsubmissions doc:name="Assignments - Get assignment submissions" doc:id="7e15b2a7-9e9d-499b-9916-8483e0d7251b" correlationId="#[correlationId]" config-ref="Moodle_config">
+		<moodle:assignments-getassignmentsubmissions doc:name="Assignments - Get assignment submissions" doc:id="7e15b2a7-9e9d-499b-9916-8483e0d7251b" correlationId="#[correlationId]" config-ref="Moodle_config1">
 		</moodle:assignments-getassignmentsubmissions>
     </flow>
     <flow name="post:\core_calendar_create_calendar_events:application\x-www-form-urlencoded:moodle-rest-api-config">
@@ -738,7 +739,7 @@ output application/java
 }]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
-		<moodle:calendar-create-calendar-events doc:name="Calendar - Create Calendar Events" doc:id="fc776a3d-7e78-490c-bb09-fea6955e1f4e" correlationId="#[correlationId]" config-ref="Moodle_config">
+		<moodle:calendar-create-calendar-events doc:name="Calendar - Create Calendar Events" doc:id="fc776a3d-7e78-490c-bb09-fea6955e1f4e" correlationId="#[correlationId]" config-ref="Moodle_config1">
 		</moodle:calendar-create-calendar-events>
     </flow>
     <flow name="post:\core_calendar_delete_calendar_events:application\x-www-form-urlencoded:moodle-rest-api-config">
@@ -762,7 +763,7 @@ output application/java
 }]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
-		<moodle:calendar-delete-calendar-events doc:name="Calendar - Delete Calendar Events" doc:id="dcf4d7cc-f69b-49d4-8bf9-968389f51e92" correlationId="#[correlationId]" config-ref="Moodle_config">
+		<moodle:calendar-delete-calendar-events doc:name="Calendar - Delete Calendar Events" doc:id="dcf4d7cc-f69b-49d4-8bf9-968389f51e92" correlationId="#[correlationId]" config-ref="Moodle_config1">
 		</moodle:calendar-delete-calendar-events>
     </flow>
     <flow name="post:\core_calendar_get_action_events_by_timesort:application\x-www-form-urlencoded:moodle-rest-api-config">
@@ -785,7 +786,7 @@ output application/java
 }]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
-		<moodle:calendar-get-calendareventsforstudents doc:name="Calendar - Get Calendar events for students" doc:id="79f0d479-376b-48e1-a2c2-894da8ab4db1" correlationId="#[correlationId]" config-ref="Moodle_config">
+		<moodle:calendar-get-calendareventsforstudents doc:name="Calendar - Get Calendar events for students" doc:id="79f0d479-376b-48e1-a2c2-894da8ab4db1" correlationId="#[correlationId]" config-ref="Moodle_config1">
 		</moodle:calendar-get-calendareventsforstudents>
     </flow>
     <flow name="post:\core_calendar_get_calendar_event_by_id:application\x-www-form-urlencoded:moodle-rest-api-config">
@@ -804,11 +805,11 @@ output application/java
      wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,                            
     (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
     (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
-    eventid: payload.eventid
+    eventid: payload.eventid as Number
 }]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
-		<moodle:calendar-get-calendar-eventby-id doc:name="Calendar - Get Calendar Event by Id" doc:id="e44f8587-55f2-40a3-8b1b-0bf5dacea535" correlationId="#[correlationId]" config-ref="Moodle_config">
+		<moodle:calendar-get-calendar-eventby-id doc:name="Calendar - Get Calendar Event by Id" doc:id="e44f8587-55f2-40a3-8b1b-0bf5dacea535" correlationId="#[correlationId]" config-ref="Moodle_config1">
 		</moodle:calendar-get-calendar-eventby-id>
     </flow>
     <flow name="post:\core_calendar_get_calendar_events:application\x-www-form-urlencoded:moodle-rest-api-config">
@@ -834,7 +835,7 @@ output application/java
 }]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
-		<moodle:calendar-get-calendar-events doc:name="Calendar - Get Calendar Events" doc:id="bb402bcc-7630-4d8b-b56f-59f010882135" correlationId="#[correlationId]" config-ref="Moodle_config">
+		<moodle:calendar-get-calendar-events doc:name="Calendar - Get Calendar Events" doc:id="bb402bcc-7630-4d8b-b56f-59f010882135" correlationId="#[correlationId]" config-ref="Moodle_config1">
 		</moodle:calendar-get-calendar-events>
 		<logger level="INFO" doc:name="Logger" doc:id="c70e88f6-6d59-4f46-91f5-367faa331664" />
     </flow>
@@ -861,7 +862,7 @@ output application/java
 }]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
-		<moodle:cohort-add-cohort-members doc:name="Cohort - Add Cohort Members" doc:id="65b5d29c-9e0e-4533-9b03-8770543fcff9" correlationId="#[correlationId]" config-ref="Moodle_config">
+		<moodle:cohort-add-cohort-members doc:name="Cohort - Add Cohort Members" doc:id="65b5d29c-9e0e-4533-9b03-8770543fcff9" correlationId="#[correlationId]" config-ref="Moodle_config1">
 		</moodle:cohort-add-cohort-members>
     </flow>
     <flow name="post:\core_cohort_create_cohorts:application\x-www-form-urlencoded:moodle-rest-api-config">
@@ -891,7 +892,7 @@ output application/java
 }]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
-		<moodle:cohort-create-cohorts doc:name="Cohort - Create Cohort" doc:id="af2a61d2-d8e6-4a15-96f9-6d07466c250a" correlationId="#[correlationId]" config-ref="Moodle_config">
+		<moodle:cohort-create-cohorts doc:name="Cohort - Create Cohort" doc:id="af2a61d2-d8e6-4a15-96f9-6d07466c250a" correlationId="#[correlationId]" config-ref="Moodle_config1">
 		</moodle:cohort-create-cohorts>
     </flow>
     <flow name="post:\core_cohort_delete_cohort_members:application\x-www-form-urlencoded:moodle-rest-api-config">
@@ -915,7 +916,7 @@ output application/java
 }]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
-		<moodle:cohort-delete-cohort-member doc:name="Cohort - Delete Cohort Member" doc:id="9eb09be8-786f-47de-b1c1-5ee17996a3f6" correlationId="#[correlationId]" config-ref="Moodle_config">
+		<moodle:cohort-delete-cohort-member doc:name="Cohort - Delete Cohort Member" doc:id="9eb09be8-786f-47de-b1c1-5ee17996a3f6" correlationId="#[correlationId]" config-ref="Moodle_config1">
 		</moodle:cohort-delete-cohort-member>
     </flow>
     <flow name="post:\core_cohort_delete_cohorts:application\x-www-form-urlencoded:moodle-rest-api-config">
@@ -938,7 +939,7 @@ output application/java
 }]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
-		<moodle:cohort-delete-cohort doc:name="Cohort - Delete Cohort" doc:id="ff03dd91-973c-4a28-8ab7-e9c4c4d1434f" correlationId="#[correlationId]" config-ref="Moodle_config">
+		<moodle:cohort-delete-cohort doc:name="Cohort - Delete Cohort" doc:id="ff03dd91-973c-4a28-8ab7-e9c4c4d1434f" correlationId="#[correlationId]" config-ref="Moodle_config1">
 		</moodle:cohort-delete-cohort>
     </flow>
     <flow name="post:\core_cohort_get_cohort_members:application\x-www-form-urlencoded:moodle-rest-api-config">
@@ -961,7 +962,7 @@ output application/java
 }]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
-		<moodle:cohort-get-cohort-members doc:name="Cohort - Get Cohort Members" doc:id="bae94d5a-7e47-45dc-acf3-8ef84d31da16" correlationId="#[correlationId]" config-ref="Moodle_config">
+		<moodle:cohort-get-cohort-members doc:name="Cohort - Get Cohort Members" doc:id="bae94d5a-7e47-45dc-acf3-8ef84d31da16" correlationId="#[correlationId]" config-ref="Moodle_config1">
 		</moodle:cohort-get-cohort-members>
     </flow>
     <flow name="post:\core_cohort_get_cohorts:application\x-www-form-urlencoded:moodle-rest-api-config">
@@ -983,7 +984,7 @@ output application/java
 }]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
-		<moodle:cohort-get-cohorts doc:name="Cohort - Get Cohorts" doc:id="39a15e0b-d772-443d-88f7-4adb2e71a1ed" correlationId="#[correlationId]" config-ref="Moodle_config">
+		<moodle:cohort-get-cohorts doc:name="Cohort - Get Cohorts" doc:id="39a15e0b-d772-443d-88f7-4adb2e71a1ed" correlationId="#[correlationId]" config-ref="Moodle_config1">
 		</moodle:cohort-get-cohorts>
     </flow>
     <flow name="post:\core_cohort_update_cohorts:application\x-www-form-urlencoded:moodle-rest-api-config">
@@ -1016,7 +1017,7 @@ output application/java
 }]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
-		<moodle:cohort-update-cohorts doc:name="Cohort - Update Cohorts" doc:id="49a22b31-e9f9-43ed-9885-b40d16bb92df" correlationId="#[correlationId]" config-ref="Moodle_config">
+		<moodle:cohort-update-cohorts doc:name="Cohort - Update Cohorts" doc:id="49a22b31-e9f9-43ed-9885-b40d16bb92df" correlationId="#[correlationId]" config-ref="Moodle_config1">
 		</moodle:cohort-update-cohorts>
     </flow>
     <flow name="post:\core_group_add_group_members:application\x-www-form-urlencoded:moodle-rest-api-config">
@@ -1041,7 +1042,7 @@ output application/java
 }]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
-		<moodle:groups-add-group-members doc:name="Groups - Add Group Members" doc:id="f6e56fb7-69a1-41f0-baab-c26aa05735ee" correlationId="#[correlationId]" config-ref="Moodle_config">
+		<moodle:groups-add-group-members doc:name="Groups - Add Group Members" doc:id="f6e56fb7-69a1-41f0-baab-c26aa05735ee" correlationId="#[correlationId]" config-ref="Moodle_config1">
 		</moodle:groups-add-group-members>
     </flow>
     <flow name="post:\core_group_assign_grouping:application\x-www-form-urlencoded:moodle-rest-api-config">
@@ -1066,7 +1067,7 @@ output application/java
 }]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
-		<moodle:groups-assign-groupings doc:name="Groups - Assign Groupings" doc:id="21c36651-bd62-49d7-be25-df1b9edf0692" correlationId="#[correlationId]" config-ref="Moodle_config">
+		<moodle:groups-assign-groupings doc:name="Groups - Assign Groupings" doc:id="21c36651-bd62-49d7-be25-df1b9edf0692" correlationId="#[correlationId]" config-ref="Moodle_config1">
 		</moodle:groups-assign-groupings>
     </flow>
     <flow name="post:\core_group_create_groupings:application\x-www-form-urlencoded:moodle-rest-api-config">
@@ -1124,7 +1125,7 @@ output application/java
 }]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
-		<moodle:groups-create-group doc:name="Groups - Create Group" doc:id="dc77344a-179c-4c8f-b019-20591e4e835b" correlationId="#[correlationId]" config-ref="Moodle_config">
+		<moodle:groups-create-group doc:name="Groups - Create Group" doc:id="dc77344a-179c-4c8f-b019-20591e4e835b" correlationId="#[correlationId]" config-ref="Moodle_config1">
 		</moodle:groups-create-group>
     </flow>
     <flow name="post:\core_group_delete_group_members:application\x-www-form-urlencoded:moodle-rest-api-config">
@@ -1149,7 +1150,7 @@ output application/java
 }]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
-		<moodle:groups-delete-group-members doc:name="Groups - Delete Group Members" doc:id="a5c7b53d-552c-49e5-bedd-e0c7d00c5e7a" correlationId="#[correlationId]" config-ref="Moodle_config">
+		<moodle:groups-delete-group-members doc:name="Groups - Delete Group Members" doc:id="a5c7b53d-552c-49e5-bedd-e0c7d00c5e7a" correlationId="#[correlationId]" config-ref="Moodle_config1">
 		</moodle:groups-delete-group-members>
     </flow>
     <flow name="post:\core_group_delete_groupings:application\x-www-form-urlencoded:moodle-rest-api-config">
@@ -1172,7 +1173,7 @@ output application/java
 }]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
-		<moodle:groups-delete-groupings doc:name="Groups - Delete Groupings" doc:id="63f5daca-67f5-4b1f-8788-7c29e076a678" correlationId="#[correlationId]" config-ref="Moodle_config">
+		<moodle:groups-delete-groupings doc:name="Groups - Delete Groupings" doc:id="63f5daca-67f5-4b1f-8788-7c29e076a678" correlationId="#[correlationId]" config-ref="Moodle_config1">
 		</moodle:groups-delete-groupings>
     </flow>
     <flow name="post:\core_group_delete_groups:application\x-www-form-urlencoded:moodle-rest-api-config">
@@ -1196,7 +1197,7 @@ output application/java
 }]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
-		<moodle:groups-delete-group doc:name="Groups - Delete Group" doc:id="43a6802f-880b-4cda-8f4b-50f20913000a" correlationId="#[correlationId]" config-ref="Moodle_config">
+		<moodle:groups-delete-group doc:name="Groups - Delete Group" doc:id="43a6802f-880b-4cda-8f4b-50f20913000a" correlationId="#[correlationId]" config-ref="Moodle_config1">
 		</moodle:groups-delete-group>
     </flow>
     <flow name="post:\core_group_get_course_groupings:application\x-www-form-urlencoded:moodle-rest-api-config">
@@ -1219,7 +1220,7 @@ output application/java
 }]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
-		<moodle:groups-get-groupings doc:name="Groups - Get Groupings" doc:id="17017d8f-205d-4888-9092-b546219679f3" correlationId="#[correlationId]" config-ref="Moodle_config">
+		<moodle:groups-get-groupings doc:name="Groups - Get Groupings" doc:id="17017d8f-205d-4888-9092-b546219679f3" correlationId="#[correlationId]" config-ref="Moodle_config1">
 		</moodle:groups-get-groupings>
     </flow>
     <flow name="post:\core_group_get_course_groups:application\x-www-form-urlencoded:moodle-rest-api-config">
@@ -1242,7 +1243,7 @@ output application/java
 }]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
-		<moodle:groups-get-course-groups doc:name="Groups - Get Course Groups" doc:id="72122e73-9eb2-4f07-bd74-7d2327ebb3a3" correlationId="#[correlationId]" config-ref="Moodle_config">
+		<moodle:groups-get-course-groups doc:name="Groups - Get Course Groups" doc:id="72122e73-9eb2-4f07-bd74-7d2327ebb3a3" correlationId="#[correlationId]" config-ref="Moodle_config1">
 		</moodle:groups-get-course-groups>
     </flow>
     <flow name="post:\core_group_get_group_members:application\x-www-form-urlencoded:moodle-rest-api-config">
@@ -1266,7 +1267,7 @@ output application/java
 }]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
-		<moodle:groups-get-group-members doc:name="Groups - Get Group Members" doc:id="b87591b8-d3ba-4bbe-a050-1fe8cb16fdc9" correlationId="#[correlationId]" config-ref="Moodle_config">
+		<moodle:groups-get-group-members doc:name="Groups - Get Group Members" doc:id="b87591b8-d3ba-4bbe-a050-1fe8cb16fdc9" correlationId="#[correlationId]" config-ref="Moodle_config1">
 		</moodle:groups-get-group-members>
     </flow>
     <flow name="post:\core_group_get_groups:application\x-www-form-urlencoded:moodle-rest-api-config">
@@ -1289,7 +1290,7 @@ output application/java
 }]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
-		<moodle:groups-get-group doc:name="Groups - Get Group" doc:id="e1ade10f-849e-4e07-b222-7ecee50058eb" correlationId="#[correlationId]" config-ref="Moodle_config">
+		<moodle:groups-get-group doc:name="Groups - Get Group" doc:id="e1ade10f-849e-4e07-b222-7ecee50058eb" correlationId="#[correlationId]" config-ref="Moodle_config1">
 		</moodle:groups-get-group>
     </flow>
     <flow name="post:\core_group_unassign_grouping:application\x-www-form-urlencoded:moodle-rest-api-config">
@@ -1313,7 +1314,7 @@ output application/java
 }]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
-		<moodle:groups-unassign-groupings doc:name="Groups - Unassign Groupings" doc:id="3c04a9c7-06bd-451d-a321-04b512e92761" correlationId="#[correlationId]" config-ref="Moodle_config">
+		<moodle:groups-unassign-groupings doc:name="Groups - Unassign Groupings" doc:id="3c04a9c7-06bd-451d-a321-04b512e92761" correlationId="#[correlationId]" config-ref="Moodle_config1">
 		</moodle:groups-unassign-groupings>
     </flow>
     <flow name="post:\core_group_update_groupings:application\x-www-form-urlencoded:moodle-rest-api-config">
@@ -1342,7 +1343,7 @@ output application/java
 }]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
-		<moodle:groups-update-groupings doc:name="Groups - Update Groupings" doc:id="a1bbc107-2107-4dfe-866e-36a55284ade3" correlationId="#[correlationId]" config-ref="Moodle_config">
+		<moodle:groups-update-groupings doc:name="Groups - Update Groupings" doc:id="a1bbc107-2107-4dfe-866e-36a55284ade3" correlationId="#[correlationId]" config-ref="Moodle_config1">
 		</moodle:groups-update-groupings>
     </flow>
     <flow name="post:\core_group_update_groups:application\x-www-form-urlencoded:moodle-rest-api-config">
@@ -1374,7 +1375,7 @@ output application/java
 }]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
-		<moodle:groups-update-group doc:name="Groups - Update Group" doc:id="3874a891-04d9-4a79-abe1-78c8a6c1be58" correlationId="#[correlationId]" config-ref="Moodle_config">
+		<moodle:groups-update-group doc:name="Groups - Update Group" doc:id="3874a891-04d9-4a79-abe1-78c8a6c1be58" correlationId="#[correlationId]" config-ref="Moodle_config1">
 		</moodle:groups-update-group>
     </flow>
     <flow name="post:\gradereport_user_get_grade_items:application\x-www-form-urlencoded:moodle-rest-api-config">
@@ -1400,7 +1401,7 @@ output application/java
 }]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
-		<moodle:grade-report-get-grade-items doc:name="Grade Report - Get Grade Items" doc:id="cf71e017-8e1c-46be-9dfe-01fc86d88b20" correlationId="#[correlationId]" config-ref="Moodle_config">
+		<moodle:grade-report-get-grade-items doc:name="Grade Report - Get Grade Items" doc:id="cf71e017-8e1c-46be-9dfe-01fc86d88b20" correlationId="#[correlationId]" config-ref="Moodle_config1">
 		</moodle:grade-report-get-grade-items>
     </flow>	
 	
