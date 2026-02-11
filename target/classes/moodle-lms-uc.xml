@@ -26,12 +26,12 @@ output application/java
     wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,                            
     (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
     (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
-    "categories[0][name]": payload.'categories[0][name]',
-    "categories[0][parent]": payload.'categories[0][parent]',
-    "categories[0][idnumber]": payload.'categories[0][idnumber]',
-    "categories[0][description]": payload.'categories[0][description]',
-    "categories[0][descriptionformat]": payload.'categories[0][descriptionformat]',
-    "categories[0][theme]": payload.'categories[0][theme]'
+    ("categories[0][name]": payload.'categories[0][name]') if(!isEmpty(payload.'categories[0][name]')),
+    ("categories[0][parent]": payload.'categories[0][parent]'as Number) if(!isEmpty(payload.'categories[0][parent]')) ,
+    ("categories[0][idnumber]": payload.'categories[0][idnumber]') if(!isEmpty(payload.'categories[0][idnumber]')),
+    ("categories[0][description]": payload.'categories[0][description]') if(!isEmpty(payload.'categories[0][description]')),
+    ("categories[0][descriptionformat]": payload.'categories[0][descriptionformat]' as Number) if(!isEmpty(payload.'categories[0][descriptionformat]')),
+    ("categories[0][theme]": payload.'categories[0][theme]') if(!isEmpty(payload.'categories[0][theme]'))
 }]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
