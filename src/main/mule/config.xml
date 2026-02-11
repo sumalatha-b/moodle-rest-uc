@@ -13,7 +13,8 @@ http://www.mulesoft.org/schema/connectivity/moodle http://www.mulesoft.org/schem
 	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="fb106bc8-f257-44e4-89b5-7e62664feff8" >
 		<http:listener-connection host="${https.host}" port="${https.port}" protocol="HTTPS">
 			<tls:context >
-				<tls:key-store type="jks" path="Client-Keystore.jks" keyPassword="Mule12345" password="Mule12345" />
+				<tls:trust-store path="client-truststore.jks" password="Mule12345" type="jks" insecure="true" />
+				<tls:key-store type="jks" path="client-keystore.jks" keyPassword="Mule12345" password="Mule12345" />
 			</tls:context>
 		</http:listener-connection>
 	</http:listener-config>

@@ -17,7 +17,8 @@
       "exportedPackages": [],
       "exportedResources": [
         "application-types.xml",
-        "Client-Keystore.jks",
+        "client-keystore.jks",
+        "client-truststore.jks",
         "common.xml",
         "config.xml",
         "config.yaml",
