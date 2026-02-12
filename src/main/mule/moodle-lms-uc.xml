@@ -240,7 +240,8 @@ output application/java
 {
     wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,              
     (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
-    (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat))
+    (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
+    ("options[ids][0]": payload.'options[ids][0]' as Number) if(!isEmpty(payload.'options[ids][0]'))
 }]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
@@ -368,8 +369,7 @@ output application/java
     ("courses[0][customfields][0][shortname]": payload.'courses[0][customfields][0][shortname]') 
         if(!isEmpty(payload.'courses[0][customfields][0][customfields][0][shortname]')),
 
-    ("courses[0][customfields][0][value]": payload.'courses[0][customfields][0][value]') 
-        if(!isEmpty(payload.'courses[0][customfields][0][value]'))
+    ("courses[0][customfields][0][value]": payload.'courses[0][customfields][0][value]')  if(!isEmpty(payload.'courses[0][customfields][0][value]'))
 }
 ]]></ee:set-payload>
 			</ee:message>
@@ -692,7 +692,15 @@ output application/java
     (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
     (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
     ("criteria[0][key]": payload.'criteria[0][key]') if (!isEmpty(payload.'criteria[0][key]')),
-    ("criteria[0][value]": payload.'criteria[0][value]') if (!isEmpty(payload.'criteria[0][value]'))
+    ("criteria[0][value]": payload.'criteria[0][value]') if (!isEmpty(payload.'criteria[0][value]')),
+    ("criteria[1][key]": payload.'criteria[1][key]') if (!isEmpty(payload.'criteria[1][key]')),
+    ("criteria[1][value]": payload.'criteria[1][value]') if (!isEmpty(payload.'criteria[1][value]')),
+    ("criteria[2][key]": payload.'criteria[2][key]') if (!isEmpty(payload.'criteria[2][key]')),
+    ("criteria[2][value]": payload.'criteria[2][value]') if (!isEmpty(payload.'criteria[2][value]')),
+    ("criteria[3][key]": payload.'criteria[3][key]') if (!isEmpty(payload.'criteria[3][key]')),
+    ("criteria[3][value]": payload.'criteria[3][value]') if (!isEmpty(payload.'criteria[3][value]')),
+    ("criteria[4][key]": payload.'criteria[4][key]') if (!isEmpty(payload.'criteria[4][key]')),
+    ("criteria[4][value]": payload.'criteria[4][value]') if (!isEmpty(payload.'criteria[4][value]'))
 }
 ]]></ee:set-payload>
 			</ee:message>
@@ -1147,7 +1155,8 @@ output application/java
     ("cohorts[0][visible]": payload.'cohorts[0][visible]' as Number) 
         if(!isEmpty(payload.'cohorts[0][visible]')),
 
-    ("cohorts[0][theme]": payload.'cohorts[0][theme]') if(!isEmpty(payload.'cohorts[0][theme]'))
+    ("cohorts[0][theme]": payload.'cohorts[0][customfields][0][shortname]') if(!isEmpty(payload.'cohorts[0][customfields][0][shortname]')),
+    ("cohorts[0][theme]": payload.'cohorts[0][customfields][0][value]') if(!isEmpty(payload.'cohorts[0][customfields][0][value]'))
 }
 ]]></ee:set-payload>
 			</ee:message>
@@ -1397,6 +1406,7 @@ output application/java
     ('groups[0][name]': payload.'groups[0][name]') if(!isEmpty(payload.'groups[0][name]')),
     ('groups[0][description]': payload.'groups[0][description]') if(!isEmpty(payload.'groups[0][description]')),
     ('groups[0][descriptionformat]': payload.'groups[0][descriptionformat]' as Number) if(!isEmpty(payload.'groups[0][descriptionformat]')),
+   ('groups[0][enrolmentkey]': payload.'groups[0][enrolmentkey]') if(!isEmpty(payload.'groups[0][enrolmentkey]')),
     ('groups[0][idnumber]': payload.'groups[0][idnumber]') if(!isEmpty(payload.'groups[0][idnumber]')),
     ('groups[0][visibility]': payload.'groups[0][visibility]' as Number) if(!isEmpty(payload.'groups[0][visibility]')),
     ('groups[0][participation]': payload.'groups[0][participation]' as Number) if(!isEmpty(payload.'groups[0][participation]')),

@@ -368,8 +368,7 @@ output application/java
     ("courses[0][customfields][0][shortname]": payload.'courses[0][customfields][0][shortname]') 
         if(!isEmpty(payload.'courses[0][customfields][0][customfields][0][shortname]')),
 
-    ("courses[0][customfields][0][value]": payload.'courses[0][customfields][0][value]') 
-        if(!isEmpty(payload.'courses[0][customfields][0][value]'))
+    ("courses[0][customfields][0][value]": payload.'courses[0][customfields][0][value]')  if(!isEmpty(payload.'courses[0][customfields][0][value]'))
 }
 ]]></ee:set-payload>
 			</ee:message>
@@ -692,7 +691,15 @@ output application/java
     (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
     (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
     ("criteria[0][key]": payload.'criteria[0][key]') if (!isEmpty(payload.'criteria[0][key]')),
-    ("criteria[0][value]": payload.'criteria[0][value]') if (!isEmpty(payload.'criteria[0][value]'))
+    ("criteria[0][value]": payload.'criteria[0][value]') if (!isEmpty(payload.'criteria[0][value]')),
+    ("criteria[1][key]": payload.'criteria[1][key]') if (!isEmpty(payload.'criteria[1][key]')),
+    ("criteria[1][value]": payload.'criteria[1][value]') if (!isEmpty(payload.'criteria[1][value]')),
+    ("criteria[2][key]": payload.'criteria[2][key]') if (!isEmpty(payload.'criteria[2][key]')),
+    ("criteria[2][value]": payload.'criteria[2][value]') if (!isEmpty(payload.'criteria[2][value]')),
+    ("criteria[3][key]": payload.'criteria[3][key]') if (!isEmpty(payload.'criteria[3][key]')),
+    ("criteria[3][value]": payload.'criteria[3][value]') if (!isEmpty(payload.'criteria[3][value]')),
+    ("criteria[4][key]": payload.'criteria[4][key]') if (!isEmpty(payload.'criteria[4][key]')),
+    ("criteria[4][value]": payload.'criteria[4][value]') if (!isEmpty(payload.'criteria[4][value]'))
 }
 ]]></ee:set-payload>
 			</ee:message>
@@ -800,9 +807,14 @@ output application/java
     wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,                            
     (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
     (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
+
     ("enrolments[0][roleid]": payload.'enrolments[0][roleid]' as Number) if(!isEmpty(payload.'enrolments[0][roleid]')),
     ("enrolments[0][userid]": payload.'enrolments[0][userid]' as Number) if(!isEmpty(payload.'enrolments[0][userid]')),
-    ("enrolments[0][courseid]": payload.'enrolments[0][courseid]' as Number) if(!isEmpty(payload.'enrolments[0][courseid]'))
+    ("enrolments[0][courseid]": payload.'enrolments[0][courseid]' as Number) if(!isEmpty(payload.'enrolments[0][courseid]')),
+
+    ("enrolments[0][timestart]": payload.'enrolments[0][timestart]' as Number) if(!isEmpty(payload.'enrolments[0][timestart]')),
+    ("enrolments[0][timeend]": payload.'enrolments[0][timeend]' as Number) if(!isEmpty(payload.'enrolments[0][timeend]')),
+    ("enrolments[0][suspend]": payload.'enrolments[0][suspend]' as Number) if(!isEmpty(payload.'enrolments[0][suspend]'))
 }
 ]]></ee:set-payload>
 			</ee:message>
@@ -851,9 +863,9 @@ output application/java
      wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,                            
     (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
     (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
- 
-    (userid: payload.userid) if (!isEmpty(payload.userid))
-}]]></ee:set-payload>
+    (userid: payload.userid as Number) if (!isEmpty(payload.userid))
+}
+]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
 		<moodle:grade-report-get-course-grades doc:name="Grade Report - Get Course Grades" doc:id="1995490d-9a89-4412-ada9-d8debeaa7b7e" correlationId="#[correlationId]" config-ref="Moodle_config1">
@@ -875,9 +887,9 @@ output application/java
      wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,                            
     (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
     (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
-    ("courseids[0]": payload.courseids[0]) if (!isEmpty(payload.courseids[0]))
-    
-}]]></ee:set-payload>
+    ("courseids[0]": payload.'courseids[0]' as Number) if(!isEmpty(payload.'courseids[0]'))
+}
+]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
 		<moodle:assignments-getallthecourseassignments doc:name="Assignments - Get all the course assignments" doc:id="577d81fa-38a2-4e41-a62f-4ba795a35db9" correlationId="#[correlationId]" config-ref="Moodle_config1">
@@ -899,8 +911,9 @@ output application/java
      wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,                            
     (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
     (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
-    'assignmentids[0]': payload.'assignmentids[0]'
-}]]></ee:set-payload>
+    ('assignmentids[0]': payload.'assignmentids[0]' as Number) if(!isEmpty(payload.'assignmentids[0]'))
+}
+]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
 		<moodle:assignments-getassignmentgrades doc:name="Assignments - Get assignment grades" doc:id="4e893310-0b41-4c2e-9ecf-0db80ac32d00" correlationId="#[correlationId]" config-ref="Moodle_config1">
@@ -922,9 +935,12 @@ output application/java
      wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,                            
     (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
     (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
-    assignid: payload.assignid,
-    userid: payload.userid
-}]]></ee:set-payload>
+
+    (assignid: payload.assignid as Number) if(!isEmpty(payload.assignid)),
+    (userid: payload.userid as Number) if(!isEmpty(payload.userid)),
+    (groupid: payload.groupid as Number) if(!isEmpty(payload.groupid))
+}
+]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
 		<moodle:assignments-getassignmentsubmissions doc:name="Assignments - Get assignment submissions" doc:id="7e15b2a7-9e9d-499b-9916-8483e0d7251b" correlationId="#[correlationId]" config-ref="Moodle_config1">
@@ -946,18 +962,23 @@ output application/java
      wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,                            
     (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
     (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
-    "events[0][name]": payload."events[0][name]",
-    "events[0][description]": payload."events[0][description]",
-    "events[0][format]": payload."events[0][format]",
-    "events[0][courseid]": payload."events[0][courseid]",
-    "events[0][groupid]": payload."events[0][groupid]",
-    "events[0][repeats]": payload."events[0][repeats]",
-    "events[0][eventtype]": payload."events[0][eventtype]",
-    "events[0][timestart]": payload."events[0][timestart]",
-    "events[0][timeduration]": payload."events[0][timeduration]",
-    "events[0][visible]": payload."events[0][visible]",
-    "events[0][sequence]": payload."events[0][sequence]"
-}]]></ee:set-payload>
+
+    ("events[0][name]": payload."events[0][name]") if(!isEmpty(payload."events[0][name]")),
+    ("events[0][description]": payload."events[0][description]") if(!isEmpty(payload."events[0][description]")),
+
+    ("events[0][format]": payload."events[0][format]" as Number) if(!isEmpty(payload."events[0][format]")),
+    ("events[0][courseid]": payload."events[0][courseid]" as Number) if(!isEmpty(payload."events[0][courseid]")),
+    ("events[0][groupid]": payload."events[0][groupid]" as Number) if(!isEmpty(payload."events[0][groupid]")),
+    ("events[0][repeats]": payload."events[0][repeats]" as Number) if(!isEmpty(payload."events[0][repeats]")),
+
+    ("events[0][eventtype]": payload."events[0][eventtype]") if(!isEmpty(payload."events[0][eventtype]")),
+
+    ("events[0][timestart]": payload."events[0][timestart]" as Number) if(!isEmpty(payload."events[0][timestart]")),
+    ("events[0][timeduration]": payload."events[0][timeduration]" as Number) if(!isEmpty(payload."events[0][timeduration]")),
+    ("events[0][visible]": payload."events[0][visible]" as Number) if(!isEmpty(payload."events[0][visible]")),
+    ("events[0][sequence]": payload."events[0][sequence]" as Number) if(!isEmpty(payload."events[0][sequence]"))
+}
+]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
 		<moodle:calendar-create-calendar-events doc:name="Calendar - Create Calendar Events" doc:id="fc776a3d-7e78-490c-bb09-fea6955e1f4e" correlationId="#[correlationId]" config-ref="Moodle_config1">
@@ -979,9 +1000,10 @@ output application/java
      wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,                            
     (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
     (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
-    "events[0][eventid]": payload."events[0][eventid]",
-    "events[0][repeat]": payload."events[0][repeat]"
-}]]></ee:set-payload>
+    ("events[0][eventid]": payload."events[0][eventid]" as Number) if(!isEmpty(payload."events[0][eventid]")),
+    ("events[0][repeat]": payload."events[0][repeat]" as Number) if(!isEmpty(payload."events[0][repeat]"))
+}
+]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
 		<moodle:calendar-delete-calendar-events doc:name="Calendar - Delete Calendar Events" doc:id="dcf4d7cc-f69b-49d4-8bf9-968389f51e92" correlationId="#[correlationId]" config-ref="Moodle_config1">
@@ -1003,8 +1025,16 @@ output application/java
      wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,                            
     (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
     (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
-    (timesortfrom: payload.timesortfrom) if (!isEmpty(payload.timesortfrom))
-}]]></ee:set-payload>
+
+    (timesortfrom: payload.timesortfrom as Number) if(!isEmpty(payload.timesortfrom)),
+    (timesortto: payload.timesortto as Number) if(!isEmpty(payload.timesortto)),
+    (aftereventid: payload.aftereventid as Number) if(!isEmpty(payload.aftereventid)),
+    (limitnum: payload.limitnum as Number) if(!isEmpty(payload.limitnum)),
+    (limittononsuspendedevents: payload.limittononsuspendedevents as Number) if(!isEmpty(payload.limittononsuspendedevents)),
+    (userid: payload.userid as Number) if(!isEmpty(payload.userid)),
+    (searchvalue: payload.searchvalue) if(!isEmpty(payload.searchvalue))
+}
+]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
 		<moodle:calendar-get-calendareventsforstudents doc:name="Calendar - Get Calendar events for students" doc:id="79f0d479-376b-48e1-a2c2-894da8ab4db1" correlationId="#[correlationId]" config-ref="Moodle_config1">
@@ -1026,8 +1056,9 @@ output application/java
      wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,                            
     (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
     (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
-    eventid: payload.eventid as Number
-}]]></ee:set-payload>
+    (eventid: payload.eventid as Number) if(!isEmpty(payload.eventid))
+}
+]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
 		<moodle:calendar-get-calendar-eventby-id doc:name="Calendar - Get Calendar Event by Id" doc:id="e44f8587-55f2-40a3-8b1b-0bf5dacea535" correlationId="#[correlationId]" config-ref="Moodle_config1">
@@ -1049,11 +1080,19 @@ output application/java
      wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,                            
     (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
     (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
-    ("events[0][eventids]": payload.'events[0][eventids]') if(!isEmpty(payload.'events[0][eventids]')),
-    ("events[0][courseids]": payload.'events[0][courseids]') if(!isEmpty(payload.'events[0][courseids]')),
-    ("events[0][groupids]": payload.'events[0][groupids]') if(!isEmpty(payload.'events[0][groupids]')),
-    ("events[0][categoryids]": payload.'events[0][categoryids]') if(!isEmpty(payload.'events[0][categoryids]'))
-}]]></ee:set-payload>
+
+    ("events[eventids][0]": payload.'events[eventids][0]' as Number) if(!isEmpty(payload.'events[eventids][0]')),
+    ("events[courseids][0]": payload.'events[courseids][0]' as Number) if(!isEmpty(payload.'events[courseids][0]')),
+    ("events[groupids][0]": payload.'events[groupids][0]' as Number) if(!isEmpty(payload.'events[groupids][0]')),
+    ("events[categoryids][0]": payload.'events[categoryids][0]' as Number) if(!isEmpty(payload.'events[categoryids][0]')),
+
+    ("options[userevents]": payload.'options[userevents]' as Number) if(!isEmpty(payload.'options[userevents]')),
+    ("options[siteevents]": payload.'options[siteevents]' as Number) if(!isEmpty(payload.'options[siteevents]')),
+    ("options[timestart]": payload.'options[timestart]' as Number) if(!isEmpty(payload.'options[timestart]')),
+    ("options[timeend]": payload.'options[timeend]' as Number) if(!isEmpty(payload.'options[timeend]')),
+    ("options[ignorehidden]": payload.'options[ignorehidden]' as Number) if(!isEmpty(payload.'options[ignorehidden]'))
+}
+]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
 		<moodle:calendar-get-calendar-events doc:name="Calendar - Get Calendar Events" doc:id="bb402bcc-7630-4d8b-b56f-59f010882135" correlationId="#[correlationId]" config-ref="Moodle_config1">
@@ -1102,15 +1141,23 @@ output application/java
      wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,                            
     (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
     (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
-    "cohorts[0][categorytype][type]": payload.'cohorts[0][categorytype][type]',
-    "cohorts[0][categorytype][value]": payload.'cohorts[0][categorytype][value]',
-    "cohorts[0][name]": payload.'cohorts[0][name]',
-    "cohorts[0][idnumber]": payload.'cohorts[0][idnumber]',
-    "cohorts[0][description]": payload.'cohorts[0][description]',
-    "cohorts[0][descriptionformat]": payload.'cohorts[0][descriptionformat]',
-    "cohorts[0][visible]": payload.'cohorts[0][visible]',
-    "cohorts[0][theme]": payload.'cohorts[0][theme]'
-}]]></ee:set-payload>
+
+    ("cohorts[0][categorytype][type]": payload.'cohorts[0][categorytype][type]') if(!isEmpty(payload.'cohorts[0][categorytype][type]')),
+    ("cohorts[0][categorytype][value]": payload.'cohorts[0][categorytype][value]') if(!isEmpty(payload.'cohorts[0][categorytype][value]')),
+    ("cohorts[0][name]": payload.'cohorts[0][name]') if(!isEmpty(payload.'cohorts[0][name]')),
+    ("cohorts[0][idnumber]": payload.'cohorts[0][idnumber]') if(!isEmpty(payload.'cohorts[0][idnumber]')),
+    ("cohorts[0][description]": payload.'cohorts[0][description]') if(!isEmpty(payload.'cohorts[0][description]')),
+
+    ("cohorts[0][descriptionformat]": payload.'cohorts[0][descriptionformat]' as Number) 
+        if(!isEmpty(payload.'cohorts[0][descriptionformat]')),
+
+    ("cohorts[0][visible]": payload.'cohorts[0][visible]' as Number) 
+        if(!isEmpty(payload.'cohorts[0][visible]')),
+
+    ("cohorts[0][theme]": payload.'cohorts[0][customfields][0][shortname]') if(!isEmpty(payload.'cohorts[0][customfields][0][shortname]')),
+    ("cohorts[0][theme]": payload.'cohorts[0][customfields][0][value]') if(!isEmpty(payload.'cohorts[0][customfields][0][value]'))
+}
+]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
 		<moodle:cohort-create-cohorts doc:name="Cohort - Create Cohort" doc:id="af2a61d2-d8e6-4a15-96f9-6d07466c250a" correlationId="#[correlationId]" config-ref="Moodle_config1">
@@ -1132,9 +1179,10 @@ output application/java
      wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,                            
     (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
     (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
-    "members[0][cohortid]": payload.'members[0][cohortid]',
-    "members[0][userid]": payload.'members[0][userid]'
-}]]></ee:set-payload>
+    ("members[0][cohortid]": payload.'members[0][cohortid]' as Number) if(!isEmpty(payload.'members[0][cohortid]')),
+    ("members[0][userid]": payload.'members[0][userid]' as Number) if(!isEmpty(payload.'members[0][userid]'))
+}
+]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
 		<moodle:cohort-delete-cohort-member doc:name="Cohort - Delete Cohort Member" doc:id="9eb09be8-786f-47de-b1c1-5ee17996a3f6" correlationId="#[correlationId]" config-ref="Moodle_config1">
@@ -1156,8 +1204,9 @@ output application/java
      wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,                            
     (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
     (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
-    "cohortids[0]": payload.'cohortids[0]'
-}]]></ee:set-payload>
+    ("cohortids[0]": payload.'cohortids[0]' as Number) if(!isEmpty(payload.'cohortids[0]'))
+}
+]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
 		<moodle:cohort-delete-cohort doc:name="Cohort - Delete Cohort" doc:id="ff03dd91-973c-4a28-8ab7-e9c4c4d1434f" correlationId="#[correlationId]" config-ref="Moodle_config1">
@@ -1179,8 +1228,9 @@ output application/java
      wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,                            
     (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
     (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
-    "cohortids[0]": payload.'cohortids[0]'                
-}]]></ee:set-payload>
+    ("cohortids[0]": payload.'cohortids[0]' as Number) if(!isEmpty(payload.'cohortids[0]'))                
+}
+]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
 		<moodle:cohort-get-cohort-members doc:name="Cohort - Get Cohort Members" doc:id="bae94d5a-7e47-45dc-acf3-8ef84d31da16" correlationId="#[correlationId]" config-ref="Moodle_config1">
@@ -1202,7 +1252,9 @@ output application/java
      wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,                            
     (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
     (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
-}]]></ee:set-payload>
+    ("cohortids[0]": payload.'cohortids[0]' as Number) if(!isEmpty(payload.'cohortids[0]'))
+}
+]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
 		<moodle:cohort-get-cohorts doc:name="Cohort - Get Cohorts" doc:id="39a15e0b-d772-443d-88f7-4adb2e71a1ed" correlationId="#[correlationId]" config-ref="Moodle_config1">
@@ -1224,18 +1276,25 @@ output application/java
      wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,                            
     (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
     (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
-    "cohorts[0][id]": payload.'cohorts[0][id]',
-    "cohorts[0][categorytype][type]": payload.'cohorts[0][categorytype][type]',
-    "cohorts[0][categorytype][value]": payload.'cohorts[0][categorytype][value]',
-    "cohorts[0][name]": payload.'cohorts[0][name]',
-    "cohorts[0][idnumber]": payload.'cohorts[0][idnumber]',
-    "cohorts[0][description]": payload.'cohorts[0][description]',
-    "cohorts[0][descriptionformat]": payload.'cohorts[0][descriptionformat]',
-    "cohorts[0][visible]": payload.'cohorts[0][visible]',
-    "cohorts[0][theme]": payload.'cohorts[0][theme]',
-    "cohorts[0][customfields][0][shortname]": payload.'cohorts[0][customfields][0][shortname]',
-    "cohorts[0][customfields][0][value]": payload.'cohorts[0][customfields][0][value]'
-}]]></ee:set-payload>
+
+    ("cohorts[0][id]": payload.'cohorts[0][id]') if(!isEmpty(payload.'cohorts[0][id]')),
+    ("cohorts[0][categorytype][type]": payload.'cohorts[0][categorytype][type]') if(!isEmpty(payload.'cohorts[0][categorytype][type]')),
+    ("cohorts[0][categorytype][value]": payload.'cohorts[0][categorytype][value]') if(!isEmpty(payload.'cohorts[0][categorytype][value]')),
+    ("cohorts[0][name]": payload.'cohorts[0][name]') if(!isEmpty(payload.'cohorts[0][name]')),
+    ("cohorts[0][idnumber]": payload.'cohorts[0][idnumber]') if(!isEmpty(payload.'cohorts[0][idnumber]')),
+    ("cohorts[0][description]": payload.'cohorts[0][description]') if(!isEmpty(payload.'cohorts[0][description]')),
+
+    ("cohorts[0][descriptionformat]": payload.'cohorts[0][descriptionformat]' as Number) 
+        if(!isEmpty(payload.'cohorts[0][descriptionformat]')),
+
+    ("cohorts[0][visible]": payload.'cohorts[0][visible]' as Number) 
+        if(!isEmpty(payload.'cohorts[0][visible]')),
+
+    ("cohorts[0][theme]": payload.'cohorts[0][theme]') if(!isEmpty(payload.'cohorts[0][theme]')),
+    ("cohorts[0][customfields][0][shortname]": payload.'cohorts[0][customfields][0][shortname]') if(!isEmpty(payload.'cohorts[0][customfields][0][shortname]')),
+    ("cohorts[0][customfields][0][value]": payload.'cohorts[0][customfields][0][value]') if(!isEmpty(payload.'cohorts[0][customfields][0][value]'))
+}
+]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
 		<moodle:cohort-update-cohorts doc:name="Cohort - Update Cohorts" doc:id="49a22b31-e9f9-43ed-9885-b40d16bb92df" correlationId="#[correlationId]" config-ref="Moodle_config1">
@@ -1258,9 +1317,10 @@ output application/java
     (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
     (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
 
-    ("members[0][groupid]": payload.'members[0][groupid]') if(!isEmpty(payload.'members[0][groupid]')),
-    ("members[0][userid]": payload.'members[0][userid]') if(!isEmpty(payload.'members[0][userid]'))
-}]]></ee:set-payload>
+    ("members[0][groupid]": payload.'members[0][groupid]' as Number) if(!isEmpty(payload.'members[0][groupid]')),
+    ("members[0][userid]": payload.'members[0][userid]' as Number) if(!isEmpty(payload.'members[0][userid]'))
+}
+]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
 		<moodle:groups-add-group-members doc:name="Groups - Add Group Members" doc:id="f6e56fb7-69a1-41f0-baab-c26aa05735ee" correlationId="#[correlationId]" config-ref="Moodle_config1">
@@ -1283,9 +1343,10 @@ output application/java
     (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
     (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
 
-    "assignments[0][groupingid]": payload.'assignments[0][groupingid]',
-    "assignments[0][groupid]": payload.'assignments[0][groupid]'
-}]]></ee:set-payload>
+    ("assignments[0][groupingid]": payload.'assignments[0][groupingid]' as Number) if(!isEmpty(payload.'assignments[0][groupingid]')),
+    ("assignments[0][groupid]": payload.'assignments[0][groupid]' as Number) if(!isEmpty(payload.'assignments[0][groupid]'))
+}
+]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
 		<moodle:groups-assign-groupings doc:name="Groups - Assign Groupings" doc:id="21c36651-bd62-49d7-be25-df1b9edf0692" correlationId="#[correlationId]" config-ref="Moodle_config1">
@@ -1307,12 +1368,17 @@ output application/java
      wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,                            
     (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
     (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
-    "groupings[0][courseid]": payload.'groupings[0][courseid]',
-    "groupings[0][name]": payload.'groupings[0][name]',
-   ("groupings[0][description]": payload.'groupings[0][description]')  if (!isEmpty(payload.'groupings[0][description]')),
-    "groupings[0][descriptionformat]": payload.'groupings[0][descriptionformat]',
-    "groupings[0][idnumber]": payload.'groupings[0][idnumber]'
-}]]></ee:set-payload>
+
+    ("groupings[0][courseid]": payload.'groupings[0][courseid]' as Number) if(!isEmpty(payload.'groupings[0][courseid]')),
+    ("groupings[0][name]": payload.'groupings[0][name]') if(!isEmpty(payload.'groupings[0][name]')),
+    ("groupings[0][description]": payload.'groupings[0][description]') if(!isEmpty(payload.'groupings[0][description]')),
+    ("groupings[0][descriptionformat]": payload.'groupings[0][descriptionformat]' as Number) if(!isEmpty(payload.'groupings[0][descriptionformat]')),
+    ("groupings[0][idnumber]": payload.'groupings[0][idnumber]') if(!isEmpty(payload.'groupings[0][idnumber]')),
+
+    ("groupings[0][customfields][0][shortname]": payload.'groupings[0][customfields][0][shortname]') if(!isEmpty(payload.'groupings[0][customfields][0][shortname]')),
+    ("groupings[0][customfields][0][value]": payload.'groupings[0][customfields][0][value]') if(!isEmpty(payload.'groupings[0][customfields][0][value]'))
+}
+]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
 		<moodle:groups-create-groupings doc:name="Groups - Create Groupings" doc:id="33359421-4da2-4a20-b171-6a0207a8ba6c" correlationId="#[correlationId]" config-ref="Moodle_config">
@@ -1334,16 +1400,19 @@ output application/java
      wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,                            
     (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
     (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
-    ('groups[0][courseid]': payload.'groups[0][courseid]')if(!isEmpty(payload.'groups[0][courseid]')),
-    ('groups[0][name]': payload.'groups[0][name]')if(!isEmpty(payload.'groups[0][name]')),
-    ('groups[0][description]': payload.'groups[0][description]')if(!isEmpty(payload.'groups[0][description]')),
-    ('groups[0][descriptionformat]': payload.'groups[0][descriptionformat]')if(!isEmpty(payload.'groups[0][descriptionformat]')),
+
+    ('groups[0][courseid]': payload.'groups[0][courseid]' as Number) if(!isEmpty(payload.'groups[0][courseid]')),
+    ('groups[0][name]': payload.'groups[0][name]') if(!isEmpty(payload.'groups[0][name]')),
+    ('groups[0][description]': payload.'groups[0][description]') if(!isEmpty(payload.'groups[0][description]')),
+    ('groups[0][descriptionformat]': payload.'groups[0][descriptionformat]' as Number) if(!isEmpty(payload.'groups[0][descriptionformat]')),
+   ('groups[0][enrolmentkey]': payload.'groups[0][enrolmentkey]') if(!isEmpty(payload.'groups[0][enrolmentkey]')),
     ('groups[0][idnumber]': payload.'groups[0][idnumber]') if(!isEmpty(payload.'groups[0][idnumber]')),
-	('groups[0][visibility]': payload.'groups[0][visibility]') if(!isEmpty(payload.'groups[0][visibility]')),
-	('groups[0][participation]': payload.'groups[0][participation]') if(!isEmpty(payload.'groups[0][participation]')),
-	('groups[0][customfields][0][shortname]': payload.'groups[0][customfields][0][shortname]') if(!isEmpty(payload.'groups[0][customfields][0][shortname]')),
-	('groups[0][customfields][0][value]': payload.'groups[0][customfields][0][value]') if(!isEmpty(payload.'groups[0][customfields][0][value]'))
-}]]></ee:set-payload>
+    ('groups[0][visibility]': payload.'groups[0][visibility]' as Number) if(!isEmpty(payload.'groups[0][visibility]')),
+    ('groups[0][participation]': payload.'groups[0][participation]' as Number) if(!isEmpty(payload.'groups[0][participation]')),
+    ('groups[0][customfields][0][shortname]': payload.'groups[0][customfields][0][shortname]') if(!isEmpty(payload.'groups[0][customfields][0][shortname]')),
+    ('groups[0][customfields][0][value]': payload.'groups[0][customfields][0][value]') if(!isEmpty(payload.'groups[0][customfields][0][value]'))
+}
+]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
 		<moodle:groups-create-group doc:name="Groups - Create Group" doc:id="dc77344a-179c-4c8f-b019-20591e4e835b" correlationId="#[correlationId]" config-ref="Moodle_config1">
@@ -1366,9 +1435,10 @@ output application/java
     (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
     (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
 
-    ("members[0][userid]": payload.'members[0][userid]') if (!isEmpty(payload.'members[0][userid]')),
-    ("members[0][groupid]": payload.'members[0][groupid]') if (!isEmpty(payload.'members[0][groupid]'))
-}]]></ee:set-payload>
+    ("members[0][userid]": payload.'members[0][userid]' as Number) if (!isEmpty(payload.'members[0][userid]')),
+    ("members[0][groupid]": payload.'members[0][groupid]' as Number) if (!isEmpty(payload.'members[0][groupid]'))
+}
+]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
 		<moodle:groups-delete-group-members doc:name="Groups - Delete Group Members" doc:id="a5c7b53d-552c-49e5-bedd-e0c7d00c5e7a" correlationId="#[correlationId]" config-ref="Moodle_config1">
@@ -1390,9 +1460,10 @@ output application/java
     wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,                            
     (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
     (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
-    "members[0][userid]": payload.'members[0][userid]' as Number,
-    "members[0][groupid]": payload.'members[0][groupid]' as Number,
-}]]></ee:set-payload>
+    ("members[0][userid]": payload.'members[0][userid]' as Number) if(!isEmpty(payload.'members[0][userid]')),
+    ("members[0][groupid]": payload.'members[0][groupid]' as Number) if(!isEmpty(payload.'members[0][groupid]'))
+}
+]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
 		<moodle:groups-delete-groupings doc:name="Groups - Delete Groupings" doc:id="63f5daca-67f5-4b1f-8788-7c29e076a678" correlationId="#[correlationId]" config-ref="Moodle_config1">
@@ -1412,11 +1483,12 @@ output application/java
 ---
 {
    wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,                            
-    (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
-    (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
-    "groupids[0]": payload.'groupids[0]' as Number,      
-    "groupids[1]": payload.'groupids[1]' as Number     
-}]]></ee:set-payload>
+   (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
+   (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
+   ("groupids[0]": payload.'groupids[0]' as Number) if(!isEmpty(payload.'groupids[0]')),
+   ("groupids[1]": payload.'groupids[1]' as Number) if(!isEmpty(payload.'groupids[1]'))
+}
+]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
 		<moodle:groups-delete-group doc:name="Groups - Delete Group" doc:id="43a6802f-880b-4cda-8f4b-50f20913000a" correlationId="#[correlationId]" config-ref="Moodle_config1">
@@ -1485,8 +1557,9 @@ output application/java
     (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
     (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
 
-    ("groupids[0]": payload.'groupids[0]') if(!isEmpty(payload.'groupids[0]'))
-}]]></ee:set-payload>
+    ("groupids[0]": payload.'groupids[0]' as Number) if(!isEmpty(payload.'groupids[0]'))
+}
+]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
 		<moodle:groups-get-group-members doc:name="Groups - Get Group Members" doc:id="b87591b8-d3ba-4bbe-a050-1fe8cb16fdc9" correlationId="#[correlationId]" config-ref="Moodle_config1">
@@ -1508,8 +1581,9 @@ output application/java
      wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,                            
     (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
     (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
-    ('groupids[0]': payload.'groupids[0]') if (!isEmpty(payload.'groupids[0]'))
-}]]></ee:set-payload>
+    ('groupids[0]': payload.'groupids[0]' as Number) if (!isEmpty(payload.'groupids[0]'))
+}
+]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
 		<moodle:groups-get-group doc:name="Groups - Get Group" doc:id="e1ade10f-849e-4e07-b222-7ecee50058eb" correlationId="#[correlationId]" config-ref="Moodle_config1">
@@ -1558,11 +1632,12 @@ output application/java
     ("groupings[0][id]": payload.'groupings[0][id]' as Number) if(!isEmpty(payload.'groupings[0][id]')),
     ("groupings[0][name]": payload.'groupings[0][name]') if(!isEmpty(payload.'groupings[0][name]')),
     ("groupings[0][description]": payload.'groupings[0][description]') if(!isEmpty(payload.'groupings[0][description]')),
-    ("groupings[0][descriptionformat]": payload.'groupings[0][descriptionformat]') if(!isEmpty(payload.'groupings[0][descriptionformat]')),
+    ("groupings[0][descriptionformat]": payload.'groupings[0][descriptionformat]' as Number) if(!isEmpty(payload.'groupings[0][descriptionformat]')),
     ("groupings[0][idnumber]": payload.'groupings[0][idnumber]') if(!isEmpty(payload.'groupings[0][idnumber]')),
     ("groupings[0][customfields][0][shortname]": payload.'groupings[0][customfields][0][shortname]') if(!isEmpty(payload.'groupings[0][customfields][0][shortname]')),
     ("groupings[0][customfields][0][value]": payload.'groupings[0][customfields][0][value]') if(!isEmpty(payload.'groupings[0][customfields][0][value]'))
-}]]></ee:set-payload>
+}
+]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
 		<moodle:groups-update-groupings doc:name="Groups - Update Groupings" doc:id="a1bbc107-2107-4dfe-866e-36a55284ade3" correlationId="#[correlationId]" config-ref="Moodle_config1">
