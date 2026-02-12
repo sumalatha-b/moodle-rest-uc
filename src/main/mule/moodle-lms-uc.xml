@@ -156,18 +156,18 @@ output application/java
 output application/java
 ---
 {
-    wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,                      
+    wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,
     (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
     (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
 
-    ("categories[0][id]": payload.'categories[0][id]' as Number) 
+    ("categories[0][id]": payload.'categories[0][id]' as Number)
         if(!isEmpty(payload.'categories[0][id]')),
 
-    ("categories[0][newparent]": payload.categories[0].newparent as Number)  
-        if(!isEmpty(payload.categories[0].newparent)),  
+    ("categories[0][newparent]": payload.'categories[0][newparent]' as Number)
+        if(!isEmpty(payload.'categories[0][newparent]')),
 
-    ("categories[0][recursive]": payload.categories[0].recursive as Number)
-        if(!isEmpty(payload.categories[0].recursive))
+    ("categories[0][recursive]": payload.'categories[0][recursive]' as Number)
+        if(!isEmpty(payload.'categories[0][recursive]'))
 }
 ]]></ee:set-payload>
 			</ee:message>
