@@ -1373,13 +1373,11 @@ output application/java
      wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,                            
     (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
     (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
-
     ("groupings[0][courseid]": payload.'groupings[0][courseid]' as Number) if(!isEmpty(payload.'groupings[0][courseid]')),
     ("groupings[0][name]": payload.'groupings[0][name]') if(!isEmpty(payload.'groupings[0][name]')),
     ("groupings[0][description]": payload.'groupings[0][description]') if(!isEmpty(payload.'groupings[0][description]')),
     ("groupings[0][descriptionformat]": payload.'groupings[0][descriptionformat]' as Number) if(!isEmpty(payload.'groupings[0][descriptionformat]')),
     ("groupings[0][idnumber]": payload.'groupings[0][idnumber]') if(!isEmpty(payload.'groupings[0][idnumber]')),
-
     ("groupings[0][customfields][0][shortname]": payload.'groupings[0][customfields][0][shortname]') if(!isEmpty(payload.'groupings[0][customfields][0][shortname]')),
     ("groupings[0][customfields][0][value]": payload.'groupings[0][customfields][0][value]') if(!isEmpty(payload.'groupings[0][customfields][0][value]'))
 }

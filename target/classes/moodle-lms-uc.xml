@@ -1384,7 +1384,7 @@ output application/java
 ]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
-		<moodle:groups-create-groupings doc:name="Groups - Create Groupings" doc:id="33359421-4da2-4a20-b171-6a0207a8ba6c" correlationId="#[correlationId]" config-ref="Moodle_config">
+		<moodle:groups-create-groupings doc:name="Groups - Create Groupings" doc:id="33359421-4da2-4a20-b171-6a0207a8ba6c" correlationId="#[correlationId]" config-ref="Moodle_config1">
 		</moodle:groups-create-groupings>
     </flow>
     <flow name="post:\core_group_create_groups:application\x-www-form-urlencoded:moodle-rest-api-config">
