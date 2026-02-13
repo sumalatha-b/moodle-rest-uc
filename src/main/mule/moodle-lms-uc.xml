@@ -245,8 +245,7 @@ output application/java
 }]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
-		<moodle:course-get-courses doc:name="Course - Get Courses" doc:id="c584a005-c515-4f20-a380-152fadfc9205" correlationId="#[correlationId]" config-ref="Moodle_config1" Course_Get_Courses--body="#[payload]">
-		</moodle:course-get-courses>
+		<moodle:course-get-courses doc:name="Course - Get Courses" doc:id="56991039-8c49-4eeb-968f-d302a55f2e88" config-ref="Moodle_config1" correlationId="#[correlationId]"/>
     
 </flow>
     <flow name="post:\core_course_get_courses_by_field:application\x-www-form-urlencoded:moodle-rest-api-config">
