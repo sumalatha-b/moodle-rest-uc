@@ -1278,28 +1278,25 @@ output application/java
 output application/java
 ---
 {
-     wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,                            
-    (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
-    (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
+  wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,
+  (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
+  (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)), 
+  ("cohorts[0][id]": payload.'cohorts[0][id]' as Number) if(!isEmpty(payload.'cohorts[0][id]')),
+  ("cohorts[0][categorytype][type]": payload.'cohorts[0][categorytype][type]')if(!isEmpty(payload.'cohorts[0][categorytype][type]')),
+  ("cohorts[0][categorytype][value]": (payload.'cohorts[0][categorytype][value]' as String)) if(!isEmpty(payload.'cohorts[0][categorytype][value]')),
+  ("cohorts[0][name]": payload.'cohorts[0][name]') if(!isEmpty(payload.'cohorts[0][name]')),
+  ("cohorts[0][idnumber]": payload.'cohorts[0][idnumber]') if(!isEmpty(payload.'cohorts[0][idnumber]')),
+  ("cohorts[0][description]": payload.'cohorts[0][description]') if(!isEmpty(payload.'cohorts[0][description]')),
+  ("cohorts[0][descriptionformat]": payload.'cohorts[0][descriptionformat]' as Number) if(!isEmpty(payload.'cohorts[0][descriptionformat]')),
+  ("cohorts[0][visible]": payload.'cohorts[0][visible]' as Number)if(!isEmpty(payload.'cohorts[0][visible]')),
+  ("cohorts[0][theme]": payload.'cohorts[0][theme]') if(!isEmpty(payload.'cohorts[0][theme]')),
+  ("cohorts[0][customfields][0][shortname]": payload.'cohorts[0][customfields][0][shortname]') if(!isEmpty(payload.'cohorts[0][customfields][0][shortname]')), 
+  ("cohorts[0][customfields][0][value]": payload.'cohorts[0][customfields][0][value]') if(!isEmpty(payload.'cohorts[0][customfields][0][shortname]'))
 
-    ("cohorts[0][id]": payload.'cohorts[0][id]') if(!isEmpty(payload.'cohorts[0][id]')),
-    ("cohorts[0][categorytype][type]": payload.'cohorts[0][categorytype][type]') if(!isEmpty(payload.'cohorts[0][categorytype][type]')),
-    ("cohorts[0][categorytype][value]": payload.'cohorts[0][categorytype][value]') if(!isEmpty(payload.'cohorts[0][categorytype][value]')),
-    ("cohorts[0][name]": payload.'cohorts[0][name]') if(!isEmpty(payload.'cohorts[0][name]')),
-    ("cohorts[0][idnumber]": payload.'cohorts[0][idnumber]') if(!isEmpty(payload.'cohorts[0][idnumber]')),
-    ("cohorts[0][description]": payload.'cohorts[0][description]') if(!isEmpty(payload.'cohorts[0][description]')),
 
-    ("cohorts[0][descriptionformat]": payload.'cohorts[0][descriptionformat]' as Number) 
-        if(!isEmpty(payload.'cohorts[0][descriptionformat]')),
-
-    ("cohorts[0][visible]": payload.'cohorts[0][visible]' as Number) 
-        if(!isEmpty(payload.'cohorts[0][visible]')),
-
-    ("cohorts[0][theme]": payload.'cohorts[0][theme]') if(!isEmpty(payload.'cohorts[0][theme]')),
-    ("cohorts[0][customfields][0][shortname]": payload.'cohorts[0][customfields][0][shortname]') if(!isEmpty(payload.'cohorts[0][customfields][0][shortname]')),
-    ("cohorts[0][customfields][0][value]": payload.'cohorts[0][customfields][0][value]') if(!isEmpty(payload.'cohorts[0][customfields][0][value]'))
 }
-]]></ee:set-payload>
+
+ ]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
 		<moodle:cohort-update-cohorts doc:name="Cohort - Update Cohorts" doc:id="49a22b31-e9f9-43ed-9885-b40d16bb92df" correlationId="#[correlationId]" config-ref="Moodle_config1">
