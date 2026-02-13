@@ -330,45 +330,50 @@ output application/java
 output application/java
 ---
 {
-    wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,                    
-    (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
-    (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
+    wstoken: if (!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,
 
-    ("courses[0][id]": payload.'courses[0][id]' as Number) if(!isEmpty(payload.'courses[0][id]')),
-    ("courses[0][fullname]": payload.'courses[0][fullname]') if(!isEmpty(payload.'courses[0][fullname]')),
-    ("courses[0][shortname]": payload.'courses[0][shortname]') if(!isEmpty(payload.'courses[0][shortname]')),
-    ("courses[0][categoryid]": payload.'courses[0][categoryid]' as Number) if(!isEmpty(payload.'courses[0][categoryid]')),
-    ("courses[0][idnumber]": payload.'courses[0][idnumber]') if(!isEmpty(payload.'courses[0][idnumber]')),
-    ("courses[0][summary]": payload.'courses[0][summary]') if(!isEmpty(payload.'courses[0][summary]')),
-    ("courses[0][summaryformat]": payload.'courses[0][summaryformat]' as Number) if(!isEmpty(payload.'courses[0][summaryformat]')),
-    ("courses[0][format]": payload.'courses[0][format]') if(!isEmpty(payload.'courses[0][format]')),
-    ("courses[0][showgrades]": payload.'courses[0][showgrades]' as Number) if(!isEmpty(payload.'courses[0][showgrades]')),
-    ("courses[0][newsitems]": payload.'courses[0][newsitems]' as Number) if(!isEmpty(payload.'courses[0][newsitems]')),
-    ("courses[0][startdate]": payload.'courses[0][startdate]' as Number) if(!isEmpty(payload.'courses[0][startdate]')),
-    ("courses[0][enddate]": payload.'courses[0][enddate]' as Number) if(!isEmpty(payload.'courses[0][enddate]')),
-    ("courses[0][numsections]": payload.'courses[0][numsections]' as Number) if(!isEmpty(payload.'courses[0][numsections]')),
-    ("courses[0][maxbytes]": payload.'courses[0][maxbytes]' as Number) if(!isEmpty(payload.'courses[0][maxbytes]')),
-    ("courses[0][showreports]": payload.'courses[0][showreports]' as Number) if(!isEmpty(payload.'courses[0][showreports]')),
-    ("courses[0][visible]": payload.'courses[0][visible]' as Number) if(!isEmpty(payload.'courses[0][visible]')),
-    ("courses[0][hiddensections]": payload.'courses[0][hiddensections]' as Number) if(!isEmpty(payload.'courses[0][hiddensections]')),
-    ("courses[0][groupmode]": payload.'courses[0][groupmode]' as Number) if(!isEmpty(payload.'courses[0][groupmode]')),
-    ("courses[0][groupmodeforce]": payload.'courses[0][groupmodeforce]' as Number) if(!isEmpty(payload.'courses[0][groupmodeforce]')),
-    ("courses[0][defaultgroupingid]": payload.'courses[0][defaultgroupingid]' as Number) if(!isEmpty(payload.'courses[0][defaultgroupingid]')),
-    ("courses[0][enablecompletion]": payload.'courses[0][enablecompletion]' as Number) if(!isEmpty(payload.'courses[0][enablecompletion]')),
-    ("courses[0][completionnotify]": payload.'courses[0][completionnotify]' as Number) if(!isEmpty(payload.'courses[0][completionnotify]')),
-    ("courses[0][lang]": payload.'courses[0][lang]') if(!isEmpty(payload.'courses[0][lang]')),
-    ("courses[0][forcetheme]": payload.'courses[0][forcetheme]') if(!isEmpty(payload.'courses[0][forcetheme]')),
+    (wsfunction: payload.wsfunction) if (!isEmpty(payload.wsfunction)),
+    (moodlewsrestformat: payload.moodlewsrestformat) if (!isEmpty(payload.moodlewsrestformat)),
 
-    ("courses[0][courseformatoptions][0][name]": payload.'courses[0][courseformatoptions][0][name]') 
-        if(!isEmpty(payload.'courses[0][courseformatoptions][0][name]')),
+    ("courses[0][id]": payload.'courses[0][id]' as Number) if (!isEmpty(payload.'courses[0][id]')),
+    ("courses[0][fullname]": payload.'courses[0][fullname]') if (!isEmpty(payload.'courses[0][fullname]')),
+    ("courses[0][shortname]": payload.'courses[0][shortname]') if (!isEmpty(payload.'courses[0][shortname]')),
+    ("courses[0][categoryid]": payload.'courses[0][categoryid]' as Number) if (!isEmpty(payload.'courses[0][categoryid]')),
+    ("courses[0][idnumber]": payload.'courses[0][idnumber]') if (!isEmpty(payload.'courses[0][idnumber]')),
+    ("courses[0][summary]": payload.'courses[0][summary]') if (!isEmpty(payload.'courses[0][summary]')),
+    ("courses[0][summaryformat]": payload.'courses[0][summaryformat]' as Number) if (!isEmpty(payload.'courses[0][summaryformat]')),
+    ("courses[0][format]": payload.'courses[0][format]') if (!isEmpty(payload.'courses[0][format]')),
+    ("courses[0][showgrades]": payload.'courses[0][showgrades]' as Number) if (!isEmpty(payload.'courses[0][showgrades]')),
+    ("courses[0][newsitems]": payload.'courses[0][newsitems]' as Number) if (!isEmpty(payload.'courses[0][newsitems]')),
+    ("courses[0][startdate]": payload.'courses[0][startdate]' as Number) if (!isEmpty(payload.'courses[0][startdate]')),
+    ("courses[0][enddate]": payload.'courses[0][enddate]' as Number) if (!isEmpty(payload.'courses[0][enddate]')),
+    ("courses[0][numsections]": payload.'courses[0][numsections]' as Number) if (!isEmpty(payload.'courses[0][numsections]')),
+    ("courses[0][maxbytes]": payload.'courses[0][maxbytes]' as Number) if (!isEmpty(payload.'courses[0][maxbytes]')),
+    ("courses[0][showreports]": payload.'courses[0][showreports]' as Number) if (!isEmpty(payload.'courses[0][showreports]')),
+    ("courses[0][visible]": payload.'courses[0][visible]' as Number) if (!isEmpty(payload.'courses[0][visible]')),
+    ("courses[0][hiddensections]": payload.'courses[0][hiddensections]' as Number) if (!isEmpty(payload.'courses[0][hiddensections]')),
+    ("courses[0][groupmode]": payload.'courses[0][groupmode]' as Number) if (!isEmpty(payload.'courses[0][groupmode]')),
+    ("courses[0][groupmodeforce]": payload.'courses[0][groupmodeforce]' as Number) if (!isEmpty(payload.'courses[0][groupmodeforce]')),
+    ("courses[0][defaultgroupingid]": payload.'courses[0][defaultgroupingid]' as Number) if (!isEmpty(payload.'courses[0][defaultgroupingid]')),
+    ("courses[0][enablecompletion]": payload.'courses[0][enablecompletion]' as Number) if (!isEmpty(payload.'courses[0][enablecompletion]')),
+    ("courses[0][completionnotify]": payload.'courses[0][completionnotify]' as Number) if (!isEmpty(payload.'courses[0][completionnotify]')),
+    ("courses[0][lang]": payload.'courses[0][lang]') if (!isEmpty(payload.'courses[0][lang]')),
+    ("courses[0][forcetheme]": payload.'courses[0][forcetheme]') if (!isEmpty(payload.'courses[0][forcetheme]')),
 
-    ("courses[0][courseformatoptions][0][value]": payload.'courses[0][courseformatoptions][0][value]') 
-        if(!isEmpty(payload.'courses[0][courseformatoptions][0][value]')),
+    ("courses[0][courseformatoptions][0][name]": payload.'courses[0][courseformatoptions][0][name]')
+        if (!isEmpty(payload.'courses[0][courseformatoptions][0][name]')),
 
-    ("courses[0][customfields][0][shortname]": payload.'courses[0][customfields][0][shortname]') 
-        if(!isEmpty(payload.'courses[0][customfields][0][customfields][0][shortname]')),
+    ("courses[0][courseformatoptions][0][value]": payload.'courses[0][courseformatoptions][0][value]')
+        if (!isEmpty(payload.'courses[0][courseformatoptions][0][value]')),
 
-    ("courses[0][customfields][0][value]": payload.'courses[0][customfields][0][value]')  if(!isEmpty(payload.'courses[0][customfields][0][value]'))
+    
+    ("courses[0][customfields][0][shortname]": payload.'courses[0][customfields][0][shortname]')
+        if (!isEmpty(payload.'courses[0][customfields][0][shortname]')
+            and !isEmpty(payload.'courses[0][customfields][0][value]')),
+
+    ("courses[0][customfields][0][value]": payload.'courses[0][customfields][0][value]')
+        if (!isEmpty(payload.'courses[0][customfields][0][shortname]')
+            and !isEmpty(payload.'courses[0][customfields][0][value]'))
 }
 ]]></ee:set-payload>
 			</ee:message>
@@ -1368,13 +1373,11 @@ output application/java
      wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,                            
     (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
     (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
-
     ("groupings[0][courseid]": payload.'groupings[0][courseid]' as Number) if(!isEmpty(payload.'groupings[0][courseid]')),
     ("groupings[0][name]": payload.'groupings[0][name]') if(!isEmpty(payload.'groupings[0][name]')),
     ("groupings[0][description]": payload.'groupings[0][description]') if(!isEmpty(payload.'groupings[0][description]')),
     ("groupings[0][descriptionformat]": payload.'groupings[0][descriptionformat]' as Number) if(!isEmpty(payload.'groupings[0][descriptionformat]')),
     ("groupings[0][idnumber]": payload.'groupings[0][idnumber]') if(!isEmpty(payload.'groupings[0][idnumber]')),
-
     ("groupings[0][customfields][0][shortname]": payload.'groupings[0][customfields][0][shortname]') if(!isEmpty(payload.'groupings[0][customfields][0][shortname]')),
     ("groupings[0][customfields][0][value]": payload.'groupings[0][customfields][0][value]') if(!isEmpty(payload.'groupings[0][customfields][0][value]'))
 }
@@ -1460,8 +1463,7 @@ output application/java
     wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,                            
     (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
     (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
-    ("members[0][userid]": payload.'members[0][userid]' as Number) if(!isEmpty(payload.'members[0][userid]')),
-    ("members[0][groupid]": payload.'members[0][groupid]' as Number) if(!isEmpty(payload.'members[0][groupid]'))
+    ("groupingids[0]": payload.'groupingids[0]' as Number) if(!isEmpty(payload.'groupingids[0]'))
 }
 ]]></ee:set-payload>
 			</ee:message>
