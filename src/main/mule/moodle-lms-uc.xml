@@ -270,8 +270,7 @@ output application/java
 ]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
-		<moodle:course-get-coursesby-field doc:name="Course - Get Courses by Field" doc:id="f07f1ca1-674f-4bb0-96a2-8d391b3e5e6a" correlationId="#[correlationId]" config-ref="Moodle_config1">
-		</moodle:course-get-coursesby-field>
+		<moodle:course-get-courses-by-field doc:name="Course Get Courses By Field" doc:id="aaaed139-94c1-4ebd-b38a-df068c6c3691" config-ref="Moodle_config1" correlationId="#[correlationId]"/>
     </flow>
     <flow name="post:\core_course_update_categories:application\x-www-form-urlencoded:moodle-rest-api-config">
         <http:listener doc:name="Listener" doc:id="ebc98c1a-9d22-4f35-a971-1b7199d88061" path="/core_course_update_categories" config-ref="HTTP_Listener_config" allowedMethods="POST">
@@ -491,8 +490,6 @@ output application/java
 ]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
-		<moodle:user-roles-assign-roles doc:name="User Roles - Assign Roles" doc:id="86252f0e-0ecb-48ca-8f89-dd5b39bfb4e6" correlationId="#[correlationId]" config-ref="Moodle_config1">
-		</moodle:user-roles-assign-roles>
     </flow>
     <flow name="post:\core_role_unassign_roles:application\x-www-form-urlencoded:moodle-rest-api-config">
         <http:listener doc:name="Listener" doc:id="1c38a373-89e8-4678-969e-0bc4c47451b5" path="/core_role_unassign_roles" config-ref="HTTP_Listener_config" allowedMethods="POST">
@@ -529,8 +526,6 @@ output application/java
 ]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
-		<moodle:user-roles-unassign-roles doc:name="User Roles - Unassign Roles" doc:id="0705e506-be0a-40d4-a3fb-37a5b877bf9d" correlationId="#[correlationId]" config-ref="Moodle_config1">
-		</moodle:user-roles-unassign-roles>
     </flow>
     <flow name="post:\core_user_create_users:application\x-www-form-urlencoded:moodle-rest-api-config">
         <http:listener doc:name="Listener" doc:id="5ec64d09-7e98-49ac-9f41-7ff04dfe9f7b" path="/core_user_create_users" config-ref="HTTP_Listener_config" allowedMethods="POST">
@@ -645,8 +640,7 @@ output application/java
 ]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
-		<moodle:user-createusers doc:name="User - Create users" doc:id="b0e70186-c62f-4b3a-889e-a537c6a8b5e6" correlationId="#[correlationId]" config-ref="Moodle_config1">
-		</moodle:user-createusers>
+		<moodle:user-create-users doc:name="User Create Users" doc:id="4560eaa9-74fb-4eec-b4fa-41e14db1e312" config-ref="Moodle_config1" correlationId="#[correlationId]"/>
     </flow>
     <flow name="post:\core_user_delete_users:application\x-www-form-urlencoded:moodle-rest-api-config">
         <http:listener doc:name="Listener" doc:id="651608d8-7512-474b-b141-a603598bc18d" path="/core_user_delete_users" config-ref="HTTP_Listener_config" allowedMethods="POST">
@@ -731,8 +725,7 @@ output application/java
 ]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
-		<moodle:user-get-usersby-id doc:name="User - Get Users by Id" doc:id="99ed74ff-b131-4b47-bb5c-3a770fe3c8e3" correlationId="#[correlationId]" config-ref="Moodle_config1">
-		</moodle:user-get-usersby-id>
+		<moodle:user-get-users-by-id doc:name="User Get Users By Id" doc:id="d21ffca6-5519-4462-b24b-047224de31d9" config-ref="Moodle_config1" correlationId="#[correlationId]"/>
     </flow>
     <flow name="post:\core_user_update_users:application\x-www-form-urlencoded:moodle-rest-api-config">
         <http:listener doc:name="Listener" doc:id="94ce8f85-fc93-463b-88a2-84c38d5b328c" path="/core_user_update_users" config-ref="HTTP_Listener_config" allowedMethods="POST">
@@ -894,8 +887,7 @@ output application/java
 ]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
-		<moodle:assignments-getallthecourseassignments doc:name="Assignments - Get all the course assignments" doc:id="577d81fa-38a2-4e41-a62f-4ba795a35db9" correlationId="#[correlationId]" config-ref="Moodle_config1">
-		</moodle:assignments-getallthecourseassignments>
+		<moodle:assignments-get-all-the-course-assignments doc:name="Assignments Get All The Course Assignments" doc:id="9f4ebfea-8bed-460d-a62e-09477fbde634" config-ref="Moodle_config1" correlationId="#[correlationId]"/>
     </flow>
     <flow name="post:\mod_assign_get_grades:application\x-www-form-urlencoded:moodle-rest-api-config">
         <http:listener doc:name="Listener" doc:id="a010d89e-0363-405f-a887-476c88028716" path="/mod_assign_get_grades" config-ref="HTTP_Listener_config" allowedMethods="POST">
@@ -918,8 +910,7 @@ output application/java
 ]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
-		<moodle:assignments-getassignmentgrades doc:name="Assignments - Get assignment grades" doc:id="4e893310-0b41-4c2e-9ecf-0db80ac32d00" correlationId="#[correlationId]" config-ref="Moodle_config1">
-		</moodle:assignments-getassignmentgrades>
+		<moodle:assignments-get-assignment-grades doc:name="Assignments Get Assignment Grades" doc:id="5a2cc1aa-7c07-4567-8f96-69f9b633ac7b" config-ref="Moodle_config1" correlationId="#[correlationId]"/>
     </flow>
     <flow name="post:\mod_assign_get_submission_status:application\x-www-form-urlencoded:moodle-rest-api-config">
         <http:listener doc:name="Listener" doc:id="71f7d0e5-7597-44fc-acf8-5a4af97cee5c" path="/mod_assign_get_submission_status" config-ref="HTTP_Listener_config" allowedMethods="POST">
@@ -945,8 +936,6 @@ output application/java
 ]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
-		<moodle:assignments-getassignmentsubmissions doc:name="Assignments - Get assignment submissions" doc:id="7e15b2a7-9e9d-499b-9916-8483e0d7251b" correlationId="#[correlationId]" config-ref="Moodle_config1">
-		</moodle:assignments-getassignmentsubmissions>
     </flow>
     <flow name="post:\core_calendar_create_calendar_events:application\x-www-form-urlencoded:moodle-rest-api-config">
         <http:listener doc:name="Listener" doc:id="cd4b7392-f396-4e05-97a5-c57edf5ade74" path="/core_calendar_create_calendar_events" config-ref="HTTP_Listener_config" allowedMethods="POST">
@@ -1039,8 +1028,7 @@ output application/java
 ]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
-		<moodle:calendar-get-calendareventsforstudents doc:name="Calendar - Get Calendar events for students" doc:id="79f0d479-376b-48e1-a2c2-894da8ab4db1" correlationId="#[correlationId]" config-ref="Moodle_config1">
-		</moodle:calendar-get-calendareventsforstudents>
+		<moodle:calendar-get-calendar-events-for-students doc:name="Calendar Get Calendar Events For students" doc:id="1cea0d56-8814-4010-ae2f-a589fba8e303" config-ref="Moodle_config1" correlationId="#[correlationId]"/>
     </flow>
     <flow name="post:\core_calendar_get_calendar_event_by_id:application\x-www-form-urlencoded:moodle-rest-api-config">
         <http:listener doc:name="Listener" doc:id="49c4c0c0-06de-460c-9401-4cf8d9454cbd" path="/core_calendar_get_calendar_event_by_id" config-ref="HTTP_Listener_config">
@@ -1097,8 +1085,6 @@ output application/java
 ]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
-		<moodle:calendar-get-calendar-events doc:name="Calendar - Get Calendar Events" doc:id="bb402bcc-7630-4d8b-b56f-59f010882135" correlationId="#[correlationId]" config-ref="Moodle_config1">
-		</moodle:calendar-get-calendar-events>
 		<logger level="INFO" doc:name="Logger" doc:id="c70e88f6-6d59-4f46-91f5-367faa331664" />
     </flow>
     <flow name="post:\core_cohort_add_cohort_members:application\x-www-form-urlencoded:moodle-rest-api-config">
@@ -1322,8 +1308,6 @@ output application/java
 ]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
-		<moodle:groups-add-group-members doc:name="Groups - Add Group Members" doc:id="f6e56fb7-69a1-41f0-baab-c26aa05735ee" correlationId="#[correlationId]" config-ref="Moodle_config1">
-		</moodle:groups-add-group-members>
     </flow>
     <flow name="post:\core_group_assign_grouping:application\x-www-form-urlencoded:moodle-rest-api-config">
         <http:listener doc:name="Listener" doc:id="1ed99dc3-cca6-4378-bfc6-84961721337b" path="/core_group_assign_grouping" config-ref="HTTP_Listener_config" allowedMethods="POST">
@@ -1438,8 +1422,6 @@ output application/java
 ]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
-		<moodle:groups-delete-group-members doc:name="Groups - Delete Group Members" doc:id="a5c7b53d-552c-49e5-bedd-e0c7d00c5e7a" correlationId="#[correlationId]" config-ref="Moodle_config1">
-		</moodle:groups-delete-group-members>
     </flow>
     <flow name="post:\core_group_delete_groupings:application\x-www-form-urlencoded:moodle-rest-api-config">
         <http:listener doc:name="Listener" doc:id="68605915-86fb-4d39-9252-9da14aed992a" path="/core_group_delete_groupings" config-ref="HTTP_Listener_config" allowedMethods="POST">
@@ -1533,8 +1515,6 @@ output application/java
 }]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
-		<moodle:groups-get-course-groups doc:name="Groups - Get Course Groups" doc:id="72122e73-9eb2-4f07-bd74-7d2327ebb3a3" correlationId="#[correlationId]" config-ref="Moodle_config1">
-		</moodle:groups-get-course-groups>
     </flow>
     <flow name="post:\core_group_get_group_members:application\x-www-form-urlencoded:moodle-rest-api-config">
         <http:listener doc:name="Listener" doc:id="adf8bff8-9673-4ece-b129-42c70935f057" path="/core_group_get_group_members" config-ref="HTTP_Listener_config" allowedMethods="POST">
@@ -1668,8 +1648,6 @@ output application/java
 }]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
-		<moodle:groups-update-group doc:name="Groups - Update Group" doc:id="3874a891-04d9-4a79-abe1-78c8a6c1be58" correlationId="#[correlationId]" config-ref="Moodle_config1">
-		</moodle:groups-update-group>
     </flow>
     <flow name="post:\gradereport_user_get_grade_items:application\x-www-form-urlencoded:moodle-rest-api-config">
         <http:listener doc:name="Listener" doc:id="0344baac-2c14-47a3-968c-cfa8329f2f0e" path="/gradereport_user_get_grade_items" config-ref="HTTP_Listener_config" allowedMethods="POST">
