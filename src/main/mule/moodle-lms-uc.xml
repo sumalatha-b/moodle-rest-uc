@@ -449,19 +449,12 @@ output application/java
     (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
     (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
 
-    ("enrolments[0][userid]": payload.'enrolments[0][userid]' as Number) 
-        if(!isEmpty(payload.'enrolments[0][userid]')),
-
-    ("enrolments[0][courseid]": payload.'enrolments[0][courseid]' as Number) 
-        if(!isEmpty(payload.'enrolments[0][courseid]')),
-
-    ("enrolments[0][roleid]": payload.'enrolments[0][roleid]' as Number) 
-        if(!isEmpty(payload.'enrolments[0][roleid]'))
+    (ueid: payload.ueid) if(!isEmpty(payload.ueid))
 }
 ]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
-		<moodle:enrollment-unenroll-users_0 doc:name="Enrollment - Unenroll Users 0" doc:id="e6ad151e-71b1-43c8-bade-d5af79f5e323" config-ref="Moodle_config1" correlationId="#[correlationId]"/>
+		<moodle:enrollment-unenrol-user doc:name="Enrollment - Unenrol User" doc:id="f6c6015d-f64e-4a77-b996-f159ea5db9df" config-ref="Moodle_config1" correlationId="#[correlationId]"/>
     </flow>
     <flow name="post:\core_role_assign_roles:application\x-www-form-urlencoded:moodle-rest-api-config">
         <http:listener doc:name="Listener" doc:id="2179cb16-543f-4f0b-82ff-3388ff88c506" path="/core_role_assign_roles" config-ref="HTTP_Listener_config" allowedMethods="POST">
@@ -704,7 +697,11 @@ output application/java
     ("criteria[3][key]": payload.'criteria[3][key]') if (!isEmpty(payload.'criteria[3][key]')),
     ("criteria[3][value]": payload.'criteria[3][value]') if (!isEmpty(payload.'criteria[3][value]')),
     ("criteria[4][key]": payload.'criteria[4][key]') if (!isEmpty(payload.'criteria[4][key]')),
-    ("criteria[4][value]": payload.'criteria[4][value]') if (!isEmpty(payload.'criteria[4][value]'))
+    ("criteria[4][value]": payload.'criteria[4][value]') if (!isEmpty(payload.'criteria[4][value]')),
+    ("criteria[5][key]": payload.'criteria[4][key]') if (!isEmpty(payload.'criteria[4][key]')),
+    ("criteria[5][value]": payload.'criteria[4][value]') if (!isEmpty(payload.'criteria[4][value]')),
+    ("criteria[6][key]": payload.'criteria[4][key]') if (!isEmpty(payload.'criteria[4][key]')),
+    ("criteria[6][value]": payload.'criteria[4][value]') if (!isEmpty(payload.'criteria[4][value]'))
 }
 ]]></ee:set-payload>
 			</ee:message>
@@ -850,7 +847,7 @@ output application/java
 ]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
-		<moodle:enrollment-unenroll-users_0 doc:name="Enrollment - Unenroll Users 0" doc:id="7679b969-17a7-4461-a85e-d30089fac455" config-ref="Moodle_config1" correlationId="#[correlationId]"/>
+		<moodle:enrollment-unenroll-users doc:name="Enrollment - Unenroll Users" doc:id="f5db5917-07f1-41d4-9b2f-388d1fa7d789" config-ref="Moodle_config1" correlationId="#[correlationId]"/>
     </flow>
     <flow name="post:\gradereport_overview_get_course_grades:application\x-www-form-urlencoded:moodle-rest-api-config">
         <http:listener doc:name="Listener" doc:id="52cc9f25-f503-4bac-beeb-84299e979e4b" path="/gradereport_overview_get_course_grades" config-ref="HTTP_Listener_config" allowedMethods="POST">
